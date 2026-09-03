@@ -185,8 +185,7 @@ let
 in
 config:
 let
-  doCheckByDefault = config.doCheckByDefault or false;
-  inherit (config) contentAddressedByDefault;
+  inherit (config) contentAddressedByDefault doCheckByDefault;
   userHook = config.stdenv.userHook or null;
   checkMeta = import ./check-meta.nix {
     inherit lib config;
@@ -417,10 +416,10 @@ let
       configurePlatforms ? defaultConfigurePlatforms,
 
       # Check phase
-      doCheck ? doCheckByDefault,
+      doCheck ? doCheckByDefault && canExecuteHostOnBuild,
 
       # InstallCheck phase
-      doInstallCheck ? doCheckByDefault,
+      doInstallCheck ? doCheckByDefault && canExecuteHostOnBuild,
 
       strictDeps ? true,
       __structuredAttrs ? true,
@@ -448,11 +447,6 @@ let
       ...
     }@attrs:
     let
-      # TODO(@oxij, @Ericson2314): This is here to keep the old semantics, remove when
-      # no package has `doCheck = true`.
-      doCheck' = doCheck && canExecuteHostOnBuild;
-      doInstallCheck' = doInstallCheck && canExecuteHostOnBuild;
-
       separateDebugInfo' =
         let
           actualValue = separateDebugInfo && isLinux;
@@ -525,8 +519,6 @@ let
       )
     else
       let
-        doCheck = doCheck';
-        doInstallCheck = doInstallCheck';
         buildInputs' =
           buildInputs ++ optionals doCheck checkInputs ++ optionals doInstallCheck installCheckInputs;
         nativeBuildInputs' =
