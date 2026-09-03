@@ -186,8 +186,7 @@ in
 config:
 let
   doCheckByDefault = config.doCheckByDefault or false;
-  structuredAttrsByDefault = config.structuredAttrsByDefault or false;
-  inherit (config) enableParallelBuildingByDefault contentAddressedByDefault;
+  inherit (config) contentAddressedByDefault;
   userHook = config.stdenv.userHook or null;
   checkMeta = import ./check-meta.nix {
     inherit lib config;
@@ -351,9 +350,6 @@ let
     hostPlatformConfigureFlag
   ];
 
-  # TODO(@Ericson2314): Make always true and remove / resolve #178468
-  defaultStrictDeps = if config.strictDepsByDefault then true else hostPlatform != buildPlatform;
-
   canExecuteHostOnBuild = buildPlatform.canExecute hostPlatform;
   defaultHardeningFlags = stdenv.cc.defaultHardeningFlags or knownHardeningFlags;
   hostSuffixNecessary = hostPlatform != buildPlatform && stdenvHasCC;
@@ -420,19 +416,18 @@ let
       configureFlags ? [ ],
       configurePlatforms ? defaultConfigurePlatforms,
 
-      # TODO(@Ericson2314): Make unconditional / resolve #33599
       # Check phase
       doCheck ? doCheckByDefault,
 
-      # TODO(@Ericson2314): Make unconditional / resolve #33599
       # InstallCheck phase
       doInstallCheck ? doCheckByDefault,
 
-      # TODO(@Ericson2314): Make always true and remove / resolve #178468
-      strictDeps ? defaultStrictDeps,
-
-      enableParallelBuilding ? enableParallelBuildingByDefault,
-
+      strictDeps ? true,
+      __structuredAttrs ? true,
+      enableParallelBuilding ? true,
+      enableParallelChecking ? true,
+      enableParallelInstalling ? true,
+      
       separateDebugInfo ? false,
       outputs ? [ "out" ],
       __darwinAllowLocalNetworking ? false,
@@ -448,14 +443,8 @@ let
 
       patches ? [ ],
 
-      __contentAddressed ?
-        (!attrs ? outputHash) # Fixed-output drvs can't be content addressed too
-        && contentAddressedByDefault,
-
-      # Experimental.  For simple packages mostly just works,
-      # but for anything complex, be prepared to debug if enabling.
-      __structuredAttrs ? structuredAttrsByDefault,
-
+      __contentAddressed ? contentAddressedByDefault
+      && (!attrs ? outputHash), # Fixed-output drvs can't be content addressed too
       ...
     }@attrs:
     let
@@ -742,7 +731,7 @@ let
 
           inherit patches;
 
-          inherit doCheck doInstallCheck;
+          inherit doCheck doInstallCheck enableParallelBuilding enableParallelChecking enableParallelInstalling;
 
           inherit outputs;
 
@@ -752,12 +741,6 @@ let
           ${if __contentAddressed then "__contentAddressed" else null} = __contentAddressed;
           ${if __contentAddressed then "outputHashAlgo" else null} = attrs.outputHashAlgo or "sha256";
           ${if __contentAddressed then "outputHashMode" else null} = attrs.outputHashMode or "recursive";
-
-          ${if enableParallelBuilding then "enableParallelBuilding" else null} = enableParallelBuilding;
-          ${if enableParallelBuilding then "enableParallelChecking" else null} =
-            attrs.enableParallelChecking or true;
-          ${if enableParallelBuilding then "enableParallelInstalling" else null} =
-            attrs.enableParallelInstalling or true;
 
           ${
             if (hardeningDisable != [ ] || hardeningEnable != [ ] || isMusl) then
@@ -940,9 +923,7 @@ let
             unsafeGetAttrPos "name" attrs
         ),
 
-      # Experimental.  For simple packages mostly just works,
-      # but for anything complex, be prepared to debug if enabling.
-      __structuredAttrs ? structuredAttrsByDefault,
+      __structuredAttrs ? true,
 
       env ? { },
 
