@@ -217,12 +217,12 @@ lib.extendMkDerivation {
       nativeBuildInputs = [ go ] ++ nativeBuildInputs;
 
       env = args.env or { } // {
-        inherit (go) GOOS GOARCH;
+        inherit (go.env) GOOS GOARCH;
 
         GO111MODULE = "on";
         GOTOOLCHAIN = "local";
 
-        CGO_ENABLED = args.env.CGO_ENABLED or go.CGO_ENABLED;
+        CGO_ENABLED = args.env.CGO_ENABLED or go.env.CGO_ENABLED;
 
         GOFLAGS = toString (
           GOFLAGS

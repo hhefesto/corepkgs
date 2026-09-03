@@ -109,7 +109,7 @@ let
   # Reference: https://github.com/opencontainers/image-spec/blob/master/config.md#properties
   # For the mapping from Nixpkgs system parameters to GOARCH, we can reuse the
   # mapping from the go package.
-  defaultArchitecture = go.GOARCH;
+  defaultArchitecture = go.env.GOARCH;
 
   compressors = {
     none = {
