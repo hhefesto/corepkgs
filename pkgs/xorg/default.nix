@@ -115,7 +115,7 @@ self: {
   viewres = self.viewres or null;
   wrapWithXFileSearchPathHook = self.wrapWithXFileSearchPathHook;
   x11perf = self.x11perf or null;
-  xauth = self.xauth;
+  xauth = self.xauth or null;
   xbacklight = self.xbacklight or null;
   xbitmaps = self.xbitmaps or null;
   xcalc = self.xcalc or null;
