@@ -17,7 +17,7 @@
   # Avoid large dependencies
   libavif,
   withXorg ? false,
-  libXpm,
+  libxpm,
 }:
 
 stdenv.mkDerivation rec {
@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
   ]
   ++ lib.optionals withXorg [
     fontconfig
-    libXpm
+    libxpm
   ];
 
   outputs = [

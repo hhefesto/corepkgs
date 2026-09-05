@@ -169,7 +169,6 @@ with final;
   graphene = null; # gtk4, defaultCrateOverrides
   graphicsmagick = null;
   gst_all_1 = gstAll1; # gtk4, libde265 tests
-  # gsettings-desktop-schemas is auto-registered from pkgs/gsettings-desktop-schemas
   gsm = null; # ffmpeg
   gtkmm3 = null;
   gunicorn = null;
@@ -195,7 +194,6 @@ with final;
   libcdio = null; # ffmpeg
   libcdio-paranoia = null; # ffmpeg
   libdc1394 = null; # ffmpeg
-  # libdecor is auto-registered from pkgs/libdecor
   libdvdnav = null; # ffmpeg
   libdvdread = null; # ffmpeg
   libgeotiff = null;
@@ -731,9 +729,6 @@ with final;
 
   # TODO: Remove alias
   libjpeg = libjpeg_turbo;
-
-  # Alias for packages that reference libXpm (CamelCase)
-  libXpm = libxpm;
 
   # Less secure variant of lowdown for use inside Nix builds.
   lowdown-unsandboxed = lowdown.override {

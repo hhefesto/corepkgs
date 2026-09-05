@@ -19,7 +19,7 @@
   libXaw ? libxaw,
   icu,
   ghostscript,
-  libXpm ? null,
+  libxpm,
   libxmu,
   libXmu ? libxmu,
   libxext,
@@ -737,12 +737,12 @@ rec {
       core # kpathsea
       freetype
       ghostscript
+      libxpm
     ]
     ++ (with xorg; [
       libX11
       libXaw
       libXi
-      libXpm
       libXmu
       libXaw
       libXext
