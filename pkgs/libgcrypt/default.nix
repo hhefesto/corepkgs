@@ -12,7 +12,6 @@
   # for passthru.tests. Don't force these to be available in corepkgs
   gnupg,
   libotr,
-  rsyslog,
 }:
 
 assert enableCapabilities -> stdenv.hostPlatform.isLinux;
@@ -116,7 +115,7 @@ stdenv.mkDerivation (finalAttrs: {
   enableParallelChecking = true;
 
   passthru.tests = {
-    inherit gnupg libotr rsyslog;
+    inherit gnupg libotr;
     unittests = runUnitTests finalAttrs.finalPackage;
   };
 

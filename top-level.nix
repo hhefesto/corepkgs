@@ -123,7 +123,6 @@ with final;
   atk = at-spi2-core; # merged into at-spi2-core
   avisynthplus = null; # ffmpeg
   awsebcli = null;
-  azmq = null;
   gsasl = null; # cursed cull option
   babel = null;
   bear = null;

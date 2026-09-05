@@ -10,7 +10,6 @@
   enableDrafts ? false,
   fetchpatch,
   # for passthru.tests
-  azmq,
   cppzmq,
   czmq,
   zmqpp,
@@ -108,7 +107,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru.tests = {
     inherit
-      azmq
       cppzmq
       czmq
       zmqpp
