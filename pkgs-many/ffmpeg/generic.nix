@@ -53,8 +53,8 @@
   withCaca ? withFullDeps, # Textual display (ASCII art)
   withCdio ? withFullDeps && withGPL, # Audio CD grabbing
   withCelt ? withFullDeps, # CELT decoder
-  withChromaprint ? withFullDeps, # Audio fingerprinting
-  withCodec2 ? withFullDeps, # codec2 en/decoding
+  withChromaprint ? withFullDeps && chromaprint != null, # Audio fingerprinting
+  withCodec2 ? withFullDeps && codec2 != null, # codec2 en/decoding
   withCuda ? withFullDeps && withNvcodec,
   withCudaLLVM ? withHeadlessDeps,
   withCudaNVCC ? withFullDeps && withUnfree && config.cudaSupport,
@@ -245,8 +245,8 @@
   avisynthplus,
   bzip2,
   celt,
-  chromaprint,
-  codec2,
+  chromaprint ? null,
+  codec2 ? null,
   clang,
   dav1d,
   davs2,
@@ -1072,7 +1072,8 @@ stdenv.mkDerivation (
         ++ optional buildSwscale "libswscale";
       platforms = lib.platforms.all;
       # See https://github.com/NixOS/nixpkgs/pull/295344#issuecomment-1992263658
-      broken = stdenv.hostPlatform.isMinGW && stdenv.hostPlatform.is64bit;
+      # TODO: mark more deps optional for full variant and remove from top-level
+      broken = stdenv.hostPlatform.isMinGW && stdenv.hostPlatform.is64bit || ffmpegVariant == "full";
       mainProgram = "ffmpeg";
       identifiers.cpeParts = lib.meta.cpeFullVersionWithVendor "ffmpeg" finalAttrs.version;
     };

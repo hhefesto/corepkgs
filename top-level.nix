@@ -131,8 +131,6 @@ with final;
   libidn = null; # defaultGemConfig
   capnproto = null; # defaultCrateOverrides
   celt = null; # ffmpeg
-  chromaprint = null; # ffmpeg
-  codec2 = null; # ffmpeg
   coeurl = null;
   cppzmq = null;
   cuda_cudart = null; # ffmpeg
@@ -1295,15 +1293,17 @@ with final;
       inherit (libc) pname version;
       libcDev = lib.getDev libc;
     in
-    runCommand "${pname}-iconv-${version}" {
-      strictDeps = true;
-      passthru = {
-        inherit (prev.libiconv) variants;
-      };
-    } ''
-      mkdir -p $out/include
-      ln -sv ${libcDev}/include/iconv.h $out/include
-    '';
+    runCommand "${pname}-iconv-${version}"
+      {
+        strictDeps = true;
+        passthru = {
+          inherit (prev.libiconv) variants;
+        };
+      }
+      ''
+        mkdir -p $out/include
+        ln -sv ${libcDev}/include/iconv.h $out/include
+      '';
 
   libiconvReal = prev.libiconv;
 
