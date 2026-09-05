@@ -84,10 +84,6 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     ninja
   ]
-  ++ lib.optionals (isScanner) [
-    expat
-    libxml2
-  ]
   ++ lib.optionals (!isScanner) [
     wayland.scanner
   ]
@@ -103,6 +99,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [
     libffi
+  ]
+  ++ lib.optionals isScanner [
+    expat
+    libxml2
   ]
   ++ lib.optionals (!stdenv.hostPlatform.isLinux) [
     epoll-shim
