@@ -32,7 +32,8 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
   makeFlags = [
     "PREFIX=$(out)"
-    "-C src"
+    "-C"
+    "src"
   ];
 
   passthru.tests = {
