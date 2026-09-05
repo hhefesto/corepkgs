@@ -118,7 +118,6 @@ rec {
               if (types.str.check content) then
                 {
                   inherit content interpreter;
-                  passAsFile = [ "content" ];
                 }
               else
                 {
@@ -152,7 +151,11 @@ rec {
             fi
 
             echo "#! $interpreterLine" > $out
-            cat "$contentPath" >> $out
+            if [[ -v content ]]; then
+              printf '%s' "$content" >> $out
+            else
+              cat "$contentPath" >> $out
+            fi
             ${optionalString (check != "") ''
               ${check} $out
             ''}
@@ -265,13 +268,16 @@ rec {
               if (types.str.check content) then
                 {
                   inherit content;
-                  passAsFile = [ "content" ];
                 }
               else
                 { contentPath = content; }
             )
           )
           ''
+            if [[ -v content ]]; then
+              contentPath="$TMPDIR/content"
+              printf '%s' "$content" > "$contentPath"
+            fi
             ${compileScript}
             ${lib.optionalString strip "${lib.getBin buildPackages.bintools-unwrapped}/bin/${buildPackages.bintools-unwrapped.targetPrefix}strip -S $out"}
             # Sometimes binaries produced for darwin (e. g. by GHC) won't be valid
@@ -1107,12 +1113,11 @@ rec {
     pkgs.runCommandLocal name
       {
         inherit text;
-        passAsFile = [ "text" ];
         nativeBuildInputs = [ gixy ];
       } # sh
       ''
         # nginx-config-formatter has an error - https://github.com/1connect/nginx-config-formatter/issues/16
-        awk -f ${awkFormatNginx} "$textPath" | sed '/^\s*$/d' > $out
+        printf '%s' "$text" | awk -f ${awkFormatNginx} | sed '/^\s*$/d' > $out
         gixy $out || (echo "\n\nThis can be caused by combining multiple incompatible services on the same hostname.\n\nFull merged config:\n\n"; cat $out; exit 1)
       '';
 

@@ -78,7 +78,6 @@ rec {
       {
         enableParallelBuilding = true;
         inherit buildCommand name;
-        passAsFile = [ "buildCommand" ] ++ (derivationArgs.passAsFile or [ ]);
       }
       // lib.optionalAttrs (!derivationArgs ? meta) {
         pos =
@@ -94,7 +93,7 @@ rec {
         preferLocalBuild = true;
         allowSubstitutes = false;
       })
-      // removeAttrs derivationArgs [ "passAsFile" ]
+      // derivationArgs
     );
 
   # Docs in doc/build-helpers/trivial-build-helpers.chapter.md
@@ -132,7 +131,6 @@ rec {
             allowSubstitutes
             preferLocalBuild
             ;
-          passAsFile = [ "text" ] ++ derivationArgs.passAsFile or [ ];
           meta =
             lib.optionalAttrs (executable && matches != null) {
               mainProgram = lib.head matches;
@@ -142,7 +140,6 @@ rec {
           passthru = passthru // derivationArgs.passthru or { };
         }
         // removeAttrs derivationArgs [
-          "passAsFile"
           "meta"
           "passthru"
         ]
@@ -151,11 +148,7 @@ rec {
         target=$out${lib.escapeShellArg destination}
         mkdir -p "$(dirname "$target")"
 
-        if [ -e "$textPath" ]; then
-          mv "$textPath" "$target"
-        else
-          echo -n "$text" > "$target"
-        fi
+        printf '%s' "$text" > "$target"
 
         if [ -n "$executable" ]; then
           chmod +x "$target"
@@ -399,7 +392,6 @@ rec {
       {
         inherit pname code;
         executable = true;
-        passAsFile = [ "code" ];
         # Pointless to do this on a remote machine.
         preferLocalBuild = true;
         allowSubstitutes = false;
@@ -410,7 +402,7 @@ rec {
       ''
         n=$out/bin/${pname}
         mkdir -p "$(dirname "$n")"
-        mv "$codePath" code.c
+        printf '%s' "$code" > code.c
         $CC -x c code.c -o "$n"
       '';
 
@@ -614,13 +606,14 @@ rec {
         ]
         // {
           inherit preferLocalBuild allowSubstitutes;
-          paths = mapPaths (path: "${path}${stripPrefix}") paths;
-          passAsFile = [ "paths" ];
+          paths = lib.filter (path: path != null) (
+            lib.flatten (mapPaths (path: "${path}${stripPrefix}") paths)
+          );
         }; # pass the defaults
     in
     runCommand name args ''
       mkdir -p $out
-      for i in $(cat $pathsPath); do
+      for i in "''${paths[@]}"; do
         ${optionalString (!failOnMissing) "if test -d $i; then "}${lndir}/bin/lndir -silent $i $out${
           optionalString (!failOnMissing) "; fi"
         }
