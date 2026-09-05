@@ -1,4 +1,4 @@
-# Evaluates every package in the repository: each top-level attribute, plus
+# Enumerates every package in the repository: each top-level attribute, plus
 # every variant of each `pkgs-many` package.
 #
 # Variants live one level down (`cmake.v4`), so enumerating attribute names
@@ -10,7 +10,7 @@
 # Aliases are disabled. They are shims for a package already covered under its
 # canonical name, so evaluating them only repeats work.
 #
-# `handleEvalIssue` decides which `check-meta` rejections are bugs.
+# When `checkMeta` is enabled, `handleEvalIssue` decides which rejections are bugs.
 # `unknown-meta` and `broken-outputs` mean the `meta` itself is malformed, so
 # they `abort` and name the package. Everything else -- broken, unfree,
 # unsupported, insecure -- is a package correctly refusing to evaluate here,
@@ -22,13 +22,17 @@
 #
 # Usage:
 #   nix-instantiate --eval --strict ci/eval.nix
-#   nix-build ci/packages.nix -A buildable
+#   nix build --file ci/packages.nix buildable
+
+{
+  checkMeta ? false,
+}:
 
 let
   pkgs = import ../. {
     config = {
       allowAliases = false;
-      checkMeta = true;
+      inherit checkMeta;
 
       handleEvalIssue =
         reason: msg:
@@ -46,9 +50,9 @@ let
 
   inherit (pkgs) lib;
 
-  # Forcing `drvPath` runs `check-meta` and resolves every dependency, which is
-  # the point of this job. `package` arrives unforced, so a lookup that throws
-  # is caught here too.
+  # Forcing `drvPath` resolves every dependency and, for ci/eval.nix, runs
+  # `check-meta`. `package` arrives unforced, so a lookup that throws is caught
+  # here too.
   probe =
     package:
     let
@@ -69,16 +73,6 @@ let
       variants = builtins.tryEval (pkgs.${name}.variants or { });
     in
     if variants.success then variants.value else { };
-
-  # Forced through `tryEval` because an attribute that throws is not a
-  # placeholder: it still has to reach `probe`, which is what decides whether
-  # the throw is a package correctly refusing to evaluate or a real bug.
-  isPlaceholder =
-    value:
-    let
-      forced = builtins.tryEval value;
-    in
-    value ? drvPath && forced.success && forced.value == null;
 
   # Check whether a value is a derivation whose drvPath can be forced.
   isBuildable =
@@ -129,21 +123,11 @@ let
 
   allPairs = topLevel ++ variantPairs;
 
-  candidatePairs = builtins.filter (
-    pair:
-    let
-      check = builtins.tryEval (isPlaceholder pair.value);
-    in
-    !(check.success && check.value)
-  ) allPairs;
-
-  # For eval.nix compatibility
-  candidates = map (pair: pair.value) allPairs;
-  targets = map (pair: pair.value) candidatePairs;
+  targets = map (pair: pair.value) allPairs;
 in
 {
-  inherit probe targets candidates;
+  inherit probe targets;
 
   # Attribute set of all buildable derivations, keyed by name.
-  buildable = builtins.listToAttrs (builtins.filter (pair: isBuildable pair.value) candidatePairs);
+  buildable = builtins.listToAttrs (builtins.filter (pair: isBuildable pair.value) allPairs);
 }

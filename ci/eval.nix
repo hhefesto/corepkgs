@@ -24,10 +24,9 @@
 #   nix-instantiate --eval --strict ci/eval.nix
 
 let
-  packages = import ./packages.nix;
-  inherit (packages) probe targets candidates;
+  packages = import ./packages.nix { checkMeta = true; };
+  inherit (packages) probe targets;
 in
 builtins.deepSeq (map probe targets) {
   evaluated = builtins.length targets;
-  placeholders = builtins.length candidates - builtins.length targets;
 }
