@@ -364,6 +364,12 @@ stdenv.mkDerivation {
   # calls install-strip ...
   dontBuild = true;
 
+  # The ld-cache hook runs patchelf --build-resolution-cache on all ELF files
+  # after the fixup phase. Combined with the --set-interpreter from postUnpack,
+  # this double patchelf pass corrupts small dynamically-linked GHC binaries:
+  # the PHDR segment ends up outside any LOAD segment, causing segfaults.
+  dontGenerateLDCache = true;
+
   # GHC tries to remove xattrs when installing to work around Gatekeeper
   # (see https://gitlab.haskell.org/ghc/ghc/-/issues/17418). This step normally
   # succeeds in nixpkgs because xattrs are not allowed in the store, but it

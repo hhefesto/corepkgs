@@ -10,6 +10,7 @@
   libffi,
   coreutils,
   targetPackages,
+  runCommand,
 
   # minimal = true; will remove files that aren't strictly necessary for
   # regular builds and GHC bootstrapping.
@@ -219,7 +220,7 @@ let
 
 in
 
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   inherit version;
   pname = "ghc-binary${binDistUsed.variantSuffix}";
 
@@ -311,11 +312,7 @@ stdenv.mkDerivation {
               -exec sed -i "s@FFI_LIB_DIR@FFI_LIB_DIR ${numactl.out}/lib@g" {} \;
         ''
     +
-      # Fix interpreter on ELF binaries via the dynamic linker directly.
-      # Don't use patchelf at all — it corrupts small GHC binaries (like unlit)
-      # by adding LOAD segments that overlap with program headers.
-      # Instead, rely on LD_LIBRARY_PATH (already set via libEnvVar above)
-      # and invoke via the dynamic linker for the interpreter.
+      # Set the interpreter on ELF binaries so they work on NixOS.
       lib.optionalString stdenv.hostPlatform.isLinux ''
         for f in $(find . -type f -executable); do
           if isELF "$f"; then
@@ -339,6 +336,12 @@ stdenv.mkDerivation {
   # No building is necessary, but calling make without flags ironically
   # calls install-strip ...
   dontBuild = true;
+
+  # The ld-cache hook runs patchelf --build-resolution-cache on all ELF files
+  # after the fixup phase. Combined with the --set-interpreter from postUnpack,
+  # this double patchelf pass corrupts small dynamically-linked GHC binaries:
+  # the PHDR segment ends up outside any LOAD segment, causing segfaults.
+  dontGenerateLDCache = true;
 
   # Patch scripts to include runtime dependencies in $PATH.
   postInstall = ''
@@ -450,23 +453,6 @@ stdenv.mkDerivation {
         "$out/bin/ghc-pkg" --package-db="$package_db" recache
     '';
 
-  # TODO: ghc segfaults during install check, likely binary compatibility issue
-  doInstallCheck = false;
-  installCheckPhase = ''
-    # Sanity check, can ghc create executables?
-    cd $TMP
-    mkdir test-ghc; cd test-ghc
-    cat > main.hs << EOF
-      {-# LANGUAGE TemplateHaskell #-}
-      module Main where
-      main = putStrLn \$([|"yes"|])
-    EOF
-    ghcLibDir="$out/lib/ghc-${version}/lib/x86_64-linux-ghc-${version}"
-    LD_LIBRARY_PATH="${libPath}:$ghcLibDir" $out/bin/ghc --make main.hs || exit 1
-    echo compilation ok
-    [ $(./main) == "yes" ]
-  '';
-
   passthru = {
     targetPrefix = "";
     enableShared = true;
@@ -480,6 +466,37 @@ stdenv.mkDerivation {
     # here. In the case of bindists we just make sure that the attribute exists,
     # as it is used for checking if a GHC derivation has been built with hadrian.
     hadrian = null;
+
+    tests = {
+      # Verify GHC can compile and run a simple Haskell program
+      hello = runCommand "ghc-${version}-test-hello" { ghc = finalAttrs.finalPackage; } ''
+        cd "$(mktemp -d)"
+        cat > Hello.hs <<'HASKELL'
+        module Main where
+        main :: IO ()
+        main = putStrLn "Hello from GHC ${version}"
+        HASKELL
+        $ghc/bin/ghc -o hello Hello.hs
+        output=$(./hello)
+        test "$output" = "Hello from GHC ${version}"
+        touch $out
+      '';
+
+      # Verify Template Haskell works (requires dynamic linking / GHCi)
+      templateHaskell = runCommand "ghc-${version}-test-th" { ghc = finalAttrs.finalPackage; } ''
+        cd "$(mktemp -d)"
+        cat > Main.hs <<'HASKELL'
+        {-# LANGUAGE TemplateHaskell #-}
+        module Main where
+        main :: IO ()
+        main = putStrLn $([| "TH ok" |])
+        HASKELL
+        $ghc/bin/ghc -o main Main.hs
+        output=$(./main)
+        test "$output" = "TH ok"
+        touch $out
+      '';
+    };
   };
 
   meta = {
@@ -503,4 +520,4 @@ stdenv.mkDerivation {
       product = "ghc";
     };
   };
-}
+})
