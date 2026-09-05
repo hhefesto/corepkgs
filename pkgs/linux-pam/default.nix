@@ -18,7 +18,6 @@
   docbook5,
   libxslt,
   libxml2,
-  w3m-batch,
   findXMLCatalogs,
   docbook-xsl-ns,
   nix-update-script,
@@ -71,7 +70,6 @@ stdenv.mkDerivation (finalAttrs: {
 
     libxslt
     libxml2
-    w3m-batch
     findXMLCatalogs
     docbook-xsl-ns
     docbook5

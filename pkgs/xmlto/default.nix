@@ -14,7 +14,8 @@
   makeWrapper,
   stdenv,
   testers,
-  w3m-batch,
+  withXmlToTextConversion ? false,
+  w3m-batch ? null,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -58,15 +59,16 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   postInstall = ''
-    # `w3m' is needed for HTML to text conversions.
     wrapProgram "$out/bin/xmlto" \
        --prefix PATH : "${
-         lib.makeBinPath [
-           libxslt
-           libxml2
-           getopt
-           w3m-batch
-         ]
+         lib.makeBinPath (
+           [
+             libxslt
+             libxml2
+             getopt
+           ]
+           ++ lib.optional withXmlToTextConversion w3m-batch
+         )
        }"
   '';
 

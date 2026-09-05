@@ -15,7 +15,6 @@
 
   # for passthru.tests
   imagemagick,
-  imlib2Full,
   imv,
   python3Packages,
   vips,
@@ -75,7 +74,6 @@ stdenv.mkDerivation rec {
   passthru.tests = {
     inherit
       imagemagick
-      imlib2Full
       imv
       vips
       ;

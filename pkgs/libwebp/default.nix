@@ -25,7 +25,6 @@
   graphicsmagick,
   haskellPackages,
   imagemagick,
-  imlib2,
   libjxl,
   opencv,
   python3,
@@ -94,7 +93,6 @@ stdenv.mkDerivation rec {
       gd
       graphicsmagick
       imagemagick
-      imlib2
       libjxl
       opencv
       vips

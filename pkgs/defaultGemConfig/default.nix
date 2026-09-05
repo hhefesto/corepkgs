@@ -109,8 +109,7 @@
   shared-mime-info,
   libthai ? null,
   libdatrie ? null,
-  # TODO(corepkgs): support darwin
-  DarwinTools ? null,
+  DarwinTools,
   cctools,
   libtool,
   discount ? null,
@@ -123,9 +122,8 @@
   rustc,
   rustPlatform,
   libsysprof-capture,
-  imlib2,
-  # TODO(corepkgs): support darwin
-  autoSignDarwinBinariesHook ? null,
+  imlib2 ? null,
+  autoSignDarwinBinariesHook,
 }@args:
 
 let

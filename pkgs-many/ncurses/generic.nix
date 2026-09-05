@@ -14,7 +14,7 @@
   enableStatic ? stdenv.hostPlatform.isStatic,
   withCxx ? !stdenv.hostPlatform.useAndroidPrebuilt,
   mouseSupport ? false,
-  gpm,
+  gpm ? null,
   withTermlib ? false,
   unicodeSupport ? true,
   testers,

@@ -232,7 +232,6 @@ with final;
   lilypond = null;
   lmdb = null; # gawkextlib lmdb extension
   lingua = null;
-  lynx = null;
   mashumaro = null;
   mathplotlib = null;
   mc = null;
@@ -328,6 +327,8 @@ with final;
     configd = null;
     binutilsDualAs-unwrapped = null;
   };
+  autoSignDarwinBinariesHook = null;
+  DarwinTools = null;
   bootstrap_cmds = null;
   apple-sdk = null;
   ocl-icd = null; # ffmpeg OpenCL ICD
@@ -1488,11 +1489,6 @@ with final;
 
   tclPackages = tcl.pkgs;
 
-  # tk is auto-imported from pkgs-many/tk/ via mkManyVariants
-  # tk defaults to v8_6. Variants: tk.v8_5, tk.v8_6, tk.v9_0
-
-  gpm-ncurses = gpm.override { withNcurses = true; };
-
   pam =
     if stdenv.hostPlatform.isLinux then
       linux-pam
@@ -1587,26 +1583,6 @@ with final;
     libxml2_13
     libxml2
     ;
-
-  # Should always be the version with the most features
-  w3m-full = w3m;
-  # Version without X11
-  w3m-nox = w3m.override {
-    x11Support = false;
-    imlib2 = imlib2-nox;
-  };
-  # Version without X11 or graphics
-  w3m-nographics = w3m.override {
-    x11Support = false;
-    graphicsSupport = false;
-  };
-  # Version for batch text processing, not a good browser
-  w3m-batch = w3m.override {
-    graphicsSupport = false;
-    mouseSupport = false;
-    x11Support = false;
-    imlib2 = imlib2-nox;
-  };
 
   c-aresMinimal = callPackage ./pkgs/c-ares { withCMake = false; };
 
@@ -1980,8 +1956,6 @@ with final;
       aafigure
       recursive-pth-loader
       ;
-    w3m = w3m-batch;
-    enableStandardFeatures = false;
   };
   # TODO(corepkgs): requires graphviz, lilypond, imagemagick, etc.
   asciidoc-full = throw "asciidoc-full: standard features require graphviz, lilypond, and other packages not yet in core-pkgs";
@@ -2054,16 +2028,6 @@ with final;
     ;
   texlivePackages = lib.recurseIntoAttrs (lib.mapAttrs (_: v: v.build) texlive.pkgs);
 
-  imlib2Full = imlib2.override {
-    webpSupport = true;
-    jxlSupport = true;
-    # TODO(corepkgs): Enable svgSupport once librsvg is ported
-    # TODO(corepkgs): Enable heifSupport once libheif is ported
-    # TODO(corepkgs): Enable psSupport once libspectre is ported
-  };
-  imlib2-nox = imlib2.override {
-    x11Support = false;
-  };
   validatePkgConfig = makeSetupHook {
     name = "validate-pkg-config";
     propagatedBuildInputs = [
