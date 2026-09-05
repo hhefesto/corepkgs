@@ -39,13 +39,13 @@ with final;
   inherit (stdenv.stage0) minimal-bootstrap;
 
   minimal-bootstrap-sources =
-    callPackage ./build-support/minimal-bootstrap/stage0-posix/bootstrap-sources.nix
+    callPackage ./stdenv/minimal-bootstrap/stage0-posix/bootstrap-sources.nix
       {
         inherit (stdenv) hostPlatform;
       };
 
   make-minimal-bootstrap-sources =
-    callPackage ./build-support/minimal-bootstrap/stage0-posix/make-bootstrap-sources.nix
+    callPackage ./stdenv/minimal-bootstrap/stage0-posix/make-bootstrap-sources.nix
       {
         inherit (stdenv) hostPlatform;
       };

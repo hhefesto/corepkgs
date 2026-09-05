@@ -17,7 +17,7 @@ let
   # what `pkgs.minimal-bootstrap` exposes is exactly what the stdenv on this
   # system was grown from, and the two cannot drift apart.
   minimal-bootstrap = lib.recurseIntoAttrs (
-    import ../../build-support/minimal-bootstrap {
+    import ../minimal-bootstrap {
       buildPlatform = localSystem;
       hostPlatform = localSystem;
       inherit lib config;
