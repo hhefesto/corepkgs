@@ -81,7 +81,7 @@ bootBash.runCommand "${pname}-${version}"
               fi
               export NIX_BUILD_CORES
 
-              bash -eux $buildCommandPath
+              bash -eux "$buildCommandPath"
             '')
           ];
           passAsFile = [ "buildCommand" ];

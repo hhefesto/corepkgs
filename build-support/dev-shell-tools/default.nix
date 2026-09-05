@@ -56,7 +56,6 @@
         "system"
         "__structuredAttrs"
         "__ignoreNulls"
-        "passAsFile"
       ];
     in
     removeAttrs drvAttrs structuredAttrs;

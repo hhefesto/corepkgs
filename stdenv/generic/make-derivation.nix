@@ -446,6 +446,13 @@ let
       && (!attrs ? outputHash), # Fixed-output drvs can't be content addressed too
       ...
     }@attrs:
+    assert
+      !(attrs ? passAsFile)
+      || throw ''
+        `passAsFile` is not supported by stdenv.mkDerivation.
+        Structured attributes already make values available through NIX_ATTRS_SH_FILE and NIX_ATTRS_JSON_FILE.
+        Read the shell variable directly, or materialize it as a file during the build.
+      '';
     let
       separateDebugInfo' =
         let
@@ -1024,10 +1031,6 @@ let
                 out="${placeholder "out"}"
                 if [ -e "$NIX_ATTRS_SH_FILE" ]; then . "$NIX_ATTRS_SH_FILE"; fi
                 declare -p > $out
-                for var in $passAsFile; do
-                    pathVar="''${var}Path"
-                    printf "%s" "$(< "''${!pathVar}")" >> $out
-                done
               ''
             ];
           }
