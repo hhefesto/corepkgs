@@ -3,9 +3,8 @@
 #
 # Variants live one level down (`cmake.v4`), so enumerating attribute names
 # alone reaches only the default one. Their names come from the `variants`
-# passthru rather than `pkgs-many/*/variants.nix`: `top-level.nix` may replace
-# an auto-called package with one that has no variants at all -- on glibc
-# `libiconv` becomes a plain `runCommand` -- and only the passthru knows that.
+# passthru rather than `pkgs-many/*/variants.nix`, so CI checks the same public
+# package interface that users consume.
 #
 # Aliases are disabled. They are shims for a package already covered under its
 # canonical name, so evaluating them only repeats work.
@@ -65,14 +64,17 @@ let
         null
     );
 
-  # A package `top-level.nix` has replaced carries no `variants` passthru, and
-  # so contributes nothing.
+  # Every package under `pkgs-many` must preserve the public `variants`
+  # passthru, including packages replaced in `top-level.nix`.
   variantsOf =
     name:
     let
-      variants = builtins.tryEval (pkgs.${name}.variants or { });
+      variants = builtins.tryEval pkgs.${name}.variants;
     in
-    if variants.success then variants.value else { };
+    if variants.success then
+      variants.value
+    else
+      abort "${name}: pkgs-many package does not expose .variants";
 
   # Check whether a value is a derivation whose drvPath can be forced.
   isBuildable =
