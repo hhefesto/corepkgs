@@ -42,7 +42,7 @@
   # Feature flags
   withAlsa ? withHeadlessDeps && stdenv.hostPlatform.isLinux, # Alsa in/output supporT
   withAmf ? withHeadlessDeps && amf != null && lib.meta.availableOn stdenv.hostPlatform amf, # AMD Media Framework video encoding
-  withAom ? withHeadlessDeps && libaom != null, # AV1 reference encoder
+  withAom ? withHeadlessDeps, # AV1 reference encoder
   withAribb24 ? withFullDeps, # ARIB text and caption decoding
   withAribcaption ? withFullDeps && packageAtLeast "6.1", # ARIB STD-B24 Caption Decoder/Renderer
   withAss ? withHeadlessDeps && stdenv.hostPlatform == stdenv.buildPlatform && libass != null, # (Advanced) SubStation Alpha subtitle rendering
