@@ -25,9 +25,8 @@
 let
   majorVersion = lib.versions.major version;
   minorVersion = lib.versions.majorMinor version;
-  # Node.js 18 and 20 require Python 3.12 or older
-  # Node.js 22+ works with Python 3.13
-  python = if (lib.versionAtLeast version "22.0") then python3 else python312;
+  # Node.js versions before 22.3 require Python 3.12 or older.
+  python = if (lib.versionAtLeast version "22.3") then python3 else python312;
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "nodejs";
