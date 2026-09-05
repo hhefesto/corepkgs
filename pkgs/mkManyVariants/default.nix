@@ -12,9 +12,7 @@
   # Type: AttrSet AttrSet
   variants,
 
-  # Similar to variants, but instead contain deprecation and removal messages
-  # Only added when `config.allowAliases` is true
-  # This is passed the variants attr set to allow for directly referencing the variant entries
+  # Additional aliases, as variant attrsets or strings naming raw variants.
   # Type: AttrSet AttrSet -> AttrSet AttrSet.
   aliases ? { ... }: { },
 
@@ -35,8 +33,8 @@
   # Type: AttrSet String
   removed ? { },
 
-  # A "projection" from the variant set to a variant to be used as the default
-  # Type: AttrSet package -> package
+  # Selects one attribute from the variant set as the default.
+  # Type: AttrSet a -> a
   defaultSelector,
 
   # Nix expression which takes variant and package args, and returns an attrset to pass to mkDerivation
@@ -70,87 +68,89 @@ let
     else
       aliasesExpr;
 
-  # Core variant-building logic, parameterized on the raw variant set.
-  # This allows extendVariants to re-derive everything with additional variants.
+  removedOverlay = lib.optionalAttrs config.allowAliases (
+    builtins.mapAttrs (
+      n: date: throw "${name}.${n} is no longer available and was removed on ${date}."
+    ) removed
+  );
+
+  addVariantPassthru =
+    variants':
+    variants'
+    // builtins.mapAttrs (
+      n: date:
+      lib.warn "${name}.${n} is EOL as of ${date}. It is recommended to use a newer version."
+        variants'.${n}
+    ) eol
+    // removedOverlay
+    // {
+      variants = variants';
+    };
+
   mkSet =
     rawVariants:
     let
-      # Resolve string aliases against the current raw variants
       aliases' = builtins.mapAttrs (_: v: if builtins.isString v then rawVariants.${v} else v) aliasesRaw;
-
       currentVariants = rawVariants // aliases';
-
-      defaultVariant = defaultSelector currentVariants;
-
-      # Removed variants: throw on access (only when config.allowAliases)
-      removedOverlay = lib.optionalAttrs config.allowAliases (
-        builtins.mapAttrs (
-          n: date: throw "${name}.${n} is no longer available and was removed on ${date}."
-        ) removed
+      defaultVariantName = defaultSelector (
+        builtins.mapAttrs (variantName: _: variantName) currentVariants
       );
+      defaultVariant = currentVariants.${defaultVariantName};
 
-      mkVariantPassthru =
-        variantArgs:
-        let
-          vs = builtins.mapAttrs (_: v: mkPackage (variantArgs // v)) currentVariants;
-          # EOL variants: wrap built packages with lib.warn
-          eolWrapped = builtins.mapAttrs (
-            n: date:
-            lib.warn "${name}.${n} is EOL as of ${date}. It is recommended to use a newer version." vs.${n}
-          ) eol;
-        in
-        vs // eolWrapped // removedOverlay // { variants = vs; };
-
-      # This also allows for additional attrs to be passed through besides variant and src
-      mkVariantArgs =
-        { version, ... }@args:
-        args
-        // rec {
-          # Some helpers commonly used to determine packaging behavior
-          packageOlder = lib.versionOlder version;
-          packageAtLeast = lib.versionAtLeast version;
-          packageBetween = lower: higher: packageAtLeast lower && packageOlder higher;
-          # For variants to compose, the package expressions must do `passthru = mkVariantPassthru variantArgs`
-          # This allows for built variant args to be remembered, trying to do this construction
-          # before getting callPackage'd leads to infinite recursion as it's not lazy
-          inherit mkVariantPassthru;
-        };
-
-      # Re-call the generic builder with new variant args, re-wrap with makeOverridable
-      # to give it the same appearance as being called by callPackage
       mkPackage =
         variant:
         let
-          variantArgs = mkVariantArgs (defaultVariant // variant);
-          pkg = callPackage (genericExpr variantArgs) { };
+          variantArgs =
+            defaultVariant
+            // variant
+            // rec {
+              packageOlder = lib.versionOlder variantArgs.version;
+              packageAtLeast = lib.versionAtLeast variantArgs.version;
+              packageBetween = lower: higher: packageAtLeast lower && packageOlder higher;
+              mkVariantPassthru = _: variantPassthru;
+            };
         in
-        pkg.overrideAttrs (o: {
+        (callPackage (genericExpr variantArgs) { }).overrideAttrs (oldAttrs: {
           passthru =
-            o.passthru or { }
-            // mkVariantPassthru variantArgs
+            oldAttrs.passthru or { }
+            // variantPassthru
             // {
               inherit variantArgs;
               extendVariants = extendVariantsFn rawVariants;
             };
         });
 
+      rawPackages = builtins.mapAttrs (_: variant: mkPackage variant) rawVariants;
+      aliasPackages = builtins.mapAttrs (
+        _: alias: if builtins.isString alias then rawPackages.${alias} else mkPackage alias
+      ) aliasesRaw;
+      variantPassthru = addVariantPassthru (rawPackages // aliasPackages);
     in
     {
-      inherit mkVariantPassthru currentVariants;
+      inherit defaultVariantName variantPassthru;
     };
 
-  # Extend the variant set with additional variant definitions.
-  # Returns the default package of the extended set (with all variants in passthru).
+  # Add variants and return the extended default package.
   extendVariantsFn =
     baseRawVariants: extraVariants:
-    let
-      extended = mkSet (baseRawVariants // extraVariants);
-    in
-    defaultSelector (extended.mkVariantPassthru extended.currentVariants);
+    defaultSelector (mkSet (baseRawVariants // extraVariants)).variantPassthru;
 
   topSet = mkSet variantsRaw;
-  defaultPackage = defaultSelector (topSet.mkVariantPassthru topSet.currentVariants);
+  defaultPackage = defaultSelector topSet.variantPassthru;
+
+  applyPackageArgs =
+    packageArgs:
+    let
+      finalPackage = (defaultPackage.override packageArgs).overrideAttrs (oldAttrs: {
+        passthru =
+          oldAttrs.passthru
+          // addVariantPassthru (
+            oldAttrs.passthru.variants // { ${topSet.defaultVariantName} = finalPackage; }
+          );
+      });
+    in
+    finalPackage;
 in
 # The calling scope will apply `callPackage`, so we need to return the partially
 # applied function
-defaultPackage.override
+lib.setFunctionArgs applyPackageArgs (lib.functionArgs defaultPackage.override)
