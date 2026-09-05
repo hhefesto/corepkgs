@@ -173,7 +173,6 @@ let
 
         # TODO(corepkgs): Kernel NixOS modules
         kernelConfig = kernelConfigFun intermediateNixConfig;
-        passAsFile = [ "kernelConfig" ];
 
         depsBuildBuild = [ buildPackages.stdenv.cc ];
         nativeBuildInputs = [
@@ -225,6 +224,8 @@ let
 
           # Create the config file.
           echo "generating kernel configuration..."
+          kernelConfigPath="$TMPDIR/kernel-config"
+          printf '%s' "$kernelConfig" > "$kernelConfigPath"
           ln -s "$kernelConfigPath" "$buildRoot/kernel-config"
           DEBUG=1 ARCH=$kernelArch CROSS_COMPILE=${stdenv.cc.targetPrefix} \
             KERNEL_CONFIG="$buildRoot/kernel-config" AUTO_MODULES=$autoModules \

@@ -147,13 +147,12 @@ in
               preferLocalBuild = true;
 
               json = builtins.toJSON value;
-              passAsFile = [ "json" ];
 
               strictDeps = true;
               nativeBuildInputs = [ hocon-generator ];
               buildPhase = ''
                 runHook preBuild
-                hocon-generator < $jsonPath > output.conf
+                printf '%s' "$json" | hocon-generator > output.conf
                 runHook postBuild
               '';
 

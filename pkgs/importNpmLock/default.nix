@@ -186,11 +186,6 @@ lib.fix (self: {
       nodejs,
       derivationArgs ? { },
     }:
-    let
-      # Backwards compatibility: if derivationArgs contains passAsFile,
-      # we can't force structuredAttrs here yet.
-      __structuredAttrs = !(derivationArgs ? passAsFile);
-    in
     stdenv.mkDerivation (
       {
         pname = derivationArgs.pname or "${getName package}-node-modules";
@@ -224,29 +219,13 @@ lib.fix (self: {
         ++ lib.optionals stdenv.hostPlatform.isDarwin (lib.optional (cctools != null) cctools)
         ++ derivationArgs.nativeBuildInputs or [ ];
 
-        postPatch =
-          (
-            if __structuredAttrs then
-              ''
-                printf "%s" "$package" > package.json
-                printf "%s" "$packageLock" > package-lock.json
-              ''
-            else
-              ''
-                cp --no-preserve=mode "$packagePath" package.json
-                cp --no-preserve=mode "$packageLockPath" package-lock.json
-              ''
-          )
-          + derivationArgs.postPatch or "";
+        postPatch = ''
+          printf "%s" "$package" > package.json
+          printf "%s" "$packageLock" > package-lock.json
+        ''
+        + (derivationArgs.postPatch or "");
 
-        inherit __structuredAttrs;
-      }
-      // lib.optionalAttrs (!__structuredAttrs) {
-        passAsFile = [
-          "package"
-          "packageLock"
-        ]
-        ++ derivationArgs.passAsFile;
+        __structuredAttrs = true;
       }
     );
 
