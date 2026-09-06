@@ -12,9 +12,9 @@ export interpWish="$(PATH="$HOST_PATH" command -v wish || :)"
 # prepare sed script
 substituteAll "$patchScripts" patch-scripts.sed
 
-for binname in $binfiles ; do
+for binname in "${binfiles[@]}" ; do
   # binlinks to be created last, after the other binaries are in place
-  if [[ " $binlinks " == *" $binname "* ]] ; then
+  if [[ " ${binlinks[*]} " == *" $binname "* ]] ; then
     continue
   fi
 
@@ -30,7 +30,7 @@ for binname in $binfiles ; do
   # look for scripts
   # the explicit list of extensions avoid non-scripts such as $binname.cmd, $binname.jar, $binname.pm
   # the order is relevant: $binname.sh is preferred to other $binname.*
-  for folder in $scriptsFolder ; do
+  for folder in "${scriptsFolder[@]}" ; do
     for script in "$folder/$binname"{,.sh,.lua,.pl,.py,.rb,.sno,.tcl,.texlua,.tlu}; do
       if [[ -f "$script" ]] ; then
         sed -f patch-scripts.sed \
@@ -53,8 +53,8 @@ patchShebangs "$out/bin"
 # generate links
 # we canonicalise the source to avoid symlink chains, and to check that it exists
 cd "$out"/bin
-for alias in $binlinks ; do
-  target="${bintargets%% *}"
-  bintargets="${bintargets#* }"
+for index in "${!binlinks[@]}" ; do
+  alias="${binlinks[$index]}"
+  target="${bintargets[$index]}"
   ln -s "$(realpath "$target")" "$out/bin/$alias"
 done
