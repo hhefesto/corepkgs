@@ -282,8 +282,9 @@ lib.extendMkDerivation {
               runHook preBuild
 
               exclude='\(/_\|examples\|Godeps\|testdata'
-              if [[ -n "$excludedPackages" ]]; then
-                IFS=' ' read -r -a excludedArr <<<$excludedPackages
+              local -a excludedArr
+              concatTo excludedArr excludedPackages
+              if ((''${#excludedArr[@]})); then
                 printf -v excludedAlternates '%s\\|' "''${excludedArr[@]}"
                 excludedAlternates=''${excludedAlternates%\\|} # drop final \| added by printf
                 exclude+='\|'"$excludedAlternates"
@@ -303,7 +304,7 @@ lib.extendMkDerivation {
 
                 if [ "$cmd" = "test" ]; then
                   flags+=(-vet=off)
-                  flags+=($checkFlags)
+                  concatTo flags checkFlags
                 fi
 
                 local OUT
@@ -322,8 +323,10 @@ lib.extendMkDerivation {
               getGoDirs() {
                 local type;
                 type="$1"
-                if [ -n "$subPackages" ]; then
-                  echo "$subPackages" | sed "s,\(^\| \),\1./,g"
+                local -a subPackagesArray
+                concatTo subPackagesArray subPackages
+                if ((''${#subPackagesArray[@]})); then
+                  printf './%s\n' "''${subPackagesArray[@]}"
                 else
                   find . -type f -name \*$type.go -exec dirname {} \; | grep -v "/vendor/" | sort --unique | grep -v "$exclude"
                 fi
