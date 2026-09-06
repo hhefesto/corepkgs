@@ -28,7 +28,7 @@ stdenv.mkDerivation rec {
   ];
 
   installPhase = ''
-    make -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build M=$(pwd) modules_install $makeFlags
+    make -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build M=$(pwd) modules_install "''${makeFlags[@]}"
   '';
 
   meta = {
