@@ -127,7 +127,7 @@ stdenv.mkDerivation {
   preBuild = ''
     if [ -e src/libXNVCtrl/libXNVCtrl.a ]; then
       ( cd src/libXNVCtrl
-        make $makeFlags
+        make "''${makeFlags[@]}"
       )
     fi
   '';
