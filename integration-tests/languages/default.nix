@@ -176,7 +176,7 @@ rec {
       }
       ''
         echo "Running all language tests..."
-        for test in $tests; do
+        for test in "''${tests[@]}"; do
           if [ -f "$test" ]; then
             echo "✓ $(basename $test) passed"
           else
