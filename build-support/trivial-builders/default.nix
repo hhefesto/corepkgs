@@ -455,7 +455,7 @@ rec {
       ''
         file=$out$destination
         mkdir -p "$(dirname "$file")"
-        cat $files > "$file"
+        cat "''${files[@]}" > "$file"
 
         if [ -n "$executable" ]; then
           chmod +x "$file"
