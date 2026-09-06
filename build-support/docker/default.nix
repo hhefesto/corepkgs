@@ -231,12 +231,12 @@ rec {
       }
       ''
         if [[ -n "$onlyDeps" ]]; then
-          echo $derivations > $out
+          echo "''${derivations[@]}" > $out
           exit 0
         fi
 
         mkdir $out
-        for derivation in $derivations; do
+        for derivation in "''${derivations[@]}"; do
           echo "Merging $derivation..."
           if [[ -d "$derivation" ]]; then
             # If it's a directory, copy all of its contents into $out.
@@ -459,7 +459,7 @@ rec {
     runCommand "docker-layer-${name}"
       {
         inherit baseJson extraCommands;
-        contents = copyToRoot;
+        contents = if copyToRoot == null then [ ] else toList copyToRoot;
         nativeBuildInputs = [
           rsync
         ]
@@ -468,9 +468,9 @@ rec {
       }
       ''
         mkdir layer
-        if [[ -n "$contents" ]]; then
+        if ((''${#contents[@]})); then
           echo "Adding contents..."
-          for item in $contents; do
+          for item in "''${contents[@]}"; do
             echo "Adding $item"
             rsync -a${if keepContentsDirlinks then "K" else "k"} --chown=0:0 $item/ layer/
           done
@@ -941,7 +941,7 @@ rec {
         repos=()
         manifests=()
         last_image_mime="application/gzip"
-        for item in $images; do
+        for item in "''${images[@]}"; do
           name=$(basename $item)
           mkdir inputs/$name
 
