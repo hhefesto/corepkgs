@@ -1263,22 +1263,12 @@ _defaultUnpack() {
     else
 
         case "$fn" in
-            *.tar.xz | *.tar.lzma | *.txz)
-                # Don't rely on tar knowing about .xz.
-                # Additionally, we have multiple different xz binaries with different feature sets in different
-                # stages. The XZ_OPT env var is only used by the full "XZ utils" implementation, which supports
-                # the --threads (-T) flag. This allows us to enable multithreaded decompression exclusively on
-                # that implementation, without the use of complex bash conditionals and checks.
-                # Since tar does not control the decompression, we need to
-                # disregard the error code from the xz invocation. Otherwise,
-                # it can happen that tar exits earlier, causing xz to fail
-                # from a SIGPIPE.
-                (XZ_OPT="--threads=$NIX_BUILD_CORES" xz -d < "$fn"; true) | tar xf - --mode=+w --warning=no-timestamp
-                ;;
-            *.tar | *.tar.* | *.tgz | *.tbz2 | *.tbz)
+            *.tar | *.tar.* | *.tgz | *.tbz2 | *.tbz | *.txz)
                 # GNU tar can automatically select the decompression method
-                # (info "(tar) gzip").
-                tar xf "$fn" --mode=+w --warning=no-timestamp
+                # (info "(tar) gzip"). Limit the threaded xz decoder's memory; xz reduces the
+                # worker count or falls back to single-threaded decompression to stay below it.
+                XZ_OPT="--threads=$NIX_BUILD_CORES --memlimit-mt-decompress=1GiB" \
+                    tar xf "$fn" --mode=+w --warning=no-timestamp
                 ;;
             *)
                 return 1
