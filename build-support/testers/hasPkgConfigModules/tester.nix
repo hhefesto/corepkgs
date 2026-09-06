@@ -39,8 +39,8 @@ runCommand testName
     touch "$out"
     notFound=0
     versionMismatch=0
-    for moduleName in $moduleNames; do
-      echo "checking pkg-config module $moduleName in $buildInputs"
+    for moduleName in "''${moduleNames[@]}"; do
+      echo "checking pkg-config module $moduleName in ''${buildInputs[*]}"
       set +e
       moduleVersion="$($PKG_CONFIG --modversion $moduleName)"
       r=$?
