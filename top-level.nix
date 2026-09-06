@@ -692,11 +692,6 @@ with final;
   libglut = freeglut;
   libva-minimal = callPackage ./pkgs/libva { minimal = true; };
   mesa = callPackage ./pkgs/mesa { };
-  valgrind-light = (valgrind.override { gdb = null; }).overrideAttrs (old: {
-    meta = old.meta // {
-      description = "${old.meta.description} (without GDB)";
-    };
-  });
   mesa_i686 = null; # TODO(corepkgs): needs pkgsi686Linux
   libgbm = callPackage ./pkgs/mesa/gbm.nix { };
   mesa-gl-headers = callPackage ./pkgs/mesa/headers.nix { };

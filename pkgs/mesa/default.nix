@@ -33,7 +33,7 @@
   spirv-llvm-translator,
   stdenv,
   udev,
-  valgrind-light,
+  valgrind-light ? null,
   vulkan-loader,
   wayland,
   wayland-protocols,

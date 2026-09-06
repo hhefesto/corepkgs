@@ -4,7 +4,7 @@
   fetchFromGitHub,
   fetchpatch,
   cmake,
-  valgrind,
+  valgrind ? null,
   testers,
 }:
 
@@ -32,9 +32,7 @@ stdenv.mkDerivation (finalAttrs: {
     cmake.configurePhaseHook
   ];
 
-  buildInputs = lib.optionals finalAttrs.finalPackage.doCheck [
-    valgrind
-  ];
+  checkInputs = [ valgrind ];
 
   outputs = [
     "dev"
