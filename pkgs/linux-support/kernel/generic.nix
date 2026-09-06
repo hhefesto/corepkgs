@@ -217,10 +217,10 @@ let
           export buildRoot="''${buildRoot:-build}"
 
           # Get a basic config file for later refinement with $generateConfig.
-          make $makeFlags \
+          make "''${makeFlags[@]}" \
               -C . O="$buildRoot" $kernelBaseConfig \
               ARCH=$kernelArch CROSS_COMPILE=${stdenv.cc.targetPrefix} \
-              $makeFlags
+              "''${makeFlags[@]}"
 
           # Create the config file.
           echo "generating kernel configuration..."
@@ -229,7 +229,7 @@ let
           ln -s "$kernelConfigPath" "$buildRoot/kernel-config"
           DEBUG=1 ARCH=$kernelArch CROSS_COMPILE=${stdenv.cc.targetPrefix} \
             KERNEL_CONFIG="$buildRoot/kernel-config" AUTO_MODULES=$autoModules \
-            PREFER_BUILTIN=$preferBuiltin BUILD_ROOT="$buildRoot" SRC=. MAKE_FLAGS="$makeFlags" \
+            PREFER_BUILTIN=$preferBuiltin BUILD_ROOT="$buildRoot" SRC=. MAKE_FLAGS="''${makeFlags[*]}" \
             perl -w $generateConfig
         ''
         + lib.optionalString stdenv.cc.isClang ''

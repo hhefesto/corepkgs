@@ -105,7 +105,7 @@ let
       # Skip clean on darwin, case-sensitivity issues.
       buildPhase =
         lib.optionalString (!stdenvNoCC.buildPlatform.isDarwin) ''
-          make mrproper $makeFlags
+          make mrproper "''${makeFlags[@]}"
         ''
         + (
           if stdenvNoCC.hostPlatform.isAndroid then
@@ -115,12 +115,12 @@ let
             ''
           else
             ''
-              make headers $makeFlags
+              make headers "''${makeFlags[@]}"
             ''
         );
 
       checkPhase = ''
-        make headers_check $makeFlags
+        make headers_check "''${makeFlags[@]}"
       '';
 
       # The following command requires rsync:
