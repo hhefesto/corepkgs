@@ -228,6 +228,15 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [ perl ];
 
+  # The bindist uses large independently compressed blocks.  Parallel xz
+  # decompression buffers multiple blocks and can consume several GiB on
+  # high-core builders, so keep unpacking single-threaded.
+  # TODO: fix this in stdenv instead, always use tar + less threads
+  unpackCmd = ''
+    (XZ_OPT="--threads=1" xz -d < "$curSrc"; true) \
+      | tar xf - --mode=+w --warning=no-timestamp
+  '';
+
   # Set LD_LIBRARY_PATH or equivalent so that the programs running as part
   # of the bindist installer can find the libraries they expect.
   # Cannot patchelf beforehand due to relative RPATHs that anticipate
