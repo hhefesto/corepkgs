@@ -23,6 +23,8 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ unzip ];
   buildInputs = [ tcl ];
 
+  configureFlags = [ "--with-tcl=${lib.getLib tcl}/lib" ];
+
   makeFlags = [ "sqlite3_analyzer" ];
 
   installPhase = "install -Dt $out/bin sqlite3_analyzer";
