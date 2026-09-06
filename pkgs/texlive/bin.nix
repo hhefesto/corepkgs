@@ -402,6 +402,14 @@ rec {
       ./truncate-luajit-version-number.patch
     ];
 
+    postPatch = ''
+      # corepkgs strict deps:
+      # upmendex directly uses ICU i18n, which is only a private dependency of
+      # icu-io and therefore is not included by pkg-config --libs.
+      substituteInPlace texk/upmendex/configure \
+        --replace-fail "icu-uc icu-io" "icu-uc icu-i18n icu-io"
+    '';
+
     hardeningDisable = [ "format" ];
 
     inherit (core) nativeBuildInputs depsBuildBuild;
