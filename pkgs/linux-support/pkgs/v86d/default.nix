@@ -42,7 +42,7 @@ stdenv.mkDerivation {
   configurePhase = ''
     runHook preConfigure
 
-    ./configure $configureFlags
+    ./configure "''${configureFlags[@]}"
 
     runHook postConfigure
   '';
