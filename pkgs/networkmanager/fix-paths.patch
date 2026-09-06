@@ -7,7 +7,7 @@ index 148acade5c..6395fbfbe5 100644
  ENV{ID_NET_DRIVER}=="?*", GOTO="nm_drivers_end"
  DRIVERS=="?*", GOTO="nm_drivers_end"
 -PROGRAM="/bin/sh -c '/usr/sbin/ethtool -i $$1 |/usr/bin/sed -n s/^driver:\ //p' -- $env{INTERFACE}", ENV{ID_NET_DRIVER}="%c"
-+PROGRAM="@runtimeShell@ -c '@ethtool@/bin/ethtool -i $$1 |@gnused@/bin/sed -n s/^driver:\ //p' -- $env{INTERFACE}", ENV{ID_NET_DRIVER}="%c"
++PROGRAM="@runtimeShell@ -c '@ethtool@/bin/ethtool -i $$1 |@sed@/bin/sed -n s/^driver:\ //p' -- $env{INTERFACE}", ENV{ID_NET_DRIVER}="%c"
 
  LABEL="nm_drivers_end"
 diff --git a/src/core/devices/nm-device.c b/src/core/devices/nm-device.c
@@ -66,4 +66,3 @@ index cbe76f5f1c..6ec684f9fe 100644
 +
      if (!path)
          return FALSE;
-

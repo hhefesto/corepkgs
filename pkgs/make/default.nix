@@ -69,7 +69,7 @@ stdenv.mkDerivation rec {
       touch $out
     '';
     # make sure that the override doesn't break bootstrapping
-    gnumakeWithGuile = make.override { guileSupport = true; };
+    makeWithGuile = make.override { guileSupport = true; };
   };
 
   meta = {
