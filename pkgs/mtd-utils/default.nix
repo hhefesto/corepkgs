@@ -26,8 +26,8 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     autoreconfHook
     pkg-config
-  ]
-  ++ lib.optional doCheck cmocka;
+  ];
+  checkInputs = [ cmocka ];
   buildInputs = [
     acl
     libuuid

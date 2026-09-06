@@ -15,7 +15,7 @@
   linux,
   makeInitrd,
   makeModulesClosure,
-  mtdutils,
+  mtd-utils,
   rpm,
   runCommand,
   util-linux,
@@ -448,7 +448,7 @@ let
         name = "extract-file-mtd";
         buildInputs = [
           util-linux
-          mtdutils
+          mtd-utils
         ];
         buildCommand = ''
           ln -s ${kernel}/lib /lib

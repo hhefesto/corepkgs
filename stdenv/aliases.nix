@@ -161,6 +161,7 @@ mapAliases {
   luajit_2_1 = lua.luajit_2_1;
   luajit_openresty = lua.luajit_openresty;
   man = man-db;
+  mtdutils = mtd-utils;
   ncurses5 = ncurses.v5;
   ncurses6 = ncurses.v6;
   nimble = nim;
