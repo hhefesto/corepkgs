@@ -49,9 +49,9 @@ runCommand "fonts.conf"
     impureFontDirectories = impureFontDirectories ++ [ dejavu_fonts.minimal ];
   }
   ''
-    xsltproc --stringparam fontDirectories "$fontDirectories" \
-      --stringparam impureFontDirectories "$impureFontDirectories" \
-      --stringparam includes "$includes" \
+    xsltproc --stringparam fontDirectories "''${fontDirectories[*]}" \
+      --stringparam impureFontDirectories "''${impureFontDirectories[*]}" \
+      --stringparam includes "''${includes[*]}" \
       --path ${fontconfig.out}/share/xml/fontconfig \
       ${./make-fonts-conf.xsl} ${fontconfig.out}/etc/fonts/fonts.conf \
       > $out
