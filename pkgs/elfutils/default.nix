@@ -27,7 +27,6 @@
   gitUpdater,
 
   # for passthru.tests
-  gdb,
   strace,
 }:
 
@@ -146,7 +145,7 @@ stdenv.mkDerivation rec {
         package = elfutils;
         command = "eu-readelf --version";
       };
-      inherit gdb strace;
+      inherit strace;
     };
     updateScript = gitUpdater {
       url = "https://sourceware.org/git/elfutils.git";

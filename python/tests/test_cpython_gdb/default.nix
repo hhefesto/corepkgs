@@ -1,6 +1,6 @@
 {
   interpreter,
-  gdb,
+  gdb ? null,
   writeText,
   runCommand,
 }:

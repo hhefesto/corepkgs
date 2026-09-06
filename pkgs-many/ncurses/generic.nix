@@ -19,9 +19,6 @@
   unicodeSupport ? true,
   testers,
   binlore,
-
-  # for passthru.tests
-  gdb,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -300,7 +297,6 @@ stdenv.mkDerivation (finalAttrs: {
     tests = {
       pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
       pkg-config-install = testers.pkg-config.testInstall finalAttrs.finalPackage { };
-      inherit gdb;
     };
   };
 })

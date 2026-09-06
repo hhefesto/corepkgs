@@ -2,7 +2,7 @@
   lib,
   buildPythonPackage,
   fetchFromGitHub,
-  gdb,
+  gdb ? null,
   isPyPy,
   ncurses,
   numpy,
