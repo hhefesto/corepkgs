@@ -35,11 +35,11 @@ stdenv.mkDerivation {
     ''
       # Order matters, read the patch list from the RPM spec. Our own patches
       # are applied on top of the Fedora baseline.
-      fedorapatches=""
+      fedorapatches=()
       for p in $(grep '^Patch[0-9]\+:' ${fedora}/ltrace.spec | awk '{ print $2 }'); do
-        fedorapatches="$fedorapatches ${fedora}/$p"
+        fedorapatches+=("${fedora}/$p")
       done
-      patches="$fedorapatches $patches"
+      patches=("''${fedorapatches[@]}" "''${patches[@]}")
     '';
 
   # Cherry-pick extra patches for recent glibc support in the test suite.
