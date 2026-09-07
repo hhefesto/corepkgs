@@ -454,7 +454,6 @@ LOCAL_ONLY = [
     "pkgs/maturin/pyo3-test/default.nix",
     "pkgs/mdadm/default.nix",
     "pkgs/mdadm/no-self-references.patch",
-    "pkgs/mdbook-linkcheck",
     "pkgs/mesa/musl.patch",
     "pkgs/mkManyVariants",
     "pkgs/mongosh/disable-telemetry.patch",
