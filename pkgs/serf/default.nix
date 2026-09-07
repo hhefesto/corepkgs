@@ -57,8 +57,6 @@ stdenv.mkDerivation (finalAttrs: {
     appendToVar sconsFlags "GSSAPI=${libkrb5.dev}"
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "HTTP client library based on APR";
     homepage = "https://serf.apache.org/";

@@ -21,7 +21,6 @@ stdenv.mkDerivation (finalAttrs: {
     "man"
     "doc"
   ];
-  strictDeps = true;
 
   # Process Requires.private properly, see
   # http://bugs.freedesktop.org/show_bug.cgi?id=4738, migrated to
@@ -72,8 +71,6 @@ stdenv.mkDerivation (finalAttrs: {
       "-Wno-error=format"
     ]
   );
-
-  enableParallelBuilding = true;
 
   postInstall = ''rm -f "$out"/bin/*-pkg-config''; # clean the duplicate file
 

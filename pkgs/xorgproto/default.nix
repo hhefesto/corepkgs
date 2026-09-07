@@ -37,8 +37,6 @@ stdenv.mkDerivation (finalAttrs: {
     })
   ];
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     pkg-config
     python3

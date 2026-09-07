@@ -57,7 +57,7 @@
   fakeroot ? null,
   fakechroot ? null,
   jshon ? null,
-  moreutils ? null,
+  moreutils,
   pigz ? null,
   proot ? null,
   skopeo ? null,
@@ -109,7 +109,7 @@ let
   # Reference: https://github.com/opencontainers/image-spec/blob/master/config.md#properties
   # For the mapping from Nixpkgs system parameters to GOARCH, we can reuse the
   # mapping from the go package.
-  defaultArchitecture = go.GOARCH;
+  defaultArchitecture = go.env.GOARCH;
 
   compressors = {
     none = {
@@ -231,12 +231,12 @@ rec {
       }
       ''
         if [[ -n "$onlyDeps" ]]; then
-          echo $derivations > $out
+          echo "''${derivations[@]}" > $out
           exit 0
         fi
 
         mkdir $out
-        for derivation in $derivations; do
+        for derivation in "''${derivations[@]}"; do
           echo "Merging $derivation..."
           if [[ -d "$derivation" ]]; then
             # If it's a directory, copy all of its contents into $out.
@@ -459,7 +459,7 @@ rec {
     runCommand "docker-layer-${name}"
       {
         inherit baseJson extraCommands;
-        contents = copyToRoot;
+        contents = if copyToRoot == null then [ ] else toList copyToRoot;
         nativeBuildInputs = [
           rsync
         ]
@@ -468,9 +468,9 @@ rec {
       }
       ''
         mkdir layer
-        if [[ -n "$contents" ]]; then
+        if ((''${#contents[@]})); then
           echo "Adding contents..."
-          for item in $contents; do
+          for item in "''${contents[@]}"; do
             echo "Adding $item"
             rsync -a${if keepContentsDirlinks then "K" else "k"} --chown=0:0 $item/ layer/
           done
@@ -749,9 +749,9 @@ rec {
           {
             nativeBuildInputs = [
               jq
+              moreutils
             ]
             ++ optionals (jshon != null) [ jshon ]
-            ++ optionals (moreutils != null) [ moreutils ]
             ++ compress.nativeInputs;
             # Image name must be lowercase
             imageName = lib.toLower name;
@@ -941,7 +941,7 @@ rec {
         repos=()
         manifests=()
         last_image_mime="application/gzip"
-        for item in $images; do
+        for item in "''${images[@]}"; do
           name=$(basename $item)
           mkdir inputs/$name
 

@@ -87,8 +87,6 @@ stdenv.mkDerivation (finalAttrs: {
     "-Wno-error"
   ];
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "C based gRPC (C++, Python, Ruby, Objective-C, PHP, C#)";
     license = lib.licenses.asl20;

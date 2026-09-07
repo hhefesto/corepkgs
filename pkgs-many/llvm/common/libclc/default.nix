@@ -98,7 +98,6 @@ stdenv.mkDerivation (finalAttrs: {
     spirv-llvm-translator
   ];
   buildInputs = [ llvm ];
-  strictDeps = true;
 
   postInstall = ''
     install -Dt $dev/bin prepare_builtins

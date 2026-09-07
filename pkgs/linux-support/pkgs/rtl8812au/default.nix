@@ -52,8 +52,6 @@ stdenv.mkDerivation {
     nuke-refs $out/lib/modules/*/kernel/net/wireless/*.ko
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Driver for Realtek 802.11ac, rtl8812au, provides the 8812au mod";
     homepage = "https://github.com/morrownr/8812au-20210820";

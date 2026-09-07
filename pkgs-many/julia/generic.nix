@@ -85,8 +85,6 @@ stdenv.mkDerivation {
   # Julia's build system expects to build in-tree
   dontUseCmakeConfigure = true;
 
-  enableParallelBuilding = true;
-
   doCheck = false;
   doInstallCheck = false;
   dontStrip = true;

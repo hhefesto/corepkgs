@@ -41,7 +41,6 @@ stdenv.mkDerivation rec {
 
   INSTALL_MOD_PATH = placeholder "out";
   installFlags = [ "DEPMOD=true" ];
-  enableParallelBuilding = true;
 
   passthru = {
     # remove this when our kernel comes with native wireguard support

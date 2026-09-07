@@ -39,8 +39,6 @@ stdenv.mkDerivation rec {
     sqlite
   ];
 
-  strictDeps = true;
-
   postInstall = "rm -rf $out/var";
 
   meta = {

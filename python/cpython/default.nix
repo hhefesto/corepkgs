@@ -783,7 +783,6 @@ stdenv.mkDerivation (finalAttrs: {
     ];
 
   separateDebugInfo = true;
-  __structuredAttrs = true;
 
   passthru = passthru // {
     doc = stdenv.mkDerivation {
@@ -815,8 +814,6 @@ stdenv.mkDerivation (finalAttrs: {
       pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
     };
   };
-
-  enableParallelBuilding = true;
 
   meta = {
     homepage = "https://www.python.org";

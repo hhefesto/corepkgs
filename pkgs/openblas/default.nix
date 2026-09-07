@@ -236,8 +236,6 @@ stdenv.mkDerivation (finalAttrs: {
     buildPackages.stdenv.cc
   ];
 
-  enableParallelBuilding = true;
-
   makeFlags = mkMakeFlagsFromConfig (
     config
     // {

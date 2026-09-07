@@ -36,17 +36,17 @@ stdenv.mkDerivation (finalAttrs: {
     autoreconfHook
     doxygen
     gettext
-    libxml2
     help2man
     perl
     pkg-config
   ];
 
-  buildInputs = [ python3 ];
+  buildInputs = [
+    libxml2
+    python3
+  ];
 
   configureFlags = [ "--disable-graphviz" ];
-
-  enableParallelBuilding = true;
 
   postInstall = ''
     mkdir -p $out/include

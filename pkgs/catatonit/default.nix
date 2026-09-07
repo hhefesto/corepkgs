@@ -24,9 +24,6 @@ stdenv.mkDerivation (finalAttrs: {
     glibc.static
   ];
 
-  enableParallelBuilding = true;
-  strictDeps = true;
-
   doInstallCheck = true;
   installCheckPhase = ''
     readelf -d $out/bin/catatonit | grep 'There is no dynamic section in this file.'

@@ -22,8 +22,6 @@ stdenv.mkDerivation {
     substituteInPlace Makefile --replace '$(if $(STRIP), $(STRIP) -x $@)' '$(if $(STRIP), $(STRIP) -S $@)'
   '';
 
-  enableParallelBuilding = true;
-
   outputs = [
     "out"
     "lib"

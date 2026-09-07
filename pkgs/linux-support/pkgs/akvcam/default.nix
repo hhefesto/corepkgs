@@ -27,8 +27,6 @@ stdenv.mkDerivation rec {
     install -m644 -b -D akvcam.ko $out/lib/modules/${kernel.modDirVersion}/akvcam.ko
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Virtual camera driver for Linux";
     homepage = "https://github.com/webcamoid/akvcam";

@@ -27,7 +27,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [ autoreconfHook ];
   propagatedBuildInputs = [ libkrb5 ];
-  strictDeps = true;
 
   preConfigure = ''
     sed -es"|/etc/netconfig|$out/etc/netconfig|g" -i doc/Makefile.in tirpc/netconfig.h
@@ -37,15 +36,11 @@ stdenv.mkDerivation (finalAttrs: {
     stdenv.cc.bintools.isLLVM && lib.versionAtLeast stdenv.cc.bintools.version "17"
   ) "LDFLAGS=-Wl,--undefined-version";
 
-  enableParallelBuilding = true;
-
   preInstall = ''
     mkdir -p $out/etc
   '';
 
   doCheck = true;
-
-  __structuredAttrs = true;
 
   meta = {
     homepage = "https://sourceforge.net/projects/libtirpc/";

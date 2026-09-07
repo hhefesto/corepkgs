@@ -270,7 +270,6 @@ let
   build =
     runCommand name
       {
-        __structuredAttrs = true;
         inherit meta outputDrvs;
         outputs = if outputs != [ ] then outputs else [ "out" ];
         passthru = removeAttrs passthru [ "outputSpecified" ] // {

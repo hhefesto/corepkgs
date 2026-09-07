@@ -26,9 +26,6 @@ stdenv.mkDerivation (finalAttrs: {
     touch NEWS
   '';
 
-  strictDeps = true;
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [
     autoreconfHook
     pkg-config

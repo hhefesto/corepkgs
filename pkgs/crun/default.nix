@@ -71,9 +71,6 @@ stdenv.mkDerivation (finalAttrs: {
     json_c
   ];
 
-  enableParallelBuilding = true;
-  strictDeps = true;
-
   env = {
     NIX_LDFLAGS = "-lcriu";
   };

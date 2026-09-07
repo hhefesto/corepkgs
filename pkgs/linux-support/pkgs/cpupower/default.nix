@@ -45,8 +45,6 @@ stdenv.mkDerivation {
     unit = "lib/systemd/system";
   };
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Tool to examine and tune power saving features";
     homepage = "https://www.kernel.org/";

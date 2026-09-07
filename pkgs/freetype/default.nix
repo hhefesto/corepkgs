@@ -91,8 +91,6 @@ stdenv.mkDerivation (finalAttrs: {
     lib.optionalString stdenv.hostPlatform.isAarch32 "-std=gnu99"
     + lib.optionalString stdenv.hostPlatform.is32bit " -D_FILE_OFFSET_BITS=64";
 
-  enableParallelBuilding = true;
-
   # pkgsCross.mingwW64.pkg-config doesn't build
   # makeWrapper doesn't cross-compile to windows #120726
   postInstall = ''

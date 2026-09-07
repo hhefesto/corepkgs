@@ -61,7 +61,6 @@ stdenv.mkDerivation (finalAttrs: {
   ];
   separateDebugInfo = true;
 
-  strictDeps = true;
   nativeBuildInputs = [
     autoreconfHook
     autoconf-archive
@@ -115,8 +114,6 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optionals enableSystemd [ "SYSTEMCTL=${systemdMinimal}/bin/systemctl" ];
 
   NIX_CFLAGS_LINK = lib.optionalString (!stdenv.hostPlatform.isDarwin) "-Wl,--as-needed";
-
-  enableParallelBuilding = true;
 
   makeFlags = [
     # Fix paths in XML catalog broken by mismatching build/install datadir.

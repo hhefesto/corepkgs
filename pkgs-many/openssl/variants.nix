@@ -1,18 +1,4 @@
 {
-  v1_1 = {
-    version = "1.1.1w";
-    src-hash = "sha256-zzCYlQy02FOtlcCEHx+cbT3BAtzPys1SHZOSUgi3asg=";
-    nix-ssl-cert-file-patch = ./1.1/nix-ssl-cert-file.patch;
-    use-etc-ssl-certs-patch = ./use-etc-ssl-certs.patch;
-    use-etc-ssl-certs-darwin-patch = ./use-etc-ssl-certs-darwin.patch;
-    withDocs = true;
-    extraMeta = {
-      knownVulnerabilities = [
-        "OpenSSL 1.1 is reaching its end of life on 2023/09/11 and cannot be supported through the NixOS 23.11 release cycle. https://www.openssl.org/blog/blog/2023/03/28/1.1.1-EOL/"
-      ];
-    };
-  };
-
   v3_0 = {
     version = "3.0.18";
     src-hash = "sha256-2Aw09c+QLczx8bXfXruG0DkuNwSeXXPfGzq65y5P/os=";

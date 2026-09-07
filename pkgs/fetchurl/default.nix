@@ -51,6 +51,23 @@ let
     };
   };
 
+  defaultNativeBuildInputs = [ curl ];
+  inherit (lib)
+    concatMap
+    elemAt
+    fakeHash
+    fakeSha256
+    fakeSha512
+    filter
+    hasPrefix
+    head
+    isList
+    isString
+    length
+    match
+    warn
+    ;
+
   inherit (config) hashedMirrors rewriteURL;
   mirrors = import ./mirrors.nix // {
     inherit hashedMirrors;
@@ -64,7 +81,6 @@ let
   mirrorsFile = buildPackages.stdenvNoCC.mkDerivation (
     {
       name = "mirrors-list";
-      strictDeps = true;
       builder = ./write-mirror-list.sh;
       preferLocalBuild = true;
     }
@@ -74,6 +90,61 @@ let
   # Names of the master sites that are mirrored (i.e., "sourceforge",
   # "gnu", etc.).
   sites = builtins.attrNames mirrors;
+
+  # partially applied set of functions for each hash type
+  # this is indexed into with a prefix to avoid re-calling hasPrefix, since it
+  # takes advantage of partial application for performance reasons
+  hasAlgoPrefix = lib.genAttrs [ "sha256" "sha1" "sha512" ] hasPrefix;
+
+  /**
+    Resolve a URL against the available mirrors.
+
+    If the input is a `"mirror://"` URL, it is normalized.
+    Otherwise, the URL is returned unmodified in a singleton list.
+
+    Mirror URLs should be formatted as:
+    ```
+    mirror://{mirror_name}/{path}
+    ```
+
+    The specified `mirror_name` must correspond to an entry in `pkgs/fetchurl/mirrors.nix`, otherwise an error is thrown.
+
+    # Inputs
+
+    `url` (String)
+    : A (possibly `"mirror://"`) URL to resolve.
+
+    # Output
+
+    A list of resolved URLs.
+  */
+  resolveUrl =
+    url:
+    let
+      mirrorSplit = match "mirror://([[:alpha:]]+)/(.+)" url;
+      mirrorName = head mirrorSplit;
+      mirrorList = mirrors."${mirrorName}" or (throw "unknown mirror:// site ${mirrorName}");
+    in
+    if mirrorSplit == null || mirrorName == null then
+      [ url ]
+    else
+      map (mirror: mirror + elemAt mirrorSplit 1) mirrorList;
+
+  rewriteAllUrls =
+    if rewriteURL == null then
+      urls: urls
+    else
+      urls:
+      let
+        u = concatMap (
+          url:
+          let
+            rewritten = rewriteURL url;
+          in
+          if isString rewritten then [ rewritten ] else [ ]
+        ) urls;
+      in
+      if u == [ ] then throw "urls is empty after rewriteURL (was ${toString urls})" else u;
 
   impureEnvVars =
     lib.fetchers.proxyImpureEnvVars
@@ -100,7 +171,7 @@ lib.extendMkDerivation {
     # Passed via passthru
     "url"
 
-    # Additional stdenvNoCC.mkDerivation arguments from derived fetchers.
+    # Additional stdenv.mkDerivation arguments from derived fetchers.
     "derivationArgs"
 
     # Hash attributes will be map to the corresponding outputHash*
@@ -124,8 +195,7 @@ lib.extendMkDerivation {
       # If you wish to pass arguments with spaces, use `curlOptsList`
       curlOpts ? "",
 
-      # As `curlOpts`, but each element is passed to curl as one argument, so
-      # options whose values contain spaces survive.
+      # Additional curl options needed for the download to succeed.
       curlOptsList ? [ ],
 
       # Name of the file when pname + version is unspecified.
@@ -192,29 +262,19 @@ lib.extendMkDerivation {
 
     let
       preRewriteUrls =
-        if urls != [ ] && url == "" then
+        if urls == [ ] && url != "" then
           (
-            if lib.isList urls then urls else throw "`urls` is not a list: ${lib.generators.toPretty { } urls}"
+            if isString url then [ url ] else throw "`url` is not a string: ${lib.generators.toPretty { } urls}"
           )
-        else if urls == [ ] && url != "" then
-          (
-            if lib.isString url then
-              [ url ]
-            else
-              throw "`url` is not a string: ${lib.generators.toPretty { } urls}"
-          )
+        else if urls != [ ] && url == "" then
+          (if isList urls then urls else throw "`urls` is not a list: ${lib.generators.toPretty { } urls}")
         else
           throw "fetchurl requires either `url` or `urls` to be set: ${lib.generators.toPretty { } args}";
 
-      urls_ =
-        let
-          u = lib.lists.filter (url: lib.isString url) (map rewriteURL preRewriteUrls);
-        in
-        if u == [ ] then throw "urls is empty after rewriteURL (was ${toString preRewriteUrls})" else u;
+      urls_ = rewriteAllUrls preRewriteUrls;
 
       hash_ =
         if
-          with lib.lists;
           length (
             filter (s: s != "") [
               hash
@@ -256,33 +316,17 @@ lib.extendMkDerivation {
         else if cacert != null then
           {
             outputHashAlgo = null;
-            outputHash = lib.fakeHash;
+            outputHash = fakeHash;
           }
         else
           throw "fetchurl requires a hash for fixed-output derivation: ${lib.generators.toPretty { } urls_}";
 
-      finalHashHasColon = lib.hasInfix ":" finalAttrs.hash;
-      finalHashColonMatch = lib.match "([^:]+)[:](.*)" finalAttrs.hash;
-
-      resolvedUrl =
-        let
-          mirrorSplit = lib.match "mirror://([[:alpha:]]+)/(.+)" url;
-          mirrorName = lib.head mirrorSplit;
-          mirrorList =
-            if lib.hasAttr mirrorName mirrors then
-              mirrors."${mirrorName}"
-            else
-              throw "unknown mirror:// site ${mirrorName}";
-        in
-        if mirrorSplit == null || mirrorName == null then
-          url
-        else
-          "${lib.head mirrorList}${lib.elemAt mirrorSplit 1}";
+      finalHashHasColon = match ".*:.*" finalAttrs.hash != null;
+      finalHashColonMatch = match "([^:]+)[:](.*)" finalAttrs.hash;
     in
 
     derivationArgs
     // {
-      __structuredAttrs = false;
 
       name =
         if finalAttrs.pname or null != null && finalAttrs.version or null != null then
@@ -292,11 +336,11 @@ lib.extendMkDerivation {
         else if name != null then
           name
         else
-          baseNameOf (toString (lib.head urls_));
+          baseNameOf (toString (head urls_));
 
       builder = ./builder.sh;
 
-      nativeBuildInputs = [ curl ] ++ nativeBuildInputs;
+      nativeBuildInputs = defaultNativeBuildInputs ++ nativeBuildInputs;
 
       urls = urls_;
 
@@ -309,29 +353,29 @@ lib.extendMkDerivation {
         if
           hash_.outputHashAlgo == null
           || hash_.outputHash == ""
-          || lib.hasPrefix hash_.outputHashAlgo hash_.outputHash
+          || hasAlgoPrefix.${hash_.outputHashAlgo} hash_.outputHash
         then
           hash_.outputHash
         else
           "${hash_.outputHashAlgo}:${hash_.outputHash}";
-      outputHashAlgo = if finalHashHasColon then lib.head finalHashColonMatch else null;
+      outputHashAlgo = if finalHashHasColon then head finalHashColonMatch else null;
       outputHash =
         if finalAttrs.hash == "" then
-          lib.fakeHash
+          fakeHash
         else if finalHashHasColon then
-          lib.elemAt finalHashColonMatch 1
+          elemAt finalHashColonMatch 1
         else
           finalAttrs.hash;
 
       # Disable TLS verification only when we know the hash and no credentials are
       # needed to access the resource
-      SSL_CERT_FILE =
+      env.SSL_CERT_FILE =
         if
           (
             hash_.outputHash == ""
-            || hash_.outputHash == lib.fakeSha256
-            || hash_.outputHash == lib.fakeSha512
-            || hash_.outputHash == lib.fakeHash
+            || hash_.outputHash == fakeSha256
+            || hash_.outputHash == fakeSha512
+            || hash_.outputHash == fakeHash
             || netrcPhase != null
           )
         then
@@ -341,23 +385,27 @@ lib.extendMkDerivation {
 
       outputHashMode = if (recursiveHash || executable) then "recursive" else "flat";
 
-      curlOpts = lib.warnIf (lib.isList curlOpts) (
-        let
-          url = toString (builtins.head urls_);
-          curlOptsRepresentation = lib.generators.toPretty { multiline = false; } curlOpts;
-          curlOptsAsStringRepresentation = lib.strings.escapeNixString (toString curlOpts);
-          curlOptsListElementsRepresentation =
-            lib.concatMapStringsSep " " lib.strings.escapeNixString
-              curlOpts;
-        in
-        ''
-          fetchurl for ${url}: curlOpts is a list (${curlOptsRepresentation}), which is not supported anymore.
-          - If you wish to get the same effect as before, for elements with spaces (even if escaped) to expand to multiple curl arguments, use a string argument instead:
-            curlOpts = ${curlOptsAsStringRepresentation};
-          - If you wish for each list element to be passed as a separate curl argument, allowing arguments to contain spaces, use curlOptsList instead:
-            curlOptsList = [ ${curlOptsListElementsRepresentation} ];
-        ''
-      ) curlOpts;
+      curlOpts =
+        if isList curlOpts then
+          warn (
+            let
+              url = toString (builtins.head urls_);
+              curlOptsRepresentation = lib.generators.toPretty { multiline = false; } curlOpts;
+              curlOptsAsStringRepresentation = lib.strings.escapeNixString (toString curlOpts);
+              curlOptsListElementsRepresentation =
+                lib.concatMapStringsSep " " lib.strings.escapeNixString
+                  curlOpts;
+            in
+            ''
+              fetchurl for ${url}: curlOpts is a list (${curlOptsRepresentation}), which is not supported anymore.
+              - If you wish to get the same effect as before, for elements with spaces (even if escaped) to expand to multiple curl arguments, use a string argument instead:
+                curlOpts = ${curlOptsAsStringRepresentation};
+              - If you wish for each list element to be passed as a separate curl argument, allowing arguments to contain spaces, use curlOptsList instead:
+                curlOptsList = [ ${curlOptsListElementsRepresentation} ];
+            ''
+          ) curlOpts
+        else
+          curlOpts;
 
       inherit
         curlOptsList
@@ -372,22 +420,17 @@ lib.extendMkDerivation {
 
       inherit preferLocalBuild;
 
-      postHook =
-        if netrcPhase == null then
-          null
-        else
-          ''
-            ${netrcPhase}
-            curlOpts="$curlOpts --netrc-file $PWD/netrc"
-          '';
-
       inherit meta;
       passthru = {
-        inherit url resolvedUrl;
+        inherit url;
+        resolvedUrl = head (resolveUrl url);
       }
       // passthru;
     };
 
   # No ellipsis
   inheritFunctionArgs = false;
+}
+// {
+  inherit resolveUrl;
 }

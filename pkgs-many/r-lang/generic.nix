@@ -78,8 +78,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   TZDIR = "${tzdata}/share/zoneinfo";
 
-  enableParallelBuilding = true;
-
   passthru = {
     majorVersion = lib.versions.major version;
     minorVersion = lib.versions.majorMinor version;

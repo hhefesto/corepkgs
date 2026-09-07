@@ -49,7 +49,6 @@ stdenv.mkDerivation (finalAttrs: {
   ];
   passthru.static = finalAttrs.finalPackage.out;
 
-  strictDeps = true;
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   nativeBuildInputs = [ m4 ];
 
@@ -81,8 +80,6 @@ stdenv.mkDerivation (finalAttrs: {
   ++ optional (stdenv.hostPlatform.isDarwin && stdenv.hostPlatform.isAarch64) "--disable-assembly";
 
   dontDisableStatic = withStatic;
-
-  enableParallelBuilding = true;
 
   passthru.tests.unittests = runUnitTests finalAttrs.finalPackage;
 

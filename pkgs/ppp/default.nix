@@ -64,8 +64,6 @@ stdenv.mkDerivation (finalAttrs: {
       scripts/{pon,poff,plog}
   '';
 
-  enableParallelBuilding = true;
-
   makeFlags = [
     "CC=${stdenv.cc.targetPrefix}cc"
   ];

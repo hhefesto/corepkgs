@@ -12,7 +12,6 @@
   needsOQSProvider ? false,
   oqsExtraINIConfig ? null,
   packageAtLeast,
-  packageOlder,
   ...
 }@variantArgs:
 
@@ -78,14 +77,7 @@ stdenv.mkDerivation (finalAttrs: {
   inherit version;
 
   src = fetchurl {
-    url =
-      if packageOlder "3.0" then
-        let
-          versionFixed = builtins.replaceStrings [ "." ] [ "_" ] version;
-        in
-        "https://github.com/openssl/openssl/releases/download/OpenSSL_${versionFixed}/openssl-${version}.tar.gz"
-      else
-        "https://github.com/openssl/openssl/releases/download/openssl-${version}/openssl-${version}.tar.gz";
+    url = "https://github.com/openssl/openssl/releases/download/openssl-${version}/openssl-${version}.tar.gz";
     hash = src-hash;
   };
 
@@ -101,19 +93,11 @@ stdenv.mkDerivation (finalAttrs: {
 
   postPatch = ''
     patchShebangs Configure
-  ''
-  + lib.optionalString (packageOlder "1.1.1") ''
-    patchShebangs test/*
-    for a in test/t* ; do
-      substituteInPlace "$a" \
-        --replace /bin/rm rm
-    done
-  ''
-  # config is a configure script which is not installed.
-  + lib.optionalString (packageAtLeast "1.1.1") ''
+
+    # config is a configure script which is not installed.
     substituteInPlace config --replace '/usr/bin/env' '${buildPackages.coreutils}/bin/env'
   ''
-  + lib.optionalString (packageAtLeast "1.1.1" && stdenv.hostPlatform.isMusl) ''
+  + lib.optionalString stdenv.hostPlatform.isMusl ''
     substituteInPlace crypto/async/arch/async_posix.h \
       --replace '!defined(__ANDROID__) && !defined(__OpenBSD__)' \
                 '!defined(__ANDROID__) && !defined(__OpenBSD__) && 0'
@@ -242,17 +226,18 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optional enableMD2 "enable-md2"
   ++ lib.optional enableSSL2 "enable-ssl2"
   ++ lib.optional enableSSL3 "enable-ssl3"
-  # Build the FIPS provider module. Requires OpenSSL >= 3.0.
-  ++ lib.optional (packageAtLeast "3.0.0" && enableFips) "enable-fips"
+  ++ lib.optional enableFips "enable-fips"
   # We select KTLS here instead of the configure-time detection (which we patch out).
   # KTLS should work on FreeBSD 13+ as well, so we could enable it if someone tests it.
-  ++ lib.optional (packageAtLeast "3.0.0" && enableKTLS) "enable-ktls"
-  ++ lib.optional (packageAtLeast "1.1.1" && stdenv.hostPlatform.isAarch64) "no-afalgeng"
+  ++ lib.optional enableKTLS "enable-ktls"
+  ++ lib.optional stdenv.hostPlatform.isAarch64 "no-afalgeng"
   # OpenSSL needs a specific `no-shared` configure flag.
   # See https://wiki.openssl.org/index.php/Compilation_and_Installation#Configure_Options
   # for a comprehensive list of configuration options.
-  ++ lib.optional (packageAtLeast "1.1.1" && static) "no-shared"
-  ++ lib.optional (packageAtLeast "3.0.0" && static) "no-module"
+  ++ lib.optionals static [
+    "no-shared"
+    "no-module"
+  ]
   # This introduces a reference to the CTLOG_FILE which is undesired when
   # trying to build binaries statically.
   ++ lib.optional static "no-ct"
@@ -291,8 +276,6 @@ stdenv.mkDerivation (finalAttrs: {
     # This is done in ubuntu and archlinux, and possibly many other distros.
     "MANSUFFIX=ssl"
   ];
-
-  enableParallelBuilding = true;
 
   preCheck = ''
     patchShebangs util

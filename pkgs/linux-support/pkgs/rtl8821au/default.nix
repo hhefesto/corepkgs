@@ -58,8 +58,6 @@ stdenv.mkDerivation {
     nuke-refs $out/lib/modules/*/kernel/net/wireless/*.ko
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "rtl8821AU and rtl8812AU chipset driver with firmware";
     homepage = "https://github.com/morrownr/8821au-20210708";

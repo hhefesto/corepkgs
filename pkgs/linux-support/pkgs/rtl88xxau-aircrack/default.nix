@@ -31,8 +31,6 @@ stdenv.mkDerivation {
     mkdir -p "$out/lib/modules/${kernel.modDirVersion}/kernel/net/wireless/"
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = ''
       Aircrack-ng kernel module for Realtek 88XXau network cards

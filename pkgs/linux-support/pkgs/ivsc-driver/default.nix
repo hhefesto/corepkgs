@@ -24,8 +24,6 @@ stdenv.mkDerivation {
     "KERNEL_SRC=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   ];
 
-  enableParallelBuilding = true;
-
   preInstall = ''
     sed -i -e "s,INSTALL_MOD_DIR=,INSTALL_MOD_PATH=$out INSTALL_MOD_DIR=," Makefile
   '';

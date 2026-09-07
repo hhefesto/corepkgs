@@ -102,8 +102,6 @@ let
 
         hardeningDisable = [ "all" ];
 
-        enableParallelBuilding = true;
-
         makeFlags = [
           "DTC=${lib.getExe buildPackages.dtc}"
           "CROSS_COMPILE=${stdenv.cc.targetPrefix}"
@@ -111,14 +109,12 @@ let
         ]
         ++ extraMakeFlags;
 
-        passAsFile = [ "extraConfig" ];
-
         configurePhase = ''
           runHook preConfigure
 
           make -j$NIX_BUILD_CORES ${defconfig}
 
-          cat $extraConfigPath >> .config
+          printf '%s' "$extraConfig" >> .config
 
           runHook postConfigure
         '';

@@ -508,7 +508,8 @@ lib.fix (
       mkdir -p $packageConfDir
 
       setupCompileFlags="${concatStringsSep " " setupCompileFlags}"
-      configureFlags="${concatStringsSep " " defaultConfigureFlags} $configureFlags"
+      configureFlagsArray=("''${configureFlags[@]}")
+      configureFlags="${concatStringsSep " " defaultConfigureFlags}"
     ''
     + ''
       for p in "''${pkgsBuildBuild[@]}" "''${pkgsBuildHost[@]}" "''${pkgsBuildTarget[@]}"; do
@@ -586,8 +587,8 @@ lib.fix (
     configurePhase = ''
       runHook preConfigure
 
-      echo configureFlags: $configureFlags
-      ${setupCommand} configure $configureFlags 2>&1 | ${coreutils}/bin/tee "$NIX_BUILD_TOP/cabal-configure.log"
+      echo configureFlags: $configureFlags "''${configureFlagsArray[@]}"
+      ${setupCommand} configure $configureFlags "''${configureFlagsArray[@]}" 2>&1 | ${coreutils}/bin/tee "$NIX_BUILD_TOP/cabal-configure.log"
       ${lib.optionalString (!allowInconsistentDependencies) ''
         if grep -E -q -z 'Warning:.*depends on multiple versions' "$NIX_BUILD_TOP/cabal-configure.log"; then
           echo >&2 "*** abort because of serious configure-time warning from Cabal"
@@ -609,7 +610,7 @@ lib.fix (
       find dist/build -exec touch -d '1970-01-01T00:00:00Z' {} +
     ''
     + ''
-      ${setupCommand} build ${buildTarget} $buildFlags
+      ${setupCommand} build ${buildTarget} "''${buildFlags[@]}"
       runHook postBuild
     '';
 
@@ -623,7 +624,9 @@ lib.fix (
         ${lib.escapeShellArgs (map (opt: "--test-option=${opt}") testFlags)}
       )
       export NIX_GHC_PACKAGE_PATH_FOR_TEST="''${NIX_GHC_PACKAGE_PATH_FOR_TEST:-$packageConfDir:}"
-      ${setupCommand} test ${testTargetsString} $checkFlags ''${checkFlagsArray:+"''${checkFlagsArray[@]}"}
+      local -a flagsArray
+      concatTo flagsArray checkFlags checkFlagsArray
+      ${setupCommand} test ${testTargetsString} "''${flagsArray[@]}"
       runHook postCheck
     '';
 
@@ -785,7 +788,7 @@ lib.fix (
               "${buildPackages.glibcLocales}/lib/locale/locale-archive";
           }
           // env';
-        } "echo $nativeBuildInputs $buildInputs > $out";
+        } "echo \${nativeBuildInputs[*]} \${buildInputs[*]} > $out";
 
       env = envFunc { };
 

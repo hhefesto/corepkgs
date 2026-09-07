@@ -69,8 +69,6 @@ stdenv.mkDerivation (finalAttrs: {
     runHook postInstall
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     broken = kernel.kernelOlder "4.19";
     changelog = "https://github.com/DisplayLink/evdi/releases/tag/v${finalAttrs.version}";

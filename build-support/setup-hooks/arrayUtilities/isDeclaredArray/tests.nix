@@ -10,8 +10,6 @@ let
   inherit (testers) shellcheck shfmt testBuildFailure';
 
   commonArgs = {
-    __structuredAttrs = true;
-    strictDeps = true;
     preferLocalBuild = true;
     nativeBuildInputs = [ isDeclaredArray ];
   };

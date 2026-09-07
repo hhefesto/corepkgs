@@ -24,8 +24,6 @@ stdenv.mkDerivation rec {
     "KSRC=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   ];
 
-  enableParallelBuilding = true;
-
   installTargets = [ "modules_install" ];
   installFlags = [
     "-C"

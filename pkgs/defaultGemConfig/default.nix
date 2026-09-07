@@ -109,8 +109,7 @@
   shared-mime-info,
   libthai ? null,
   libdatrie ? null,
-  # TODO(corepkgs): support darwin
-  DarwinTools ? null,
+  DarwinTools,
   cctools,
   libtool,
   discount ? null,
@@ -123,9 +122,8 @@
   rustc,
   rustPlatform,
   libsysprof-capture,
-  imlib2,
-  # TODO(corepkgs): support darwin
-  autoSignDarwinBinariesHook ? null,
+  imlib2 ? null,
+  autoSignDarwinBinariesHook,
 }@args:
 
 let
@@ -714,8 +712,6 @@ in
       pango
     ];
 
-    strictDeps = true;
-
     # The ruby build script takes care of this
     dontUseCmakeConfigure = true;
 
@@ -831,9 +827,8 @@ in
       }
     );
 
-  openssl = attrs: {
-    # https://github.com/ruby/openssl/issues/369
-    buildInputs = [ (if (lib.versionAtLeast attrs.version "3.0.0") then openssl else openssl.v1_1) ];
+  openssl = _: {
+    buildInputs = [ openssl ];
   };
 
   opus-ruby = attrs: {

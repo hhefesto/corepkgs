@@ -160,7 +160,6 @@ let
 
       configfile = stdenv.mkDerivation {
         inherit
-          ignoreConfigErrors
           autoModules
           preferBuiltin
           kernelArch
@@ -173,7 +172,6 @@ let
 
         # TODO(corepkgs): Kernel NixOS modules
         kernelConfig = kernelConfigFun intermediateNixConfig;
-        passAsFile = [ "kernelConfig" ];
 
         depsBuildBuild = [ buildPackages.stdenv.cc ];
         nativeBuildInputs = [
@@ -190,7 +188,10 @@ let
           rustc-unwrapped
         ];
 
-        RUST_LIB_SRC = lib.optionalString withRust rustPlatform.rustLibSrc;
+        env = {
+          inherit ignoreConfigErrors;
+          RUST_LIB_SRC = lib.optionalString withRust rustPlatform.rustLibSrc;
+        };
 
         # e.g. "defconfig"
         kernelBaseConfig = defconfig;
@@ -218,17 +219,19 @@ let
           export buildRoot="''${buildRoot:-build}"
 
           # Get a basic config file for later refinement with $generateConfig.
-          make $makeFlags \
+          make "''${makeFlags[@]}" \
               -C . O="$buildRoot" $kernelBaseConfig \
               ARCH=$kernelArch CROSS_COMPILE=${stdenv.cc.targetPrefix} \
-              $makeFlags
+              "''${makeFlags[@]}"
 
           # Create the config file.
           echo "generating kernel configuration..."
+          kernelConfigPath="$TMPDIR/kernel-config"
+          printf '%s' "$kernelConfig" > "$kernelConfigPath"
           ln -s "$kernelConfigPath" "$buildRoot/kernel-config"
           DEBUG=1 ARCH=$kernelArch CROSS_COMPILE=${stdenv.cc.targetPrefix} \
             KERNEL_CONFIG="$buildRoot/kernel-config" AUTO_MODULES=$autoModules \
-            PREFER_BUILTIN=$preferBuiltin BUILD_ROOT="$buildRoot" SRC=. MAKE_FLAGS="$makeFlags" \
+            PREFER_BUILTIN=$preferBuiltin BUILD_ROOT="$buildRoot" SRC=. MAKE_FLAGS="''${makeFlags[*]}" \
             perl -w $generateConfig
         ''
         + lib.optionalString stdenv.cc.isClang ''
@@ -251,8 +254,6 @@ let
         '';
 
         installPhase = "mv $buildRoot/.config $out";
-
-        enableParallelBuilding = true;
 
         passthru = rec {
           module = import ./kernel-config.nix;

@@ -139,8 +139,6 @@ lib.makeOverridable
 
       outputs = [ "out" ] ++ lib.optional docSupport "devdoc";
 
-      strictDeps = true;
-
       nativeBuildInputs = [
         autoreconfHook
         bison
@@ -187,7 +185,6 @@ lib.makeOverridable
         NIX_RUSTFLAGS = "--target ${stdenv.hostPlatform.rust.rustcTargetSpec}";
       };
 
-      enableParallelBuilding = true;
       # /build/ruby-2.7.7/lib/fileutils.rb:882:in `chmod':
       #   No such file or directory @ apply2files - ...-ruby-2.7.7-devdoc/share/ri/2.7.0/system/ARGF/inspect-i.ri (Errno::ENOENT)
       # make: *** [uncommon.mk:373: do-install-all] Error 1

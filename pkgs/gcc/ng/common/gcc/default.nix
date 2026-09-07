@@ -79,13 +79,9 @@ stdenv.mkDerivation (finalAttrs: {
     (getVersionFile "gcc/fix-collect2-paths.diff")
   ];
 
-  enableParallelBuilding = true;
-
   hardeningDisable = [
     "format" # Some macro-indirect formatting in e.g. libcpp
   ];
-
-  strictDeps = true;
 
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   nativeBuildInputs = [

@@ -51,7 +51,6 @@ stdenvNoCC.mkDerivation {
     }
     .${stdenvNoCC.hostPlatform.system} or null;
 
-  strictDeps = true;
   nativeBuildInputs = [
     unzip
     installShellFiles

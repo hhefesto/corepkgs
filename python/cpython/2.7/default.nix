@@ -261,7 +261,6 @@ let
     ++ lib.optional stdenv.hostPlatform.isLinux "ac_cv_func_lchmod=no"
     ++ lib.optional static "LDFLAGS=-static";
 
-  strictDeps = true;
   buildInputs =
     lib.optional (stdenv ? cc && stdenv.cc.libc != null) stdenv.cc.libc
     ++ [
@@ -393,8 +392,6 @@ stdenv.mkDerivation (
       # Strip tests
       rm -R $out/lib/python*/test $out/lib/python*/**/test{,s}
     '';
-
-    enableParallelBuilding = true;
 
     doCheck = false; # expensive, and fails
 

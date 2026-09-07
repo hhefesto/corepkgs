@@ -172,10 +172,6 @@ lib.makeOverridable (
   stdenv.mkDerivation {
     inherit pname version src;
 
-    __structuredAttrs = true;
-
-    enableParallelBuilding = true;
-
     hardeningDisable = [
       "bindnow"
       "format"

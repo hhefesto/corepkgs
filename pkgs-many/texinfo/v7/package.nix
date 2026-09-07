@@ -50,7 +50,11 @@ stdenv.mkDerivation {
     inherit hash;
   };
 
-  patches = optional crossBuildTools ./cross-tools-flags.patch;
+  patches =
+    optional (
+      isInteractive && lib.versionAtLeast version "7.2" && versionOlder version "7.3"
+    ) ./fix-test-suite-failures-with-perl-5.42.patch
+    ++ optional crossBuildTools ./cross-tools-flags.patch;
 
   postPatch = ''
     patchShebangs tp/maintain/regenerate_commands_perl_info.pl
@@ -79,9 +83,6 @@ stdenv.mkDerivation {
     NATIVE_TOOLS_CFLAGS = "-I${getDev buildPackages.ncurses}/include";
     NATIVE_TOOLS_LDFLAGS = "-L${getLib buildPackages.ncurses}/lib";
   };
-
-  strictDeps = true;
-  enableParallelBuilding = true;
 
   # A native compiler is needed to build tools needed at build time
   depsBuildBuild = [

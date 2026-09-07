@@ -39,13 +39,13 @@ with final;
   inherit (stdenv.stage0) minimal-bootstrap;
 
   minimal-bootstrap-sources =
-    callPackage ./build-support/minimal-bootstrap/stage0-posix/bootstrap-sources.nix
+    callPackage ./stdenv/minimal-bootstrap/stage0-posix/bootstrap-sources.nix
       {
         inherit (stdenv) hostPlatform;
       };
 
   make-minimal-bootstrap-sources =
-    callPackage ./build-support/minimal-bootstrap/stage0-posix/make-bootstrap-sources.nix
+    callPackage ./stdenv/minimal-bootstrap/stage0-posix/make-bootstrap-sources.nix
       {
         inherit (stdenv) hostPlatform;
       };
@@ -123,7 +123,6 @@ with final;
   atk = at-spi2-core; # merged into at-spi2-core
   avisynthplus = null; # ffmpeg
   awsebcli = null;
-  azmq = null;
   gsasl = null; # cursed cull option
   babel = null;
   bear = null;
@@ -132,8 +131,6 @@ with final;
   libidn = null; # defaultGemConfig
   capnproto = null; # defaultCrateOverrides
   celt = null; # ffmpeg
-  chromaprint = null; # ffmpeg
-  codec2 = null; # ffmpeg
   coeurl = null;
   cppzmq = null;
   cuda_cudart = null; # ffmpeg
@@ -172,7 +169,6 @@ with final;
   graphene = null; # gtk4, defaultCrateOverrides
   graphicsmagick = null;
   gst_all_1 = gstAll1; # gtk4, libde265 tests
-  # gsettings-desktop-schemas is auto-registered from pkgs/gsettings-desktop-schemas
   gsm = null; # ffmpeg
   gtkmm3 = null;
   gunicorn = null;
@@ -198,7 +194,6 @@ with final;
   libcdio = null; # ffmpeg
   libcdio-paranoia = null; # ffmpeg
   libdc1394 = null; # ffmpeg
-  # libdecor is auto-registered from pkgs/libdecor
   libdvdnav = null; # ffmpeg
   libdvdread = null; # ffmpeg
   libgeotiff = null;
@@ -235,7 +230,6 @@ with final;
   lilypond = null;
   lmdb = null; # gawkextlib lmdb extension
   lingua = null;
-  lynx = null;
   mashumaro = null;
   mathplotlib = null;
   mc = null;
@@ -331,6 +325,8 @@ with final;
     configd = null;
     binutilsDualAs-unwrapped = null;
   };
+  autoSignDarwinBinariesHook = null;
+  DarwinTools = null;
   bootstrap_cmds = null;
   apple-sdk = null;
   ocl-icd = null; # ffmpeg OpenCL ICD
@@ -696,11 +692,6 @@ with final;
   libglut = freeglut;
   libva-minimal = callPackage ./pkgs/libva { minimal = true; };
   mesa = callPackage ./pkgs/mesa { };
-  valgrind-light = (valgrind.override { gdb = null; }).overrideAttrs (old: {
-    meta = old.meta // {
-      description = "${old.meta.description} (without GDB)";
-    };
-  });
   mesa_i686 = null; # TODO(corepkgs): needs pkgsi686Linux
   libgbm = callPackage ./pkgs/mesa/gbm.nix { };
   mesa-gl-headers = callPackage ./pkgs/mesa/headers.nix { };
@@ -734,9 +725,6 @@ with final;
   # TODO: Remove alias
   libjpeg = libjpeg_turbo;
 
-  # Alias for packages that reference libXpm (CamelCase)
-  libXpm = libxpm;
-
   # Less secure variant of lowdown for use inside Nix builds.
   lowdown-unsandboxed = lowdown.override {
     enableDarwinSandbox = false;
@@ -746,6 +734,7 @@ with final;
     makeSetupHook
       {
         name = "generate-ld-cache-hook";
+        # TODO: Remove once makeSetupHook defaults __structuredAttrs to true.
         __structuredAttrs = true;
       }
       (
@@ -1289,16 +1278,23 @@ with final;
     else
       libiconvReal;
 
+  # TODO: fix this mess
   libcIconv =
     libc:
     let
       inherit (libc) pname version;
       libcDev = lib.getDev libc;
     in
-    runCommand "${pname}-iconv-${version}" { strictDeps = true; } ''
-      mkdir -p $out/include
-      ln -sv ${libcDev}/include/iconv.h $out/include
-    '';
+    runCommand "${pname}-iconv-${version}"
+      {
+        passthru = {
+          inherit (prev.libiconv) variants;
+        };
+      }
+      ''
+        mkdir -p $out/include
+        ln -sv ${libcDev}/include/iconv.h $out/include
+      '';
 
   libiconvReal = prev.libiconv;
 
@@ -1483,11 +1479,6 @@ with final;
 
   tclPackages = tcl.pkgs;
 
-  # tk is auto-imported from pkgs-many/tk/ via mkManyVariants
-  # tk defaults to v8_6. Variants: tk.v8_5, tk.v8_6, tk.v9_0
-
-  gpm-ncurses = gpm.override { withNcurses = true; };
-
   pam =
     if stdenv.hostPlatform.isLinux then
       linux-pam
@@ -1582,26 +1573,6 @@ with final;
     libxml2_13
     libxml2
     ;
-
-  # Should always be the version with the most features
-  w3m-full = w3m;
-  # Version without X11
-  w3m-nox = w3m.override {
-    x11Support = false;
-    imlib2 = imlib2-nox;
-  };
-  # Version without X11 or graphics
-  w3m-nographics = w3m.override {
-    x11Support = false;
-    graphicsSupport = false;
-  };
-  # Version for batch text processing, not a good browser
-  w3m-batch = w3m.override {
-    graphicsSupport = false;
-    mouseSupport = false;
-    x11Support = false;
-    imlib2 = imlib2-nox;
-  };
 
   c-aresMinimal = callPackage ./pkgs/c-ares { withCMake = false; };
 
@@ -1975,8 +1946,6 @@ with final;
       aafigure
       recursive-pth-loader
       ;
-    w3m = w3m-batch;
-    enableStandardFeatures = false;
   };
   # TODO(corepkgs): requires graphviz, lilypond, imagemagick, etc.
   asciidoc-full = throw "asciidoc-full: standard features require graphviz, lilypond, and other packages not yet in core-pkgs";
@@ -2049,16 +2018,6 @@ with final;
     ;
   texlivePackages = lib.recurseIntoAttrs (lib.mapAttrs (_: v: v.build) texlive.pkgs);
 
-  imlib2Full = imlib2.override {
-    webpSupport = true;
-    jxlSupport = true;
-    # TODO(corepkgs): Enable svgSupport once librsvg is ported
-    # TODO(corepkgs): Enable heifSupport once libheif is ported
-    # TODO(corepkgs): Enable psSupport once libspectre is ported
-  };
-  imlib2-nox = imlib2.override {
-    x11Support = false;
-  };
   validatePkgConfig = makeSetupHook {
     name = "validate-pkg-config";
     propagatedBuildInputs = [

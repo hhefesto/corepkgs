@@ -27,10 +27,8 @@ stdenv.mkDerivation rec {
   preBuild = "cd linux/igb_uio";
 
   installPhase = ''
-    make -C ${KSRC} M=$(pwd) modules_install $makeFlags
+    make -C ${KSRC} M=$(pwd) modules_install "''${makeFlags[@]}"
   '';
-
-  enableParallelBuilding = true;
 
   meta = {
     description = "Kernel modules for DPDK";

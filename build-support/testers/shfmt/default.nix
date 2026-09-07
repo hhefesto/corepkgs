@@ -11,8 +11,6 @@
   indent ? 2,
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
-  __structuredAttrs = true;
-  strictDeps = true;
   inherit src indent;
   name = "shfmt-${name}";
   dontUnpack = true; # Unpack phase tries to extract archive

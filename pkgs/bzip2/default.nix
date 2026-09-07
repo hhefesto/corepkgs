@@ -46,7 +46,6 @@ stdenv.mkDerivation (
       EOF
     '';
 
-    strictDeps = true;
     nativeBuildInputs = [ autoreconfHook ];
 
     outputs = [
@@ -62,8 +61,6 @@ stdenv.mkDerivation (
     ];
 
     dontDisableStatic = enableStatic;
-
-    enableParallelBuilding = true;
 
     postInstall = ''
       ln -s $out/lib/libbz2.so.1.0.* $out/lib/libbz2.so.1.0

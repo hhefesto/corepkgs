@@ -101,8 +101,6 @@ stdenv.mkDerivation (finalAttrs: {
   ]; # bin/ isn't really big
   outputMan = "out"; # it's tiny
 
-  enableParallelBuilding = true;
-
   configureFlags = [
     # specify delegates explicitly otherwise `convert` will invoke the build
     # coreutils for filetypes it doesn't natively support.

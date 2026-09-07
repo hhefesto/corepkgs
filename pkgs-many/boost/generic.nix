@@ -239,7 +239,7 @@ stdenv.mkDerivation {
     ++ lib.optional (
       packageAtLeast "1.81" && packageOlder "1.88" && stdenv.cc.isClang
     ) ./fix-clang-target.patch
-    ++ lib.optional (packageAtLeast "1.86" && packageOlder "1.87") [
+    ++ lib.optionals (packageAtLeast "1.86" && packageOlder "1.87") [
       # Backport fix for NumPy 2 support.
       (fetchpatch {
         name = "boost-numpy-2-compatibility.patch";
@@ -349,8 +349,6 @@ stdenv.mkDerivation {
       };
     })
   ];
-
-  enableParallelBuilding = true;
 
   nativeBuildInputs = [
     which

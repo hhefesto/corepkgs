@@ -66,7 +66,6 @@ makeSetupHook {
 
           src = sample-project;
 
-          strictDeps = true;
           nativeBuildInputs = [ wrapGAppsHook3 ];
 
           installFlags = [
@@ -112,8 +111,6 @@ makeSetupHook {
 
           src = sample-project;
 
-          strictDeps = true;
-
           installFlags = [ "typelib-Mahjong" ];
         };
 
@@ -123,7 +120,6 @@ makeSetupHook {
 
           src = sample-project;
 
-          strictDeps = true;
           nativeBuildInputs = [
             gobject-introspection
             wrapGAppsHook3
@@ -167,8 +163,6 @@ makeSetupHook {
 
           src = sample-project;
 
-          strictDeps = true;
-
           makeFlags = [
             "LIBDIR=${placeholder "lib"}/lib"
           ];
@@ -182,7 +176,6 @@ makeSetupHook {
 
           src = sample-project;
 
-          strictDeps = true;
           nativeBuildInputs = [
             gobject-introspection
             wrapGAppsHook3
@@ -222,7 +215,6 @@ makeSetupHook {
 
           src = sample-project;
 
-          strictDeps = true;
           nativeBuildInputs = [
             gobject-introspection
             wrapGAppsHook3

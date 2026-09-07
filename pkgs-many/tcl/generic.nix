@@ -103,8 +103,6 @@ stdenv.mkDerivation (finalAttrs: rec {
     ]
     ++ lib.optional stdenv.hostPlatform.is64bit "--enable-64bit";
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     make install-private-headers
     ln -s $out/bin/tclsh${release} $out/bin/tclsh

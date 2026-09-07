@@ -45,8 +45,6 @@ stdenv.mkDerivation rec {
 
   __darwinAllowLocalNetworking = true;
 
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [
     groff
   ];
@@ -106,8 +104,8 @@ stdenv.mkDerivation rec {
   ];
 
   postBuild = ''
-    for module in $extraContribModules; do
-      make $makeFlags CC=$CC -C contrib/slapd-modules/$module
+    for module in ''${extraContribModules[@]}; do
+      make ''${makeFlags[@]} CC=$CC -C contrib/slapd-modules/$module
     done
   '';
 
@@ -144,8 +142,8 @@ stdenv.mkDerivation rec {
   ];
 
   postInstall = lib.optionalString withModules ''
-    for module in $extraContribModules; do
-      make $installFlags install -C contrib/slapd-modules/$module
+    for module in ''${extraContribModules[@]}; do
+      make ''${installFlags[@]} install -C contrib/slapd-modules/$module
     done
     chmod +x "$out"/lib/*.{so,dylib}
   '';

@@ -24,8 +24,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = src-hash;
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     updateAutotoolsGnuConfigScriptsHook
     autoconf
@@ -41,8 +39,6 @@ stdenv.mkDerivation (finalAttrs: {
   doCheck = false; # takes _a lot_ of time, fails 3 out of 2698 tests
 
   doInstallCheck = false; # runs the same thing, fails the same tests
-
-  enableParallelBuilding = true;
 
   # Don't fixup '#! /bin/sh' in Libtool, otherwise it will use the
   # 'fixed' path in generated files!

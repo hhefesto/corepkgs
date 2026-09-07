@@ -28,8 +28,6 @@ stdenv.mkDerivation (finalAttrs: {
   # fixes https://github.com/NixOS/nixpkgs/issues/483585 aka https://gitlab.freedesktop.org/xorg/driver/xf86-video-amdgpu/-/issues/8
   hardeningDisable = [ "bindnow" ];
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     meson
     meson.configurePhaseHook

@@ -61,8 +61,6 @@ stdenv.mkDerivation {
     "AR=${stdenv.cc.targetPrefix}ar"
   ];
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     mkdir -p $doc/share/doc/lm_sensors
     cp -r configs doc/* $doc/share/doc/lm_sensors

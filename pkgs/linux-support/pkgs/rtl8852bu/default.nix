@@ -59,8 +59,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   env.NIX_CFLAGS_COMPILE = "-Wno-designated-init"; # Similar to 79c1cf6
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Driver for Realtek rtl8852bu and rtl8832bu chipsets, provides the 8852bu mod";
     homepage = "https://github.com/morrownr/rtl8852bu-20240418";

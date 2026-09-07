@@ -17,7 +17,6 @@
   gd,
   graphicsmagick,
   imagemagick,
-  imlib2,
   jhead,
   libjxl,
   mjpegtools,
@@ -97,7 +96,6 @@ stdenv.mkDerivation (finalAttrs: {
         gd
         graphicsmagick
         imagemagick
-        imlib2
         jhead
         libjxl
         mjpegtools

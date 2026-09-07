@@ -138,8 +138,6 @@ stdenv.mkDerivation rec {
     "CUPS_PRIMARY_SYSTEM_GROUP=root"
   ];
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     libexec=${if stdenv.hostPlatform.isDarwin then "libexec/cups" else "lib/cups"}
     moveToOutput $libexec "$out"

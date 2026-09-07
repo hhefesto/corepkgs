@@ -33,6 +33,10 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.cmakeBool "RC_INSTALL_ALL_EXTRAS" true)
   ];
 
+  postInstall = ''
+    moveToOutput share/rapidcheck/cmake "$dev"
+  '';
+
   passthru = {
     updateScript = unstableGitUpdater { };
     tests = {

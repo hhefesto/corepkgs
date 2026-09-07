@@ -923,15 +923,14 @@ rec {
     '';
   };
 
-  nix-shell-pass-as-file = streamNixShellImage {
-    name = "nix-shell-pass-as-file";
+  nix-shell-attribute = streamNixShellImage {
+    name = "nix-shell-attribute";
     tag = "latest";
     drv = pkgs.mkShell {
       str = "this is a string";
-      passAsFile = [ "str" ];
     };
     command = ''
-      cat "$strPath"
+      printf '%s\n' "$str"
     '';
   };
 

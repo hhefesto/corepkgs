@@ -112,9 +112,7 @@ stdenv.mkDerivation rec {
 
   NIX_LDFLAGS = lib.optionalString (!stdenv.hostPlatform.isGnu) "-largp";
 
-  enableParallelBuilding = true;
   dontWrapQtApps = true;
-  strictDeps = true;
   doInstallCheck = true;
 
   preFixup = lib.optionalString withMixer ''

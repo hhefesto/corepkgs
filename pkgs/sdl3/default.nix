@@ -113,10 +113,9 @@ stdenv.mkDerivation (finalAttrs: {
         --replace-fail 'libX11-xcb.so' '${lib.getLib libx11}/lib/libX11-xcb.so'
     '';
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     cmake
+    cmake.configurePhaseHook
     ninja
     validatePkgConfig
   ]

@@ -44,8 +44,6 @@ assert builtins.langVersion >= 5;
 stdenvNoCC.mkDerivation {
   name = "closure-info";
 
-  __structuredAttrs = true;
-
   exportReferencesGraph.closure = rootPaths;
 
   preferLocalBuild = true;

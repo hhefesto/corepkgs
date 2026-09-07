@@ -31,11 +31,9 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-hSHtYFn4gr8Y9cNyLBT6frDgidNCRENPtTrtGfgH3po=";
   };
 
-  strictDeps = true;
-  __structuredAttrs = true;
-
   nativeBuildInputs = [
     cmake
+    cmake.configurePhaseHook
     pkg-config
   ]
   ++ lib.optionals (stdenv.hostPlatform.isDarwin && stdenv.hostPlatform.isAarch64) [
@@ -65,8 +63,6 @@ stdenv.mkDerivation (finalAttrs: {
       (lib.cmakeFeature "CMAKE_BUILD_RPATH" rpath)
       (lib.cmakeBool "SDL12TESTS" finalAttrs.finalPackage.doCheck)
     ];
-
-  enableParallelBuilding = true;
 
   # Darwin fails with "Critical error: required built-in appearance SystemAppearance not found"
   doCheck = !stdenv.hostPlatform.isDarwin;

@@ -116,8 +116,6 @@ stdenv.mkDerivation (finalAttrs: {
     wrapProgram $dev/bin/apu-1-config --prefix PATH : "${sed}/bin"
   '';
 
-  enableParallelBuilding = true;
-
   passthru = {
     inherit sslSupport bdbSupport ldapSupport;
     tests = {

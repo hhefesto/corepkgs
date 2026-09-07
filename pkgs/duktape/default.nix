@@ -40,8 +40,6 @@ stdenv.mkDerivation (finalAttrs: {
     make INSTALL_PREFIX="$out" -f Makefile.sharedlibrary install
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Embeddable Javascript engine, with a focus on portability and compact footprint";
     homepage = "https://duktape.org/";

@@ -35,7 +35,8 @@ stdenv.mkDerivation rec {
   # any kernel but the current.
   # based on the ArchLinux pkgbuild: https://git.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/r8168
   makeFlags = kernelModuleMakeFlags ++ [
-    "-C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
+    "-C"
+    "${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
     "modules"
   ];
   preBuild = ''
@@ -43,8 +44,6 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=("M=$absSrc")
     makeFlagsArray+=("EXTRA_CFLAGS=-DCONFIG_R8168_NAPI -DCONFIG_R8168_VLAN -DCONFIG_ASPM -DENABLE_S5WOL -DENABLE_EEE")
   '';
-
-  enableParallelBuilding = true;
 
   installPhase = ''
     mkdir -p ${modDestDir}

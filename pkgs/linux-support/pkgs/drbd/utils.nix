@@ -108,8 +108,6 @@ stdenv.mkDerivation rec {
     export PATH=${systemd}/sbin:$PATH
   '';
 
-  enableParallelBuilding = true;
-
   doInstallCheck = true;
 
   meta = {

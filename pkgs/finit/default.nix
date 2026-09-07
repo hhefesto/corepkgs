@@ -24,8 +24,6 @@ stdenv.mkDerivation (finalAttrs: {
       '"/lib/modules"' '"/run/booted-system/kernel-modules/lib/modules"'
   '';
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     autoreconfHook
     pkg-config

@@ -22,12 +22,12 @@ stdenv.mkDerivation {
 
   buildPhase = ''
     make -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build \
-      -j$NIX_BUILD_CORES M=$(pwd) modules $makeFlags
+      -j$NIX_BUILD_CORES M=$(pwd) modules "''${makeFlags[@]}"
   '';
 
   installPhase = ''
     make -C ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build  \
-      INSTALL_MOD_PATH=$out M=$(pwd) modules_install $makeFlags
+      INSTALL_MOD_PATH=$out M=$(pwd) modules_install "''${makeFlags[@]}"
   '';
 
   meta = {

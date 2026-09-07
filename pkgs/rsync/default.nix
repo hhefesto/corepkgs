@@ -76,8 +76,6 @@ stdenv.mkDerivation (finalAttrs: {
     "--disable-roll-simd"
   ];
 
-  enableParallelBuilding = true;
-
   passthru.tests = {
     unittests = runUnitTests finalAttrs.finalPackage;
   };

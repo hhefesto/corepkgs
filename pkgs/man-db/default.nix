@@ -34,7 +34,6 @@ stdenv.mkDerivation rec {
   ];
   outputMan = "out"; # users will want `man man` to work
 
-  strictDeps = true;
   nativeBuildInputs = [
     groff
     makeWrapper
@@ -109,8 +108,6 @@ stdenv.mkDerivation rec {
   disallowedReferences = lib.optionals (stdenv.hostPlatform != stdenv.buildPlatform) [
     buildPackages.groff
   ];
-
-  enableParallelBuilding = true;
 
   doCheck =
     !stdenv.hostPlatform.isMusl # iconv binary

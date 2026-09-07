@@ -110,8 +110,6 @@ stdenv.mkDerivation (finalAttrs: {
       --replace-fail "pkg_get_variable(Wayland_SCANNER wayland-scanner wayland_scanner)" "set(Wayland_SCANNER ${lib.getExe buildPackages.wayland-scanner})"
   '';
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     cmake
     pkg-config

@@ -132,7 +132,13 @@ stdenv.mkDerivation (finalAttrs: {
       --subst-var-by libc_dev ${lib.getDev stdenv.cc.libc} \
       --subst-var-by libc_lib ${lib.getLib stdenv.cc.libc}
     # CC_FOR_BUILD and CXX_FOR_BUILD are used to bootstrap cmake
-    configureFlags="--parallel=''${NIX_BUILD_CORES:-1} CC=$CC_FOR_BUILD CXX=$CXX_FOR_BUILD $configureFlags $cmakeFlags"
+    local -a flagsArray=(
+      "--parallel=''${NIX_BUILD_CORES:-1}"
+      "CC=$CC_FOR_BUILD"
+      "CXX=$CXX_FOR_BUILD"
+    )
+    concatTo flagsArray configureFlags cmakeFlags
+    configureFlags=("''${flagsArray[@]}")
   '';
 
   # The configuration script is not autoconf-based, although being similar;
@@ -195,8 +201,6 @@ stdenv.mkDerivation (finalAttrs: {
   preInstall = lib.optionalString (stdenv.isCross) ''
     sed -i 's|bin/cmake|${buildPackages.cmake.minimal}/bin/cmake|g' Makefile
   '';
-
-  enableParallelBuilding = true;
 
   doCheck = false; # fails
 

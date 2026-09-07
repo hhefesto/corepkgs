@@ -28,7 +28,6 @@ stdenv.mkDerivation (finalAttrs: {
     fetchSubmodules = true;
   };
 
-  strictDeps = true;
   depsBuildBuild = [ zuo ];
 
   buildInputs = [
@@ -42,7 +41,6 @@ stdenv.mkDerivation (finalAttrs: {
     libx11
   ];
 
-  enableParallelBuilding = true;
   dontAddPrefix = true;
   configurePlatforms = [ ];
   configureFlags = [

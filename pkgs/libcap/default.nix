@@ -63,8 +63,8 @@ stdenv.mkDerivation rec {
     "GOLANG=yes"
     "GOCACHE=\${TMPDIR}/go-cache"
     "GOFLAGS=-trimpath"
-    "GOARCH=${pkgsBuildHost.go.GOARCH}"
-    "GOOS=${pkgsBuildHost.go.GOOS}"
+    "GOARCH=${pkgsBuildHost.go.env.GOARCH}"
+    "GOOS=${pkgsBuildHost.go.env.GOOS}"
   ]
   ++ lib.optionals isStatic [
     "SHARED=no"
@@ -104,8 +104,6 @@ stdenv.mkDerivation rec {
     mkdir -p "$pam/lib/security"
     mv "$lib"/lib/security "$pam/lib"
   '';
-
-  strictDeps = true;
 
   disallowedReferences = lib.optionals withGo [
     pkgsBuildHost.go

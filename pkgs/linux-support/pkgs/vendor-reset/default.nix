@@ -38,8 +38,6 @@ stdenv.mkDerivation {
     install -D vendor-reset.ko -t "$out/lib/modules/${kernel.modDirVersion}/kernel/drivers/misc/"
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Linux kernel vendor specific hardware reset module";
     homepage = "https://github.com/gnif/vendor-reset";

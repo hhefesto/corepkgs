@@ -30,8 +30,6 @@ stdenv.mkDerivation (finalAttrs: {
     "MDIR=$(out)"
   ];
 
-  enableParallelBuilding = true;
-
   meta = {
     homepage = "https://github.com/DigitalDevices/dddvb";
     description = "Device driver for all Digital Devices DVB demodulator and modulator cards";

@@ -457,7 +457,6 @@ stdenvNoCC.mkDerivation {
 
   dontBuild = true;
   dontConfigure = true;
-  enableParallelBuilding = true;
 
   # TODO(@connorbaker):
   # This is a quick fix unblock builds broken by https://github.com/NixOS/nixpkgs/pull/370750.
@@ -579,7 +578,6 @@ stdenvNoCC.mkDerivation {
     wrap ${targetPrefix}go ${./go-wrapper.sh} $ccPath/${targetPrefix}go
   '';
 
-  strictDeps = true;
   propagatedBuildInputs = [
     bintools
   ]

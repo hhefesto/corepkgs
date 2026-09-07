@@ -30,7 +30,6 @@ stdenv.mkDerivation (finalAttrs: {
     "KERNEL=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   ];
 
-  enableParallelBuilding = true;
   dontConfigure = true;
 
   prePatch = ''

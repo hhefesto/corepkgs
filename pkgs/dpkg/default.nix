@@ -49,8 +49,6 @@ stdenv.mkDerivation (finalAttrs: {
   ]
   ++ lib.optional stdenv.hostPlatform.isDarwin "--disable-linker-optimisations";
 
-  enableParallelBuilding = true;
-
   preConfigure = ''
     # Nice: dpkg has a circular dependency on itself. Its configure
     # script calls scripts/dpkg-architecture, which calls "dpkg" in

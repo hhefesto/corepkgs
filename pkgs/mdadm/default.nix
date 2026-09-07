@@ -50,8 +50,6 @@ stdenv.mkDerivation rec {
 
   installFlags = [ "install-systemd" ];
 
-  enableParallelBuilding = true;
-
   buildInputs = [ udev ];
 
   nativeBuildInputs = [

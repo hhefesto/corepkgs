@@ -33,7 +33,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-cd+PQHBqe7CoClNnB56nXZHaT4xlxY7Fm837997Nq58=";
   };
 
-  strictDeps = true;
   nativeBuildInputs = [ updateAutotoolsGnuConfigScriptsHook ];
 
   outputs = [
@@ -41,8 +40,6 @@ stdenv.mkDerivation (finalAttrs: {
     "dev"
   ]; # TODO: fix referrers
   outputBin = "dev";
-
-  enableParallelBuilding = true;
 
   configureFlags = lib.optional stdenv.hostPlatform.isFreeBSD "--with-pic";
 

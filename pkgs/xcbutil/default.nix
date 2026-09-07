@@ -20,8 +20,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-Wr47u9jlTw+j7JRSkbfo+oz9PMzENxj4dYQw+UEm5RI=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ libxcb ];
   propagatedBuildInputs = [ libxcb ];

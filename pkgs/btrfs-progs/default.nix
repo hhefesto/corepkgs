@@ -49,8 +49,6 @@ stdenv.mkDerivation (finalAttrs: {
     "--disable-python" # Don't build Python bindings (would need setuptools)
   ];
 
-  enableParallelBuilding = true;
-
   # Default install target should work
   # (btrfs-progs doesn't have install_dev like xfsprogs)
 

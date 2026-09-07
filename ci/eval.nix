@@ -3,9 +3,8 @@
 #
 # Variants live one level down (`cmake.v4`), so enumerating attribute names
 # alone reaches only the default one. Their names come from the `variants`
-# passthru rather than `pkgs-many/*/variants.nix`: `top-level.nix` may replace
-# an auto-called package with one that has no variants at all -- on glibc
-# `libiconv` becomes a plain `runCommand` -- and only the passthru knows that.
+# passthru rather than `pkgs-many/*/variants.nix`, so CI checks the same public
+# package interface that users consume.
 #
 # Aliases are disabled. They are shims for a package already covered under its
 # canonical name, so evaluating them only repeats work.
@@ -24,10 +23,9 @@
 #   nix-instantiate --eval --strict ci/eval.nix
 
 let
-  packages = import ./packages.nix;
-  inherit (packages) probe targets candidates;
+  packages = import ./packages.nix { checkMeta = true; };
+  inherit (packages) probe targets;
 in
 builtins.deepSeq (map probe targets) {
   evaluated = builtins.length targets;
-  placeholders = builtins.length candidates - builtins.length targets;
 }

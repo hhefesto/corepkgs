@@ -73,8 +73,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   doCheck = false;
 
-  enableParallelBuilding = true;
-
   passthru.tests = {
     inherit aprutil;
   };

@@ -62,8 +62,6 @@ stdenv.mkDerivation (
   {
     version = version + patchSuffix;
 
-    enableParallelBuilding = true;
-
     patches = [
       /*
         No tarballs for stable upstream branch, only https://sourceware.org/git/glibc.git and using git would complicate bootstrapping.
@@ -237,7 +235,6 @@ stdenv.mkDerivation (
       "getent"
     ];
 
-    strictDeps = true;
     depsBuildBuild = [ buildPackages.stdenv.cc ];
     nativeBuildInputs = [
       bison

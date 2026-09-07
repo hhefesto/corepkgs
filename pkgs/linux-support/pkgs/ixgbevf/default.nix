@@ -27,8 +27,6 @@ stdenv.mkDerivation rec {
     substituteInPlace common.mk --replace /boot/System.map /not-exists
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Intel 82599 Virtual Function Driver";
     homepage = "https://sourceforge.net/projects/e1000/files/ixgbevf%20stable/";

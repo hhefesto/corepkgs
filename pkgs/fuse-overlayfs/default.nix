@@ -26,9 +26,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [ fuse ];
 
-  enableParallelBuilding = true;
-  strictDeps = true;
-
   outputs = [
     "out"
     "man"

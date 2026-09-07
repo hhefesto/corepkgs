@@ -161,6 +161,7 @@ mapAliases {
   luajit_2_1 = lua.luajit_2_1;
   luajit_openresty = lua.luajit_openresty;
   man = man-db;
+  mtdutils = mtd-utils;
   ncurses5 = ncurses.v5;
   ncurses6 = ncurses.v6;
   nimble = nim;
@@ -170,6 +171,7 @@ mapAliases {
   nodejs_23 = nodejs.v23;
   openjdk = java;
   openjdk11 = java.v11;
+  openssl_1_1 = openssl.v1_1;
   openssl_oqs = openssl.oqs;
   patchelfUnstable = throw "patchelfUnstable was removed because it was older than patchelf and unneeded, use patchelf instead";
   perl538 = perl.v5_38;

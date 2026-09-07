@@ -10,7 +10,6 @@
   enableDrafts ? false,
   fetchpatch,
   # for passthru.tests
-  azmq,
   cppzmq,
   czmq,
   zmqpp,
@@ -57,8 +56,6 @@ stdenv.mkDerivation (finalAttrs: {
       hash = "sha256-FKvZi7pTUx+wLUR8Suf+pRFg8I5OHpJ93gEmTxUrmO4=";
     })
   ];
-
-  strictDeps = true;
 
   nativeBuildInputs = [
     cmake
@@ -108,7 +105,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru.tests = {
     inherit
-      azmq
       cppzmq
       czmq
       zmqpp

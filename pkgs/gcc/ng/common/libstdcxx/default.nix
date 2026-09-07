@@ -74,8 +74,6 @@ stdenv.mkDerivation (finalAttrs: {
     cd $sourceRoot
   '';
 
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [
     autoconf.v2_69.autoreconfHook
     gettext

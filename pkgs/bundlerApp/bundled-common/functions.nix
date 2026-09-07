@@ -98,7 +98,6 @@ rec {
       genStubsScript =
         runCommand "gen-bin-stubs"
           {
-            strictDeps = true;
             nativeBuildInputs = [ ruby ];
           }
           ''

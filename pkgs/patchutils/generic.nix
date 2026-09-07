@@ -23,8 +23,12 @@ stdenv.mkDerivation rec {
   buildInputs = [ perl ] ++ extraBuildInputs;
   hardeningDisable = [ "format" ];
 
-  # tests fail when building in parallel
-  enableParallelBuilding = false;
+  # tests fail when checking in parallel
+  enableParallelChecking = false;
+
+  preConfigure = ''
+    export PERL=${perl.interpreter}
+  '';
 
   postInstall = ''
     for bin in $out/bin/{splitdiff,rediff,editdiff,dehtmldiff}; do

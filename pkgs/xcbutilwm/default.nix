@@ -22,8 +22,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-YsNOIdBiZGh/rqftv2NjLJ8E1V5yEUqkpXu5Xk+Iigs=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     m4
     pkg-config

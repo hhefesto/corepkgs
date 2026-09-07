@@ -70,8 +70,6 @@ stdenv.mkDerivation (finalAttrs: {
     "--with-arch=${stdenv.hostPlatform.parsed.cpu.name}"
   ];
 
-  enableParallelBuilding = true;
-
   installFlags = [
     # Don't try to write to /var/cache/fontconfig at install time.
     "fc_cachedir=$(TMPDIR)/dummy"

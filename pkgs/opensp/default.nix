@@ -47,8 +47,6 @@ stdenv.mkDerivation rec {
     autoreconf -fi
   '';
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     xmlto
     docbook-xml-dtd.v4_1_2

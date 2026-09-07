@@ -143,7 +143,6 @@ stdenv.mkDerivation (finalAttrs: {
   # cross-binutils.
   ++ lib.optionals (targetPlatform == hostPlatform) [ "lib" ];
 
-  strictDeps = true;
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   # texinfo was removed here in https://github.com/NixOS/nixpkgs/pull/210132
   # to reduce rebuilds during stdenv bootstrap.  Please don't add it back without
@@ -284,7 +283,7 @@ stdenv.mkDerivation (finalAttrs: {
     for target in ${lib.escapeShellArgs allGasTargets}; do
       mkdir "$NIX_BUILD_TOP/build-$target"
       env -C "$NIX_BUILD_TOP/build-$target" \
-        "$configureScript" $configureFlags "''${configureFlagsArray[@]}" \
+        "$configureScript" "''${configureFlags[@]}" \
         --enable-gas --program-prefix "$target-"  --target "$target"
     done
   '';
@@ -299,7 +298,7 @@ stdenv.mkDerivation (finalAttrs: {
   postBuild = lib.optionalString withAllTargets ''
     for target in ${lib.escapeShellArgs allGasTargets}; do
       make -C "$NIX_BUILD_TOP/build-$target" -j"$NIX_BUILD_CORES" \
-        $makeFlags "''${makeFlagsArray[@]}" $buildFlags "''${buildFlagsArray[@]}" \
+        "''${makeFlags[@]}" "''${buildFlags[@]}" \
         TARGET-gas=as-new all-gas
     done
   '';
@@ -318,8 +317,6 @@ stdenv.mkDerivation (finalAttrs: {
   # `./sanity.sh: line 36: $out/bin/size: not found`
   doInstallCheck = (buildPlatform == hostPlatform) && (hostPlatform == targetPlatform);
 
-  enableParallelBuilding = true;
-
   # For the same reason we don't split "lib" output we undo the $target/
   # prefix for installed headers and libraries we link:
   #   $out/$host/$target/lib/*     to $out/lib/
@@ -334,7 +331,7 @@ stdenv.mkDerivation (finalAttrs: {
     + lib.optionalString withAllTargets ''
       for target in ${lib.escapeShellArgs allGasTargets}; do
         make -C "$NIX_BUILD_TOP/build-$target/gas" -j"$NIX_BUILD_CORES" \
-          $makeFlags "''${makeFlagsArray[@]}" $installFlags "''${installFlagsArray[@]}" \
+          "''${makeFlags[@]}" "''${installFlags[@]}" \
           install-exec-bindir
       done
     ''

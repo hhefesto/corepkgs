@@ -180,8 +180,6 @@ stdenv.mkDerivation (finalAttrs: {
   #   wrapPythonProgramsIn $test/test "$test/test ${toString pythonPath}"
   # '';
 
-  enableParallelBuilding = true;
-
   passthru = {
     tests = {
       version = testers.testVersion {

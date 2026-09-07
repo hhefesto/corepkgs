@@ -23,8 +23,6 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "e2fsprogs";
   version = "1.47.3";
 
-  __structuredAttrs = true;
-
   src = fetchurl {
     url = "mirror://kernel/linux/kernel/people/tytso/e2fsprogs/v${finalAttrs.version}/e2fsprogs-${finalAttrs.version}.tar.xz";
     hash = "sha256-hX5u+AD+qiu0V4+8gQIUvl08iLBy6lPFOEczqWVzcyk=";
@@ -50,8 +48,6 @@ stdenv.mkDerivation (finalAttrs: {
     "scripts"
   ]
   ++ lib.optionals withFuse [ "fuse2fs" ];
-
-  strictDeps = true;
 
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   nativeBuildInputs = [
@@ -104,8 +100,6 @@ stdenv.mkDerivation (finalAttrs: {
     mkdir -p $fuse2fs/bin
     mv $bin/bin/fuse2fs $fuse2fs/bin/fuse2fs
   '';
-
-  enableParallelBuilding = true;
 
   # non-glibc gettext has issues with this
   outputChecks = lib.optionalAttrs stdenv.hostPlatform.isGnu {

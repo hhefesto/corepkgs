@@ -181,8 +181,6 @@ stdenv.mkDerivation rec {
         done
       '';
 
-  enableParallelBuilding = true;
-
   nativeCheckInputs = [
     # A test would be skipped without SSH
     openssh

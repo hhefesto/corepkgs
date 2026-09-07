@@ -40,8 +40,6 @@ stdenv.mkDerivation (finalAttrs: {
     "-DBUILD_SHARED_BINARIES=${if stdenv.hostPlatform.isStatic then "OFF" else "ON"}"
   ];
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Purely-functional configuration language that helps you define JSON data";
     homepage = "https://github.com/google/jsonnet";

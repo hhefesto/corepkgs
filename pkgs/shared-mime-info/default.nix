@@ -43,8 +43,6 @@ stdenv.mkDerivation rec {
     glib
   ];
 
-  strictDeps = true;
-
   mesonFlags = [
     "-Dupdate-mimedb=true"
   ];

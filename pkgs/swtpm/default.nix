@@ -130,7 +130,6 @@ stdenv.mkDerivation (finalAttrs: {
   # Test suite is the majority of the build time
   # TODO(corepkgs): move unit tests to passthru.tests
   doCheck = false;
-  enableParallelBuilding = true;
 
   outputs = [
     "out"

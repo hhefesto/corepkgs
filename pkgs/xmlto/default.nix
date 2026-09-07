@@ -14,7 +14,8 @@
   makeWrapper,
   stdenv,
   testers,
-  w3m-batch,
+  withXmlToTextConversion ? false,
+  w3m-batch ? null,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -45,8 +46,6 @@ stdenv.mkDerivation (finalAttrs: {
     done
   '';
 
-  strictDeps = true;
-
   # `libxml2' provides `xmllint', needed at build-time and run-time.
   # `libxslt' provides `xsltproc', used by `xmlto' at run-time.
   nativeBuildInputs = [
@@ -58,15 +57,16 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   postInstall = ''
-    # `w3m' is needed for HTML to text conversions.
     wrapProgram "$out/bin/xmlto" \
        --prefix PATH : "${
-         lib.makeBinPath [
-           libxslt
-           libxml2
-           getopt
-           w3m-batch
-         ]
+         lib.makeBinPath (
+           [
+             libxslt
+             libxml2
+             getopt
+           ]
+           ++ lib.optional withXmlToTextConversion w3m-batch
+         )
        }"
   '';
 

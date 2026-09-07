@@ -34,7 +34,6 @@ stdenv.mkDerivation (finalAttrs: {
     "dev"
   ];
 
-  strictDeps = true;
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   nativeBuildInputs = [ libiberty ];
   buildInputs = [ glibc ];

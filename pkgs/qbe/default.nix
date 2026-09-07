@@ -23,8 +23,6 @@ stdenv.mkDerivation (finalAttrs: {
     "CC=${stdenv.cc.targetPrefix}cc"
   ];
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Small compiler backend written in C";
     homepage = "https://c9x.me/compile/";

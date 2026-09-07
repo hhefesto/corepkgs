@@ -33,8 +33,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-074Fyv6MwJDQZpmhQ1K+J8jQ4xxhOQGmTQgKDHqqQh0=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     autoreconfHook
     gettext

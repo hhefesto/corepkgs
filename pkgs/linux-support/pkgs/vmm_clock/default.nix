@@ -44,5 +44,4 @@ stdenv.mkDerivation rec {
     ];
   };
 
-  enableParallelBuilding = true;
 }

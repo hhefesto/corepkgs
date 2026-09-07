@@ -21,8 +21,6 @@ stdenv.mkDerivation (finalAttrs: {
     sha256 = "sha256-d5nMDFQkJY+obYkhvr8yT9mjlGEBWFLN5xGizJ9kwHw=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     libxslt
     makeWrapper

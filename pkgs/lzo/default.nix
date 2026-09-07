@@ -19,10 +19,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   configureFlags = lib.optional (!stdenv.hostPlatform.isStatic) "--enable-shared";
 
-  enableParallelBuilding = true;
-
-  strictDeps = true;
-
   passthru.tests.unittests = runUnitTests finalAttrs.finalPackage;
 
   meta = {

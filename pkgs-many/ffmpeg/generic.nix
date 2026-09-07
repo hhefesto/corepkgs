@@ -42,7 +42,7 @@
   # Feature flags
   withAlsa ? withHeadlessDeps && stdenv.hostPlatform.isLinux, # Alsa in/output supporT
   withAmf ? withHeadlessDeps && amf != null && lib.meta.availableOn stdenv.hostPlatform amf, # AMD Media Framework video encoding
-  withAom ? withHeadlessDeps && libaom != null, # AV1 reference encoder
+  withAom ? withHeadlessDeps, # AV1 reference encoder
   withAribb24 ? withFullDeps, # ARIB text and caption decoding
   withAribcaption ? withFullDeps && packageAtLeast "6.1", # ARIB STD-B24 Caption Decoder/Renderer
   withAss ? withHeadlessDeps && stdenv.hostPlatform == stdenv.buildPlatform && libass != null, # (Advanced) SubStation Alpha subtitle rendering
@@ -53,8 +53,8 @@
   withCaca ? withFullDeps, # Textual display (ASCII art)
   withCdio ? withFullDeps && withGPL, # Audio CD grabbing
   withCelt ? withFullDeps, # CELT decoder
-  withChromaprint ? withFullDeps, # Audio fingerprinting
-  withCodec2 ? withFullDeps, # codec2 en/decoding
+  withChromaprint ? withFullDeps && chromaprint != null, # Audio fingerprinting
+  withCodec2 ? withFullDeps && codec2 != null, # codec2 en/decoding
   withCuda ? withFullDeps && withNvcodec,
   withCudaLLVM ? withHeadlessDeps,
   withCudaNVCC ? withFullDeps && withUnfree && config.cudaSupport,
@@ -245,8 +245,8 @@
   avisynthplus,
   bzip2,
   celt,
-  chromaprint,
-  codec2,
+  chromaprint ? null,
+  codec2 ? null,
   clang,
   dav1d,
   davs2,
@@ -817,8 +817,6 @@ stdenv.mkDerivation (
       in
       "remove-references-to ${lib.concatStringsSep " " (map (o: "-t ${o}") toStrip)} config.h";
 
-    strictDeps = true;
-
     nativeBuildInputs = [
       removeReferencesTo
       addDriverRunpath
@@ -1034,8 +1032,6 @@ stdenv.mkDerivation (
         }
       '';
 
-    enableParallelBuilding = true;
-
     passthru = mkVariantPassthru variantArgs // {
       tests.pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
     };
@@ -1072,7 +1068,8 @@ stdenv.mkDerivation (
         ++ optional buildSwscale "libswscale";
       platforms = lib.platforms.all;
       # See https://github.com/NixOS/nixpkgs/pull/295344#issuecomment-1992263658
-      broken = stdenv.hostPlatform.isMinGW && stdenv.hostPlatform.is64bit;
+      # TODO: mark more deps optional for full variant and remove from top-level
+      broken = stdenv.hostPlatform.isMinGW && stdenv.hostPlatform.is64bit || ffmpegVariant == "full";
       mainProgram = "ffmpeg";
       identifiers.cpeParts = lib.meta.cpeFullVersionWithVendor "ffmpeg" finalAttrs.version;
     };

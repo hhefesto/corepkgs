@@ -48,9 +48,10 @@ in
     runCommand name
       {
         input = input data;
-        passAsFile = [ "input" ];
       }
       ''
+        inputPath="$TMPDIR/input"
+        printf '%s' "$input" > "$inputPath"
         ${output}
 
         ${optionalString (types.path.check nameOrPath) ''

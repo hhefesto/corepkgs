@@ -2,7 +2,7 @@
   lib,
   buildPythonPackage,
   fetchFromGitHub,
-  gdb,
+  gdb ? null,
   isPyPy,
   ncurses,
   numpy,
@@ -44,8 +44,6 @@ buildPythonPackage rec {
   # https://github.com/cython/cython/issues/2785
   # Temporary solution
   doCheck = false;
-
-  strictDeps = true;
 
   checkPhase =
     let

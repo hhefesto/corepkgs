@@ -37,8 +37,6 @@ stdenv.mkDerivation rec {
   ]
   ++ lib.optional pythonSupport "py";
 
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [
     autoreconfHook
     bison

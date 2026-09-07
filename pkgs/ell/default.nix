@@ -36,8 +36,6 @@ stdenv.mkDerivation rec {
     sysctl
   ];
 
-  enableParallelBuilding = true;
-
   # Runs multiple dbus instances on the same port failing the bind.
   enableParallelChecking = false;
 

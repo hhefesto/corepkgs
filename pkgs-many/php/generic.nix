@@ -86,8 +86,6 @@ stdenv.mkDerivation (finalAttrs: {
     "--with-sodium"
   ];
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     # Create php.ini-development and php.ini-production
     cp php.ini-development $out/etc/php.ini-development || true

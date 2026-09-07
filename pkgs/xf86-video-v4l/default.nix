@@ -22,8 +22,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-uCKeecAqHycYduKaDVMupGvMN84vHeF3ECyVchkXwdA=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     autoreconfHook
     libtool

@@ -22,9 +22,6 @@ stdenv.mkDerivation (finalAttrs: {
     sha256 = "sha256-q2QkkvXPiCt0qgy3MM1BCoHtzb7IlRg86TDnBsHHWbg=";
   };
 
-  strictDeps = true;
-  enableParallelBuilding = true;
-
   buildInputs = [
     gmp
     mpfr

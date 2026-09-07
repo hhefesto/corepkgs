@@ -14,8 +14,6 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "sudo";
   version = "1.9.17p2";
 
-  __structuredAttrs = true;
-
   src = fetchurl {
     url = "https://www.sudo.ws/dist/sudo-${finalAttrs.version}.tar.gz";
     hash = "sha256-SjihqzrbEZklftwqfEor1xRmXrYFsENohDsG2tos/Ps=";
@@ -67,8 +65,6 @@ stdenv.mkDerivation (finalAttrs: {
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   nativeBuildInputs = [ groff ];
   buildInputs = [ linux-pam ];
-
-  enableParallelBuilding = true;
 
   doCheck = false; # needs root
 

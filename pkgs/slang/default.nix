@@ -58,8 +58,6 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=(AR_CR="${stdenv.cc.targetPrefix}ar cr")
   '';
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     find "$out"/lib/ -name '*.so' -exec chmod +x "{}" \;
     sed '/^Libs:/s/$/ -lncurses/' -i "$dev"/lib/pkgconfig/slang.pc

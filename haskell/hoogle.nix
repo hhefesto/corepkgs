@@ -35,8 +35,6 @@ buildPackages.stdenv.mkDerivation (finalAttrs: {
   preferLocalBuild = true;
   allowSubstitutes = true;
 
-  passAsFile = [ "buildCommand" ];
-
   buildCommand = ''
     ${
       let

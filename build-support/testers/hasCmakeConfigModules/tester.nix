@@ -56,7 +56,7 @@ runCommandCC testName
   ''
     touch "$out"
     notFound=0
-    for moduleName in $moduleNames; do
+    for moduleName in "''${moduleNames[@]}"; do
       echo "checking cmake-config module $moduleName"
 
       cat <<EOF > CMakeLists.txt
@@ -66,9 +66,9 @@ runCommandCC testName
     find_package($moduleName $version EXACT NO_MODULE REQUIRED)
     EOF
 
-      echoCmd 'cmake flags' $cmakeFlags
+      echoCmd 'cmake flags' "''${cmakeFlags[@]}"
       set +e
-      cmake . $cmakeFlags
+      cmake . "''${cmakeFlags[@]}"
       r=$?
       set -e
       if [[ $r = 0 ]]; then

@@ -41,5 +41,4 @@ stdenv.mkDerivation rec {
     platforms = lib.platforms.linux;
   };
 
-  enableParallelBuilding = true;
 }

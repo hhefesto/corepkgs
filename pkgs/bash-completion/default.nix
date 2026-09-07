@@ -28,7 +28,6 @@ stdenv.mkDerivation rec {
       --replace-fail "/lib/modules" "/run/booted-system/kernel-modules/lib/modules"
   '';
 
-  strictDeps = true;
   nativeBuildInputs = [ autoreconfHook ];
 
   # tests are super flaky unfortunately, and regularly break.

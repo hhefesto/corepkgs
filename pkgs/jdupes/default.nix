@@ -40,8 +40,6 @@ stdenv.mkDerivation (finalAttrs: {
   ]
   ++ lib.optionals stdenv.cc.isGNU [ "HARDEN=1" ];
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Powerful duplicate file finder and an enhanced fork of 'fdupes'";
     homepage = "https://codeberg.org/jbruchon/jdupes";

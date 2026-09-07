@@ -22,8 +22,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-n/detXvtRvysc5pjFc0Q27yLC2QsNUBo9AIXYkUG4PQ=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     autoreconfHook
     bison

@@ -22,8 +22,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ autoreconfHook ];
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     mkdir -p $cxx/lib
     mv $out/lib/*c++* $cxx/lib

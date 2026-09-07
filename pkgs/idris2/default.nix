@@ -30,9 +30,7 @@ let
     pname = "libidris2_support";
     inherit version src;
 
-    strictDeps = true;
     buildInputs = [ gmp ];
-    enableParallelBuilding = true;
 
     makeFlags = [
       "PREFIX=${placeholder "out"}"
@@ -73,7 +71,6 @@ let
       patchShebangs --build tests
     '';
 
-    strictDeps = true;
     nativeBuildInputs = [
       clang
       chez
@@ -83,8 +80,6 @@ let
       gmp
       libidris2_support
     ];
-
-    enableParallelBuilding = true;
 
     makeFlags = [
       "PREFIX=${placeholder "out"}"

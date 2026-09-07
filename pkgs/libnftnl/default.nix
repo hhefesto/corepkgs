@@ -24,8 +24,6 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [ pkg-config ];
   buildInputs = [ libmnl ];
 
-  enableParallelBuilding = true;
-
   passthru = {
     tests = {
       inherit nftables;

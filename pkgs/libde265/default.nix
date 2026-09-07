@@ -10,7 +10,6 @@
   # for passthru.tests
   imagemagick,
   libheif,
-  imlib2Full,
   gst_all_1,
 }:
 
@@ -37,10 +36,8 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
   ];
 
-  enableParallelBuilding = true;
-
   passthru.tests = {
-    inherit imagemagick libheif imlib2Full;
+    inherit imagemagick libheif;
     inherit (gst_all_1) gst-plugins-bad;
 
     test-corpus-decode = callPackage ./test-corpus-decode.nix {

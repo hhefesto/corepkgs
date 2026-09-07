@@ -29,8 +29,6 @@ stdenv.mkDerivation (finalAttrs: {
     python3
   ];
 
-  enableParallelBuilding = true;
-
   preCheck = ''
     patchShebangs run_tests.py
   '';

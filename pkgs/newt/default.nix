@@ -32,7 +32,6 @@ stdenv.mkDerivation rec {
       --replace "ar rv" "${stdenv.cc.targetPrefix}ar rv"
   '';
 
-  strictDeps = true;
   nativeBuildInputs = [ python3 ];
   buildInputs = [
     slang

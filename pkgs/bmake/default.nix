@@ -67,8 +67,6 @@ stdenv.mkDerivation (finalAttrs: {
     ) "export"
   );
 
-  strictDeps = true;
-
   # TODO(corepkgs): move to passthru, majority of build time is tests
   doCheck = false;
 

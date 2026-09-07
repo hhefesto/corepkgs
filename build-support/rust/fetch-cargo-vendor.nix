@@ -96,8 +96,6 @@ let
         runHook postBuild
       '';
 
-      strictDeps = true;
-
       dontConfigure = true;
       dontInstall = true;
       dontFixup = true;

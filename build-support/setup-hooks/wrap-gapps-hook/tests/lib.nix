@@ -3,7 +3,7 @@
 rec {
   runTest =
     name: body:
-    runCommand name { strictDeps = true; } ''
+    runCommand name { } ''
       set -o errexit
       ${body}
       touch $out

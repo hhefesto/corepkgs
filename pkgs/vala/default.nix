@@ -94,8 +94,6 @@ let
       ++ lib.optional withGraphviz graphviz
       ++ extraBuildInputs;
 
-      enableParallelBuilding = true;
-
       doCheck = false; # fails, requires dbus daemon
 
       passthru = {

@@ -52,10 +52,6 @@ stdenv.mkDerivation (finalAttrs: {
   ]
   ++ lib.optional enableX11 libx11;
 
-  strictDeps = true;
-
-  enableParallelBuilding = true;
-
   postPatch = ''
     # Install libnetpbm.so symlink to correct destination
     substituteInPlace lib/Makefile \

@@ -31,9 +31,6 @@ stdenv.mkDerivation (finalAttrs: {
     "man"
   ];
 
-  strictDeps = true;
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [
     autoreconfHook
   ]

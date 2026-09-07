@@ -22,7 +22,6 @@ stdenv.mkDerivation rec {
     hash = "sha256-CiqiUIJnJYXRb82rYcew4z8DX7h0dlBceU8pVlr6SFs=";
   };
 
-  strictDeps = true;
   depsBuildBuild = [ pkg-config ];
   nativeBuildInputs = [
     glib

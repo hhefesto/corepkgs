@@ -26,8 +26,8 @@ stdenv.mkDerivation rec {
   nativeBuildInputs = [
     autoreconfHook
     pkg-config
-  ]
-  ++ lib.optional doCheck cmocka;
+  ];
+  checkInputs = [ cmocka ];
   buildInputs = [
     acl
     libuuid
@@ -41,8 +41,6 @@ stdenv.mkDerivation rec {
     substituteInPlace ubifs-utils/mount.ubifs \
       --replace-fail "/bin/mount" "${util-linux}/bin/mount"
   '';
-
-  enableParallelBuilding = true;
 
   configureFlags = [
     (lib.enableFeature doCheck "unit-tests")

@@ -55,8 +55,6 @@ stdenv'.mkDerivation (finalAttrs: {
 
   patches = [ ] ++ extraPatches;
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     pkg-config
     autoreconfHook
@@ -100,8 +98,6 @@ stdenv'.mkDerivation (finalAttrs: {
     "pythondir=\"${placeholder "py"}/${python3.sitePackages}\""
     "pyexecdir=\"${placeholder "py"}/${python3.sitePackages}\""
   ];
-
-  enableParallelBuilding = true;
 
   doCheck = (stdenv.hostPlatform == stdenv.buildPlatform) && stdenv.hostPlatform.libc != "musl";
   preCheck = lib.optional stdenv.hostPlatform.isDarwin ''

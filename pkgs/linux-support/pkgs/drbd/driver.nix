@@ -27,8 +27,6 @@ stdenv.mkDerivation (finalAttrs: {
     python3
   ];
 
-  enableParallelBuilding = true;
-
   makeFlags = kernelModuleMakeFlags ++ [
     "KDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
     "KVER=${kernel.version}"

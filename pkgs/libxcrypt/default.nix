@@ -55,8 +55,6 @@ stdenv.mkDerivation (finalAttrs: {
     perl
   ];
 
-  enableParallelBuilding = true;
-
   passthru = {
     tests = {
       passthruMatches = runCommand "libxcrypt-test-passthru-matches" { } ''

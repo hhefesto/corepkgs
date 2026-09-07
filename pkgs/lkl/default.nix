@@ -95,13 +95,12 @@ stdenv.mkDerivation {
   env.NIX_LDFLAGS = lib.optionalString stdenv.hostPlatform.isLoongArch64 "--no-relax";
 
   makeFlags = [
-    "-C tools/lkl"
+    "-C"
+    "tools/lkl"
     "CC=${stdenv.cc}/bin/${stdenv.cc.targetPrefix}cc"
     "HOSTCC=${buildPackages.stdenv.cc}/bin/${buildPackages.stdenv.cc.targetPrefix}cc"
     "CROSS_COMPILE=${stdenv.cc.targetPrefix}"
   ];
-
-  enableParallelBuilding = true;
 
   meta = {
     description = "Linux kernel as a library";

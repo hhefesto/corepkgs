@@ -22,6 +22,11 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-ZuH3tUWNklq0bKp0Yu9w3L5FNsQwUxe6lyGBv4M6U1E=";
   };
 
+  postPatch = ''
+    substituteInPlace CMake/*.pc.in \
+      --replace-fail "\''${prefix}/" ""
+  '';
+
   nativeBuildInputs = [
     cmake
     cmake.configurePhaseHook

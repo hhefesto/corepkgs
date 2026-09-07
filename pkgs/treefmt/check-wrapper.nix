@@ -13,8 +13,6 @@
 project:
 runCommandLocal "${lib.getName wrapper}-check"
   {
-    __structuredAttrs = true;
-    strictDeps = true;
     nativeBuildInputs = [
       gitMinimal
       wrapper

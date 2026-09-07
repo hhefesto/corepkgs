@@ -86,6 +86,7 @@ stdenv.mkDerivation (finalAttrs: {
     "-DUSE_GITHASH=OFF"
     "-DINSTALL_LICENSE=OFF"
     "-DINSTALL_CADICAL=OFF"
+    "-DCADICAL=${cadical'}/bin/cadical"
     "-DUSE_MIMALLOC=${if enableMimalloc then "ON" else "OFF"}"
   ];
 

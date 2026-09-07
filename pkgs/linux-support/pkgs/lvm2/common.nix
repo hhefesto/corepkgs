@@ -39,8 +39,6 @@ stdenv.mkDerivation rec {
     + lib.optionalString enableVDO "-with-vdo";
   inherit version;
 
-  __structuredAttrs = true;
-
   src = fetchurl {
     urls = [
       "https://mirrors.kernel.org/sourceware/lvm2/LVM2.${version}.tgz"
@@ -48,8 +46,6 @@ stdenv.mkDerivation rec {
     ];
     inherit hash;
   };
-
-  strictDeps = true;
 
   nativeBuildInputs = [ pkg-config ] ++ lib.optionals udevSupport [ udevCheckHook ];
   buildInputs = [
@@ -156,8 +152,6 @@ stdenv.mkDerivation rec {
     ++ lib.optionals onlyLib [
       "libdm.device-mapper"
     ];
-
-  enableParallelBuilding = true;
 
   # To prevent make install from failing.
   installFlags = [

@@ -31,8 +31,6 @@ stdenv.mkDerivation rec {
 
   dontStrip = true;
 
-  enableParallelBuilding = true;
-
   hardeningDisable = [ "pic" ];
 
   meta = {

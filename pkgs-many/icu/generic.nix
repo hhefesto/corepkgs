@@ -96,8 +96,6 @@ let
     ) "--with-cross-build=${nativeBuildRoot}"
     ++ lib.optional withStatic "--enable-static";
 
-    enableParallelBuilding = true;
-
     meta = {
       description = "Unicode and globalization support library";
       homepage = "https://icu.unicode.org/";

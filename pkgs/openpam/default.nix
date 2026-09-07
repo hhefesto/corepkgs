@@ -15,14 +15,10 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-DZrI9bVaYkH1Bz8T7/HpVGFCLEWsGjBEXX4QaOkdtP0=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     autoreconfHook
     pkg-config
   ];
-
-  __structuredAttrs = true;
 
   meta = {
     homepage = "https://www.openpam.org";

@@ -18,11 +18,7 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-LM4B3pNlOCn2q2iiDC7CdeHACpRhEHBKJ+ko0ubohxY=";
   };
 
-  strictDeps = true;
-
   setupHook = [ ./setup-hook.sh ];
-
-  enableParallelBuilding = true;
 
   # fails 8 out of 24 tests, problems when loading libc.so.6
   doCheck = stdenv.name == "stdenv-linux";

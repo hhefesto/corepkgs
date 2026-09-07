@@ -35,8 +35,6 @@ stdenv.mkDerivation (finalAttrs: {
     mkdir -p "$out/lib/modules/${kernel.modDirVersion}/kernel/net/wireless/"
   '';
 
-  enableParallelBuilding = true;
-
   passthru.updateScript = nix-update-script { extraArgs = [ "--version=branch=master" ]; };
 
   meta = {

@@ -27,11 +27,7 @@ if grep -q '^warning:' "$stderr"; then
   exit 1
 fi
 
-# `{"evaluated":N,"placeholders":M}` -- two integers looked up by name, so no
-# JSON parser is needed and key order does not matter.
-field() { sed -E "s/.*\"$1\":([0-9]+).*/\1/" <<<"$result"; }
-count="$(field evaluated)"
-placeholders="$(field placeholders)"
+# `{"evaluated":N}` -- extract the integer without needing a JSON parser.
+count="$(sed -E 's/.*"evaluated":([0-9]+).*/\1/' <<<"$result")"
 
 echo "All $count packages evaluate (top-level attributes plus pkgs-many variants)."
-echo "Skipped $placeholders null attributes (unported dependency placeholders)."

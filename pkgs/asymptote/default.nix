@@ -8,6 +8,7 @@
   cmake,
   pkg-config,
   perl,
+  python3,
   texinfo,
   ghostscript,
 
@@ -64,6 +65,7 @@ stdenv.mkDerivation (finalAttrs: {
     texinfo
     cmake
     perl
+    python3
     pkg-config
     ghostscript
   ]
@@ -74,6 +76,9 @@ stdenv.mkDerivation (finalAttrs: {
           epsf
           cm-super
           ps.texinfo
+          media9
+          ocgx2
+          collection-latexextra
         ]
       )
     else
@@ -172,7 +177,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   dontUseCmakeConfigure = true;
 
-  enableParallelBuilding = true;
   enableParallelInstalling = false;
 
   meta = {

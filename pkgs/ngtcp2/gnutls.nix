@@ -35,7 +35,6 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [ gnutls ];
 
   configureFlags = [ "--with-gnutls=yes" ];
-  enableParallelBuilding = true;
 
   nativeCheckInputs = [ cunit ] ++ lib.optional stdenv.hostPlatform.isDarwin ncurses;
 

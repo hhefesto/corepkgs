@@ -29,7 +29,6 @@ stdenv.mkDerivation rec {
       throw "MLton: unsupported platform ${stdenv.hostPlatform.system}";
 
   buildInputs = [ gmp ];
-  strictDeps = true;
 
   buildPhase = ''
     make update \

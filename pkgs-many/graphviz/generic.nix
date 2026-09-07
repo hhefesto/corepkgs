@@ -75,8 +75,6 @@ stdenv.mkDerivation rec {
   ]
   ++ optional (xorg == null || !withXorg) "--without-x";
 
-  enableParallelBuilding = true;
-
   CPPFLAGS = optionalString (withXorg && stdenv.hostPlatform.isDarwin) "-I${cairo.dev}/include/cairo";
 
   doCheck = false; # fails with "Graphviz test suite requires ksh93" which is not in nixpkgs

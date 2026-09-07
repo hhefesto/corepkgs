@@ -29,10 +29,10 @@ stdenv.mkDerivation rec {
     zlib
   ];
 
-  enableParallelBuilding = true;
   makeFlags = [
     "PREFIX=$(out)"
-    "-C src"
+    "-C"
+    "src"
   ];
 
   passthru.tests = {

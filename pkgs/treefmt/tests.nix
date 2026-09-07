@@ -125,7 +125,6 @@ in
             list = [ ];
           }
         '';
-        __structuredAttrs = true;
       }
       ''
         export XDG_CACHE_HOME=$(mktemp -d)

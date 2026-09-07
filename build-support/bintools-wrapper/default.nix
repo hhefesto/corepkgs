@@ -200,8 +200,6 @@ stdenvNoCC.mkDerivation {
   dontBuild = true;
   dontConfigure = true;
 
-  enableParallelBuilding = true;
-
   unpackPhase = ''
     src=$PWD
   '';
@@ -272,7 +270,6 @@ stdenvNoCC.mkDerivation {
     done
   '';
 
-  strictDeps = true;
   depsTargetTargetPropagated = extraPackages;
 
   setupHooks = [

@@ -23,7 +23,8 @@ let
     inherit version src;
 
     makeFlags = [
-      "-C userspace"
+      "-C"
+      "userspace"
     ];
 
     installPhase = ''

@@ -47,9 +47,9 @@ installtl_do_texmf_cnf () {
 # note that the other postactions (fileassoc, ...) are Windows only
 installtl_do_tlpdb_postactions () {
     local postaction postInterp
-    if [[ -n $postactionScripts ]] ; then
+    if (( ${#postactionScripts[@]} > 0 )) ; then
         tlutils_info "running package-specific postactions"
-        for postaction in $postactionScripts ; do
+        for postaction in "${postactionScripts[@]}" ; do
             # see TeXLive::TLUtils::_installtl_do_postaction_script
             case "$postaction" in
                 *.pl)
@@ -123,15 +123,13 @@ installtl_do_path_adjustments () {
     ln -s "$texmfdist" "$out"/share/texmf
 
     # generate other outputs
-    local otherOutput otherOutputName
-    local otherOutputs="$otherOutputs"
-    for otherOutputName in $outputs ; do
+    local otherOutputIdx=0 otherOutputName
+    for otherOutputName in "${!outputs[@]}" ; do
         if [[ $otherOutputName == out ]] ; then
             continue
         fi
-        otherOutput="${otherOutputs%% *}"
-        otherOutputs="${otherOutputs#* }"
-        ln -s "$otherOutput" "${!otherOutputName}"
+        ln -s "${otherOutputs[$otherOutputIdx]}" "${outputs[$otherOutputName]}"
+        ((otherOutputIdx++)) || true
     done
 }
 

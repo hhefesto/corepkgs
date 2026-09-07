@@ -27,8 +27,6 @@ stdenv.mkDerivation rec {
     "DEST_MAN=${placeholder "out"}/share/man"
   ];
 
-  enableParallelBuilding = true;
-
   # No install phase needed, the makefile handles it
   installFlags = [ "DEST_HOME=${placeholder "out"}" ];
 

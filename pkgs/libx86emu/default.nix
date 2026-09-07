@@ -31,8 +31,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   env.NIX_CFLAGS_COMPILE = "-Wno-implicit-function-declaration";
 
-  enableParallelBuilding = true;
-
   installFlags = [
     "DESTDIR=$(out)"
     "LIBDIR=/lib"

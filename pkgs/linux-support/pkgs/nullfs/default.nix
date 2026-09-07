@@ -18,8 +18,6 @@ stdenv.mkDerivation rec {
 
   hardeningDisable = [ "pic" ];
 
-  enableParallelBuilding = true;
-
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
   makeFlags = kernelModuleMakeFlags ++ [

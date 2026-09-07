@@ -66,8 +66,6 @@ stdenv.mkDerivation (finalAttrs: {
     "CFLAGS+=-DEXTERN_TIMEOFF=1"
   ];
 
-  enableParallelBuilding = true;
-
   checkTarget = "check";
 
   installFlags = lib.optionals (stdenv.buildPlatform != stdenv.hostPlatform) [

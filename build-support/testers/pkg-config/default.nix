@@ -35,8 +35,8 @@
           echo "============================================"
 
           # Test each module (if modules are specified)
-          if [ -n "$modules" ]; then
-            for module in $modules; do
+          if ((''${#modules[@]})); then
+            for module in "''${modules[@]}"; do
             echo ""
             echo "Testing module: $module"
 
@@ -146,9 +146,9 @@
             echo "--------------------------------"
 
             # Get combined flags for all modules
-            if [ -n "$modules" ]; then
-              allCflags=$(pkg-config --cflags $modules)
-              allLibs=$(pkg-config --libs $modules)
+            if ((''${#modules[@]})); then
+              allCflags=$(pkg-config --cflags "''${modules[@]}")
+              allLibs=$(pkg-config --libs "''${modules[@]}")
               echo "Combined CFLAGS: $allCflags"
               echo "Combined LIBS: $allLibs"
             else

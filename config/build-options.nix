@@ -73,18 +73,6 @@ in
       feature = "run `checkPhase` by default";
     };
 
-    strictDepsByDefault = mkMassRebuild {
-      feature = "set `strictDeps` to true by default";
-    };
-
-    structuredAttrsByDefault = mkMassRebuild {
-      feature = "set `__structuredAttrs` to true by default";
-    };
-
-    enableParallelBuildingByDefault = mkMassRebuild {
-      feature = "set `enableParallelBuilding` to true by default";
-    };
-
     configurePlatformsByDefault = mkMassRebuild {
       feature = "set `configurePlatforms` to `[\"build\" \"host\"]` by default";
     };
@@ -94,14 +82,10 @@ in
     };
 
     cudaSupport = mkMassRebuild {
-      type = types.bool;
-      default = false;
       feature = "build packages with CUDA support by default";
     };
 
     rocmSupport = mkMassRebuild {
-      type = types.bool;
-      default = false;
       feature = "build packages with ROCm support by default";
     };
   };

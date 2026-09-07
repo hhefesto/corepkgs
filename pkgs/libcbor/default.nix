@@ -28,7 +28,6 @@ stdenv.mkDerivation (finalAttrs: {
     "dev"
   ];
 
-  strictDeps = true;
   nativeBuildInputs = [
     cmake
     cmake.configurePhaseHook

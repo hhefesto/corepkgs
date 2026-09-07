@@ -101,7 +101,6 @@ stdenv.mkDerivation (finalAttrs: {
   ]
   ++ lib.optional enableJITDebugModule "INSTALL_LJLIBD=$(INSTALL_LMOD)"
   ++ lib.optional stdenv.hostPlatform.isStatic "BUILDMODE=static";
-  enableParallelBuilding = true;
   env.NIX_CFLAGS_COMPILE = toString XCFLAGS;
 
   # The LuaJIT build produces `src/luajit.exe` on Windows targets, but the

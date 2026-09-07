@@ -18,8 +18,6 @@ stdenv.mkDerivation (
       gettext
     ];
 
-    enableParallelBuilding = true;
-
     configurePhase = ''
       runHook preConfigure
       export MAKEFLAGS+="''${enableParallelBuilding:+-j$NIX_BUILD_CORES}"
@@ -38,8 +36,21 @@ stdenv.mkDerivation (
 
     installPhase = ''
       runHook preInstall
-      mkdir -p $out/library
-      $rCommand CMD INSTALL --built-timestamp='1970-01-01 00:00:00 UTC' $installFlags --configure-args="$configureFlags" -l $out/library .
+      mkdir -p "$out/library"
+
+      # R expands configure arguments through a shell, so quote each array
+      # element before passing the result as a single --configure-args value.
+      local configureArgs=""
+      if ((''${#configureFlags[@]})); then
+        printf -v configureArgs '%q ' "''${configureFlags[@]}"
+      fi
+
+      $rCommand CMD INSTALL \
+        --built-timestamp='1970-01-01 00:00:00 UTC' \
+        --configure-args="$configureArgs" \
+        "''${installFlags[@]}" \
+        -l "$out/library" \
+        .
       runHook postInstall
     '';
 

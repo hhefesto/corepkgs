@@ -24,8 +24,6 @@ stdenv.mkDerivation (finalAttrs: {
     "dev"
   ];
 
-  strictDeps = true;
-
   depsBuildBuild = [
     buildPackages.stdenv.cc
     buildGccPackages.libiberty
@@ -76,8 +74,6 @@ stdenv.mkDerivation (finalAttrs: {
   postPatch = ''
     sourceRoot=$(readlink -e "./libgcc")
   '';
-
-  enableParallelBuilding = true;
 
   preConfigure = ''
     cd "$buildRoot"

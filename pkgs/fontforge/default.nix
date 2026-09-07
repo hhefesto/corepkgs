@@ -4,6 +4,7 @@
   lib,
   replaceVars,
   cmake,
+  gettext,
   pkg-config,
   python3,
   freetype,
@@ -66,6 +67,7 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     cmake
     cmake.configurePhaseHook
+    gettext
   ];
 
   buildInputs = [
@@ -98,6 +100,7 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optional (!withGUI) "-DENABLE_GUI=OFF"
   ++ lib.optional (!withGTK) "-DENABLE_X11=ON"
   ++ lib.optional (!withPython) "-DENABLE_PYTHON_SCRIPTING=OFF"
+  ++ lib.optional withPython "-DPython3_EXECUTABLE=${lib.getExe py}"
   ++ lib.optional withExtras "-DENABLE_FONTFORGE_EXTRAS=ON";
 
   preConfigure = ''

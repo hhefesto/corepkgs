@@ -8,7 +8,7 @@
   python,
   pkg-config,
   pythonAtLeast,
-  gdb,
+  gdb ? null,
   numpy,
   ncurses,
 }:

@@ -27,7 +27,6 @@
   gitUpdater,
 
   # for passthru.tests
-  gdb,
   strace,
 }:
 
@@ -128,8 +127,6 @@ stdenv.mkDerivation rec {
   ]
   ++ lib.optional (stdenv.targetPlatform.useLLVM or false) "--disable-demangler";
 
-  enableParallelBuilding = true;
-
   doCheck =
     # Backtrace unwinding tests rely on glibc-internal symbol names.
     # Musl provides slightly different forms and fails.
@@ -146,7 +143,7 @@ stdenv.mkDerivation rec {
         package = elfutils;
         command = "eu-readelf --version";
       };
-      inherit gdb strace;
+      inherit strace;
     };
     updateScript = gitUpdater {
       url = "https://sourceware.org/git/elfutils.git";

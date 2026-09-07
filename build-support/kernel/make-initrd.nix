@@ -71,7 +71,6 @@ in
 assert lib.assertMsg (makeUInitrd == null && uInitrdArch == null && uInitrdCompression == null)
   "makeInitrd: U‐Boot legacy image support has been removed as it is deprecated upstream and ARMv5 kernels no longer default to uImage";
 stdenvNoCC.mkDerivation (finalAttrs: {
-  __structuredAttrs = true;
 
   # the initrd will be self-contained so we can drop references
   # to the closure that was used to build it

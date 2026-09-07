@@ -127,8 +127,6 @@ buildPythonPackage (finalAttrs: {
     ln -s ${cfg} site.cfg
   '';
 
-  enableParallelBuilding = true;
-
   nativeCheckInputs = [
     pytest-xdist
     pytestCheckHook

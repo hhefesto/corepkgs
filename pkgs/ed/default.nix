@@ -30,8 +30,6 @@ stdenv.mkDerivation (finalAttrs: {
     "CC=${stdenv.cc.targetPrefix}cc"
   ];
 
-  strictDeps = true;
-
   passthru = {
     tests = {
       version = testers.testVersion {

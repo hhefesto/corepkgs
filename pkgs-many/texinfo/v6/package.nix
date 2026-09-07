@@ -83,9 +83,6 @@ stdenv.mkDerivation {
     NATIVE_TOOLS_LDFLAGS = "-L${getLib buildPackages.ncurses}/lib";
   };
 
-  strictDeps = true;
-  enableParallelBuilding = true;
-
   # A native compiler is needed to build tools needed at build time
   depsBuildBuild = [
     buildPackages.stdenv.cc

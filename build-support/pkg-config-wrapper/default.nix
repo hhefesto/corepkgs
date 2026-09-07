@@ -42,8 +42,6 @@ stdenv.mkDerivation {
   pname = targetPrefix + pkg-config.pname + "-wrapper";
   inherit (pkg-config) version;
 
-  enableParallelBuilding = true;
-
   preferLocalBuild = true;
 
   outputs = [ "out" ] ++ optionals propagateDoc ([ "man" ] ++ optional (pkg-config ? doc) "doc");
@@ -53,7 +51,6 @@ stdenv.mkDerivation {
     inherit pkg-config;
   };
 
-  strictDeps = true;
   dontBuild = true;
   dontConfigure = true;
   dontUnpack = true;

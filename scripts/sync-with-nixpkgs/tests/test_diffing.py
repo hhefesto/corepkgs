@@ -246,6 +246,7 @@ EQUIVALENT = _cases(
     ("build flag on one side only", nix('pname = "a";'), nix('pname = "a";', "__structuredAttrs = true;")),
     ("flipped build flag", nix("strictDeps = true;"), nix("strictDeps = false;")),
     ("enableParallelBuilding dropped", nix("enableParallelBuilding = true;"), "{\n}\n"),
+    ("enableParallelChecking dropped", nix("enableParallelChecking = true;"), "{\n}\n"),
     ("enableParallelInstalling dropped", nix("enableParallelInstalling = true;"), "{\n}\n"),
     ("doCheck flipped", nix("doCheck = true;"), nix("doCheck = false;")),
     ("doCheck on one side only", nix('pname = "a";', "doCheck = false;"), nix('pname = "a";')),

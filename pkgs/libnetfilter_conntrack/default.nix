@@ -23,8 +23,6 @@ stdenv.mkDerivation rec {
   propagatedBuildInputs = [ libnfnetlink ];
   nativeBuildInputs = [ pkg-config ];
 
-  enableParallelBuilding = true;
-
   passthru.tests = {
     inherit iptables;
   };

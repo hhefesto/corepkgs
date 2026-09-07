@@ -245,7 +245,7 @@ let
     if copyGemFiles then
       runCommand name' basicEnvArgs ''
         mkdir -p $out
-        for i in $paths; do
+        for i in "''${paths[@]}"; do
           ${buildPackages.rsync}/bin/rsync -a $i/lib $out/
         done
         eval "$postBuild"

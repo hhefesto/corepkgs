@@ -67,8 +67,6 @@ stdenv.mkDerivation rec {
     moveToOutput share/man/man1/updatedb.1.gz $locate
   '';
 
-  enableParallelBuilding = true;
-
   passthru.tests = {
     version = testers.testVersion {
       package = findutils;

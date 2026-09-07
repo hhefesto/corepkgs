@@ -55,8 +55,6 @@ stdenv.mkDerivation (finalAttrs: {
     "scripts"
   ];
 
-  strictDeps = true;
-
   depsBuildBuild = [
     buildPackages.stdenv.cc
   ];
@@ -95,8 +93,6 @@ stdenv.mkDerivation (finalAttrs: {
     "--with-libcap-ng=yes"
     (lib.withFeature enablePython "python3")
   ];
-
-  __structuredAttrs = true;
 
   # lib output is part of the mandatory nixos system closure, so avoid bash here
   outputChecks.lib.disallowedRequisites = [
@@ -144,8 +140,6 @@ stdenv.mkDerivation (finalAttrs: {
 
       rm $out/lib/systemd/system/audit-rules.service
   '';
-
-  enableParallelBuilding = true;
 
   passthru = {
     updateScript = nix-update-script { };

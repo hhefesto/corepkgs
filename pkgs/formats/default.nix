@@ -148,7 +148,6 @@ optionalAttrs allowAliases aliases
               nativeBuildInputs = [ jq ];
               inherit value;
               preferLocalBuild = true;
-              __structuredAttrs = true;
             }
             # NIX_ATTRS_JSON_FILE won't have `value` if it's null, but jq returns null for missing properties anyway
             # jsonNull test keeps this in check
@@ -173,7 +172,6 @@ optionalAttrs allowAliases aliases
               nativeBuildInputs = [ remarshal ];
               inherit value;
               preferLocalBuild = true;
-              __structuredAttrs = true;
             }
             ''
               remarshal --from json --to yaml-1.1 ${
@@ -200,7 +198,6 @@ optionalAttrs allowAliases aliases
               nativeBuildInputs = [ remarshal ];
               inherit value;
               preferLocalBuild = true;
-              __structuredAttrs = true;
             }
             ''
               json2yaml ${
@@ -483,7 +480,6 @@ optionalAttrs allowAliases aliases
               nativeBuildInputs = [ json2x ];
               inherit value;
               preferLocalBuild = true;
-              __structuredAttrs = true;
             }
             ''
               json2x toml --unwrap value "$NIX_ATTRS_JSON_FILE" "$out"
@@ -515,7 +511,6 @@ optionalAttrs allowAliases aliases
               nativeBuildInputs = [ json2cdn ];
               value = toJSON value;
               preferLocalBuild = true;
-              __structuredAttrs = true;
             }
             ''
               valuePath="$TMPDIR/value"
@@ -771,7 +766,6 @@ optionalAttrs allowAliases aliases
             value = toConf value;
             nativeBuildInputs = [ elixir ];
             preferLocalBuild = true;
-            __structuredAttrs = true;
           }
           ''
             printf "%s" "$value" > "$out"
@@ -819,7 +813,6 @@ optionalAttrs allowAliases aliases
               indentType = if indentUsingTabs then "Tabs" else "Spaces";
               value = toLua { inherit asBindings multiline; } value;
               preferLocalBuild = true;
-              __structuredAttrs = true;
             }
             ''
               ${optionalString (!asBindings) ''
@@ -999,7 +992,6 @@ optionalAttrs allowAliases aliases
                         print(f"{key} = {recursive_repr(value)}")
               '';
               preferLocalBuild = true;
-              __structuredAttrs = true;
             }
             ''
               python3 "$pythonGen" > $out
@@ -1051,7 +1043,6 @@ optionalAttrs allowAliases aliases
                       }, pretty=True, indent=" " * 2))
                 '';
                 preferLocalBuild = true;
-                __structuredAttrs = true;
               }
               ''
                 python3 "$pythonGen" > $out

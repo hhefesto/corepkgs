@@ -407,7 +407,6 @@ pipe
           ];
       };
 
-      enableParallelBuilding = true;
       inherit enableShared enableMultilib;
 
       meta = {

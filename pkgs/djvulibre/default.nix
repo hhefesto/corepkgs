@@ -25,8 +25,6 @@ stdenv.mkDerivation (finalAttrs: {
     "man"
   ];
 
-  strictDeps = true;
-
   # TODO(corepkgs): port librsvg, used to rasterise the desktop icons at build time
 
   buildInputs = [
@@ -35,8 +33,6 @@ stdenv.mkDerivation (finalAttrs: {
     libiconv
     bash
   ];
-
-  enableParallelBuilding = true;
 
   meta = {
     description = "Big set of CLI tools to make/modify/optimize/show/export DJVU files";

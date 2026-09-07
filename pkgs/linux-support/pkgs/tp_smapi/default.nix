@@ -38,8 +38,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   dontStrip = true;
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "IBM ThinkPad hardware functions driver";
     homepage = "https://github.com/linux-thinkpad/tp_smapi";

@@ -217,12 +217,12 @@ lib.extendMkDerivation {
       nativeBuildInputs = [ go ] ++ nativeBuildInputs;
 
       env = args.env or { } // {
-        inherit (go) GOOS GOARCH;
+        inherit (go.env) GOOS GOARCH;
 
         GO111MODULE = "on";
         GOTOOLCHAIN = "local";
 
-        CGO_ENABLED = args.env.CGO_ENABLED or go.CGO_ENABLED;
+        CGO_ENABLED = args.env.CGO_ENABLED or go.env.CGO_ENABLED;
 
         GOFLAGS = toString (
           GOFLAGS
@@ -282,8 +282,9 @@ lib.extendMkDerivation {
               runHook preBuild
 
               exclude='\(/_\|examples\|Godeps\|testdata'
-              if [[ -n "$excludedPackages" ]]; then
-                IFS=' ' read -r -a excludedArr <<<$excludedPackages
+              local -a excludedArr
+              concatTo excludedArr excludedPackages
+              if ((''${#excludedArr[@]})); then
                 printf -v excludedAlternates '%s\\|' "''${excludedArr[@]}"
                 excludedAlternates=''${excludedAlternates%\\|} # drop final \| added by printf
                 exclude+='\|'"$excludedAlternates"
@@ -303,7 +304,7 @@ lib.extendMkDerivation {
 
                 if [ "$cmd" = "test" ]; then
                   flags+=(-vet=off)
-                  flags+=($checkFlags)
+                  concatTo flags checkFlags
                 fi
 
                 local OUT
@@ -322,8 +323,10 @@ lib.extendMkDerivation {
               getGoDirs() {
                 local type;
                 type="$1"
-                if [ -n "$subPackages" ]; then
-                  echo "$subPackages" | sed "s,\(^\| \),\1./,g"
+                local -a subPackagesArray
+                concatTo subPackagesArray subPackages
+                if ((''${#subPackagesArray[@]})); then
+                  printf './%s\n' "''${subPackagesArray[@]}"
                 else
                   find . -type f -name \*$type.go -exec dirname {} \; | grep -v "/vendor/" | sort --unique | grep -v "$exclude"
                 fi
@@ -388,8 +391,6 @@ lib.extendMkDerivation {
 
           runHook postInstall
         '';
-
-      strictDeps = true;
 
       inherit allowGoReference;
       disallowedReferences = lib.optional (!finalAttrs.allowGoReference) go;

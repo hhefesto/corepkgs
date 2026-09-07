@@ -118,7 +118,6 @@ stdenv.mkDerivation (finalAttrs: {
     configureFlagsArray+=("--with-sudo")
   '';
 
-  enableParallelBuilding = true;
   # Disable parallel install due to missing depends:
   #   libtool:   error: error: relink '_py3sss.la' with the above command before installing i
   enableParallelInstalling = false;

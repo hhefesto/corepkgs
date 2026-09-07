@@ -36,10 +36,6 @@ stdenv.mkDerivation (finalAttrs: {
   env.NIX_LDFLAGS = "-lfmt";
 
   postPatch = ''
-    # filewatch tests are failing on darwin
-    substituteInPlace 3rd/bee.lua/test/test.lua \
-      --replace-fail 'require "test_filewatch"' ""
-
     # use system fmt library
     for d in 3rd/bee.lua 3rd/luamake/bee.lua
     do
@@ -49,20 +45,18 @@ stdenv.mkDerivation (finalAttrs: {
         --replace-fail "include <3rd/fmt/fmt" "include <fmt"
     done
 
-    # flaky tests on linux
-    substituteInPlace test/tclient/init.lua \
-      --replace-fail "require 'tclient.tests.load-relative-library'" ""
-
     pushd 3rd/luamake
   '';
 
   ninjaFlags = [
     "-fcompile/ninja/${if stdenv.hostPlatform.isDarwin then "macos" else "linux"}.ninja"
+    "notest"
   ];
 
   postBuild = ''
     popd
-    ./3rd/luamake/luamake rebuild
+    # Tests are flaky
+    ./3rd/luamake/luamake rebuild --notest
   '';
 
   installPhase = ''

@@ -1,35 +1,22 @@
 {
   lib,
   stdenv,
-  fetchurl,
-  fetchzip,
+  fetchgit,
   nasm,
   perl,
   cmake,
   pkg-config,
   python3,
 }:
-
-let
-  isCross = stdenv.buildPlatform != stdenv.hostPlatform;
-in
 stdenv.mkDerivation (finalAttrs: {
   pname = "libaom";
-  version = "3.12.1";
+  version = "3.15.0";
 
-  src = fetchzip {
-    url = "https://aomedia.googlesource.com/aom/+archive/v${finalAttrs.version}.tar.gz";
-    hash = "sha256-AAS6wfq4rZ4frm6+gwKoIS3+NVzPhhfW428WXJQ2tQ8=";
-    stripRoot = false;
+  src = fetchgit {
+    url = "https://aomedia.googlesource.com/aom";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-TixZQP06TEZPtpHvWVOEagzHtXW9hqXWweO2yimBDG4=";
   };
-
-  patches = lib.optionals (!stdenv.hostPlatform.isDarwin) [
-    (fetchurl {
-      name = "musl.patch";
-      url = "https://gitweb.gentoo.org/repo/gentoo.git/plain/media-libs/libaom/files/libaom-3.4.0-posix-c-source-ftello.patch?id=50c7c4021e347ee549164595280cf8a23c960959";
-      hash = "sha256-6+u7GTxZcSNJgN7D+s+XAVwbMnULufkTcQ0s7l+Ydl0=";
-    })
-  ];
 
   nativeBuildInputs = [
     nasm
@@ -41,6 +28,8 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   env = lib.optionalAttrs stdenv.hostPlatform.isFreeBSD {
+    # This can be removed when we switch to libcxx from llvm 20
+    # https://github.com/llvm/llvm-project/pull/122361
     NIX_CFLAGS_COMPILE = "-D_XOPEN_SOURCE=700";
   };
 
@@ -57,23 +46,21 @@ stdenv.mkDerivation (finalAttrs: {
   cmakeFlags = [
     "-DBUILD_SHARED_LIBS=ON"
     "-DENABLE_TESTS=OFF"
+    # TODO(corepkgs): Enable when libvmaf is packaged.
     "-DCONFIG_TUNE_VMAF=0"
-    "-DCMAKE_INSTALL_INCLUDEDIR=${placeholder "dev"}/include"
-    "-DCMAKE_INSTALL_LIBDIR=${placeholder "out"}/lib"
   ]
-  ++ lib.optionals (isCross && !stdenv.hostPlatform.isx86) [
+  ++ lib.optionals (stdenv.isCross && !stdenv.hostPlatform.isx86) [
     "-DCMAKE_ASM_COMPILER=${lib.getBin stdenv.cc}/bin/${stdenv.cc.targetPrefix}cc"
   ]
   ++ lib.optionals stdenv.hostPlatform.isAarch32 [
+    # armv7l-hf-multiplatform does not support NEON
     "-DENABLE_NEON=0"
   ];
 
   postFixup = ''
     # Fix broken pkgconfig paths (double slashes from cmake prefix joining)
-    if [ -f "$dev/lib/pkgconfig/aom.pc" ]; then
-      sed -i "s|libdir=.*|libdir=$out/lib|" "$dev/lib/pkgconfig/aom.pc"
-      sed -i "s|includedir=.*|includedir=$dev/include|" "$dev/lib/pkgconfig/aom.pc"
-    fi
+    sed -i "s|libdir=.*|libdir=$out/lib|" "$dev/lib/pkgconfig/aom.pc"
+    sed -i "s|includedir=.*|includedir=$dev/include|" "$dev/lib/pkgconfig/aom.pc"
     moveToOutput lib/libaom.a "$static"
   ''
   + lib.optionalString stdenv.hostPlatform.isStatic ''

@@ -133,7 +133,6 @@
       )).overrideAttrs
         (old: {
           # TODO(@Artturin): Add this to the main cpython expr
-          strictDeps = true;
           pname = "python3-minimal";
         });
 

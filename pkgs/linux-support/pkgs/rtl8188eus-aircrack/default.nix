@@ -26,8 +26,6 @@ stdenv.mkDerivation {
 
   hardeningDisable = [ "pic" ];
 
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [ bc ] ++ kernel.moduleBuildDependencies;
 
   preInstall = ''

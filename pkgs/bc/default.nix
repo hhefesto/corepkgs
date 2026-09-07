@@ -46,7 +46,6 @@ stdenv.mkDerivation (finalAttrs: {
   # Hack to make sure we never to the relaxation `$PATH` and hooks support for
   # compatibility. This will be replaced with something clearer in a future
   # masss-rebuild.
-  strictDeps = true;
 
   passthru.tests = {
     version = testers.testVersion {

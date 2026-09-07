@@ -53,8 +53,6 @@ stdenv.mkDerivation rec {
     (lib.mesonOption "vulkan-layers" "")
   ];
 
-  strictDeps = true;
-
   propagatedBuildInputs = [ libdrm ];
 
   nativeBuildInputs = [

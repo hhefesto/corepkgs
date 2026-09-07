@@ -165,7 +165,8 @@ stdenv.mkDerivation rec {
   buildFlags = [ "psw_install_pkg" ] ++ lib.optionals debug [ "DEBUG=1" ];
 
   installFlags = [
-    "-C linux/installer/common/psw/output"
+    "-C"
+    "linux/installer/common/psw/output"
     "DESTDIR=$(TMPDIR)/install"
   ];
 

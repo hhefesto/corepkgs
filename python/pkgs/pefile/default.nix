@@ -3,28 +3,30 @@
   buildPythonPackage,
   fetchPypi,
   setuptools,
-  pytestCheckHook,
 }:
 
 buildPythonPackage (finalAttrs: {
   pname = "pefile";
   version = "2024.8.26";
-  format = "pyproject";
+  pyproject = true;
 
+  # DON'T fetch from github, the repo is >60 MB due to test artifacts, which we cannot use
   src = fetchPypi {
     inherit (finalAttrs) pname version;
-    hash = "sha256-QGK8kbrpDOENJy6eSMMMUFHR+MXyxadY5SJBFj+bX0g=";
+    hash = "sha256-P/bF2LQ+jDe7bm3VCFZY1linoL3NILagex/PwcTp1jI=";
   };
 
-  nativeBuildInputs = [ setuptools ];
+  build-system = [ setuptools ];
 
-  nativeCheckInputs = [ pytestCheckHook ];
+  # Test data contains proprietary executables and malware, and is therefore encrypted
+  doCheck = false;
 
   pythonImportsCheck = [ "pefile" ];
 
   meta = {
-    description = "Multi-platform Python module to parse and work with Portable Executable files";
+    description = "Multi-platform Python module to parse and work with Portable Executable (aka PE) files";
     homepage = "https://github.com/erocarrera/pefile";
+    changelog = "https://github.com/erocarrera/pefile/releases/tag/v${finalAttrs.version}";
     license = lib.licenses.mit;
   };
 })

@@ -64,8 +64,6 @@ stdenv.mkDerivation rec {
     sha256 = "qaEYu+hNh2TaDqDSizqz+uhHf8fkCF2QECuFlvx8deQ=";
   };
 
-  enableParallelBuilding = true;
-
   # Disable auto-adding stack protector flags,
   # so musl can selectively disable as needed
   hardeningDisable = [ "stackprotector" ];

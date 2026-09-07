@@ -147,8 +147,6 @@ stdenv.mkDerivation (finalAttrs: {
     abseil-cpp
   ];
 
-  strictDeps = true;
-
   cmakeDir = if packageOlder "22" then "../cmake" else null;
   cmakeFlags = [
     "-Dprotobuf_USE_EXTERNAL_GTEST=ON"

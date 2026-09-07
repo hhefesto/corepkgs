@@ -328,7 +328,7 @@
 
   v1_26_7 = {
     version = "1.26.7";
-    src-hash = "sha256-DtJOrHVRBQhbif6cq8J0K5GbrXuUtZ0602SRjryJVq0=";
+    src-hash = "sha256-DtJOrHVRBQhbif6cq8J0K5GgrXuUtZ0602SRjryJVq0=";
     bootstrap = ./bootstrap/bootstrap122.nix;
     iana-patch = ./patches/1.25/iana-etc-1.25.patch;
 

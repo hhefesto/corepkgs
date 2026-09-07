@@ -13,8 +13,9 @@
   libidn2,
   libiconv,
   texinfo,
-  unbound,
   dns-root-data,
+  withLibdane ? true,
+  unbound,
   gettext,
   util-linuxMinimal,
   cxxBindings ? !stdenv.hostPlatform.isStatic, # tries to link libstdc++.so
@@ -36,7 +37,6 @@
   pkgsStatic,
   python3Packages,
   qemu,
-  rsyslog,
   openconnect,
   samba,
 
@@ -115,14 +115,17 @@ stdenv.mkDerivation rec {
 
   preConfigure = "patchShebangs .";
   configureFlags =
-    lib.optionals withP11-kit [
+    lib.optionals withLibdane [
+      "--with-unbound-root-key-file=${dns-root-data}/root.key"
+    ]
+    ++ lib.optionals withP11-kit [
       "--with-default-trust-store-file=/etc/ssl/certs/ca-certificates.crt"
       "--with-default-trust-store-pkcs11=pkcs11:"
     ]
     ++ [
       "--disable-dependency-tracking"
       "--enable-fast-install"
-      "--with-unbound-root-key-file=${dns-root-data}/root.key"
+      (lib.enableFeature withLibdane "libdane")
       (lib.withFeature withP11-kit "p11-kit")
       (lib.enableFeature cxxBindings "cxx")
     ]
@@ -140,8 +143,6 @@ stdenv.mkDerivation rec {
       "--with-zlib=link"
     ];
 
-  enableParallelBuilding = true;
-
   hardeningDisable = [ "trivialautovarinit" ];
 
   buildInputs = [
@@ -150,10 +151,10 @@ stdenv.mkDerivation rec {
     zlib
     gmp
     libunistring
-    unbound
     gettext
     libiconv
   ]
+  ++ lib.optional withLibdane unbound
   ++ lib.optional withP11-kit p11-kit
   ++ lib.optional (tpmSupport && stdenv.hostPlatform.isLinux) trousers;
 
@@ -210,7 +211,6 @@ stdenv.mkDerivation rec {
       openconnect
       ;
     python3-gnutls = python3Packages.python3-gnutls;
-    rsyslog = rsyslog.override { withGnutls = true; };
     static = pkgsStatic.gnutls;
   };
 

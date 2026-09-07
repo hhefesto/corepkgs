@@ -19,7 +19,7 @@
   libXaw ? libxaw,
   icu,
   ghostscript,
-  libXpm ? null,
+  libxpm,
   libxmu,
   libXmu ? libxmu,
   libxext,
@@ -243,8 +243,6 @@ rec {
     pname = "texlive-bin";
     inherit version;
 
-    __structuredAttrs = true;
-
     inherit (common) binToOutput src prePatch;
 
     outputs = [
@@ -323,8 +321,6 @@ rec {
         "upmendex" # ICU isn't small
       ];
 
-    enableParallelBuilding = true;
-
     doCheck = false; # triptest fails, likely due to missing TEXMF tree
     preCheck = "patchShebangs ../texk/web2c";
 
@@ -374,8 +370,6 @@ rec {
     pname = "texlive-bin-big";
     inherit version;
 
-    __structuredAttrs = true;
-
     inherit (common) binToOutput src prePatch;
 
     patches = [
@@ -401,6 +395,14 @@ rec {
       # stay stable for 31.7 years (1e9 seconds).
       ./truncate-luajit-version-number.patch
     ];
+
+    postPatch = ''
+      # corepkgs strict deps:
+      # upmendex directly uses ICU i18n, which is only a private dependency of
+      # icu-io and therefore is not included by pkg-config --libs.
+      substituteInPlace texk/upmendex/configure \
+        --replace-fail "icu-uc icu-io" "icu-uc icu-i18n icu-io"
+    '';
 
     hardeningDisable = [ "format" ];
 
@@ -480,8 +482,6 @@ rec {
 
     configureScript = "../configure";
 
-    enableParallelBuilding = true;
-
     doCheck = false; # fails
 
     outputs = [
@@ -525,7 +525,6 @@ rec {
 
     configureFlags = common.configureFlags ++ [ "--with-system-kpathsea" ];
 
-    enableParallelBuilding = true;
   };
 
   # The LuaMetaTeX engine (distributed since TeX Live 2023) must be built separately.
@@ -548,7 +547,6 @@ rec {
         stripRoot = false;
       };
 
-      enableParallelBuilding = true;
       nativeBuildInputs = [
         cmake
         cmake.configurePhaseHook
@@ -600,7 +598,6 @@ rec {
     ]
     ++ lib.optional (ttfautohint != null) ttfautohint;
 
-    enableParallelBuilding = true;
   };
 
   dvipng = stdenv.mkDerivation {
@@ -636,7 +633,6 @@ rec {
 
     GS = "${ghostscript}/bin/gs";
 
-    enableParallelBuilding = true;
   };
 
   pygmentex = python3Packages.buildPythonApplication rec {
@@ -723,7 +719,6 @@ rec {
       "--with-system-icu"
     ];
 
-    enableParallelBuilding = true;
   };
 
   xdvi = stdenv.mkDerivation {
@@ -737,12 +732,12 @@ rec {
       core # kpathsea
       freetype
       ghostscript
+      libxpm
     ]
     ++ (with xorg; [
       libX11
       libXaw
       libXi
-      libXpm
       libXmu
       libXaw
       libXext
@@ -755,8 +750,6 @@ rec {
       "--with-system-kpathsea"
       "--with-system-libgs"
     ];
-
-    enableParallelBuilding = true;
 
     postInstall = ''
       substituteInPlace "$out/bin/xdvi" \
@@ -775,7 +768,6 @@ rec {
 
     preConfigure = "cd utils/xpdfopen";
 
-    enableParallelBuilding = true;
   };
 
 } # un-indented

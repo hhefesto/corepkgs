@@ -90,8 +90,6 @@ let
         name = namePrefix + self.pname + "-" + self.version;
         inherit rockspecVersion;
 
-        __structuredAttrs = true;
-        strictDeps = true;
         env = {
           LUAROCKS_CONFIG = self.configFile;
         }

@@ -36,8 +36,6 @@ stdenv.mkDerivation {
 
   doCheck = (stdenv.hostPlatform.system != "i686-cygwin" && !stdenv.hostPlatform.isDarwin);
 
-  enableParallelBuilding = true;
-
   patches = lib.optional (stdenv.hostPlatform.system == "i686-cygwin") ./cygwin.patch;
 
   meta = {

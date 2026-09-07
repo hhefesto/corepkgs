@@ -203,16 +203,12 @@ stdenv.mkDerivation rec {
     HOST_PATH=$out/bin patchShebangs --host ${outDispatchPath}
   '';
 
-  strictDeps = true;
-
   depsBuildBuild = [ buildPackages.stdenv.cc ];
 
   buildInputs = lib.optionals (enableStatic && !useMusl && stdenv.cc.libc ? static) [
     stdenv.cc.libc
     stdenv.cc.libc.static
   ];
-
-  enableParallelBuilding = true;
 
   doCheck = false; # tries to access the net
 

@@ -166,7 +166,6 @@ let
         inherit sha256;
       };
 
-      strictDeps = true;
       # TODO: Add a "dev" output containing the header files.
       outputs = [
         "out"
@@ -288,8 +287,6 @@ let
       dontAddStaticConfigureFlags = true;
 
       dontAddPrefix = !crossCompiling;
-
-      enableParallelBuilding = true;
 
       # perl includes the build date, the uname of the build system and the
       # username of the build user in some files.

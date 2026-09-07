@@ -24,8 +24,6 @@ stdenv.mkDerivation (finalAttrs: {
     ncurses
   ];
 
-  enableParallelBuilding = true;
-
   passthru.tests = {
     version = testers.testVersion {
       package = finalAttrs.finalPackage;

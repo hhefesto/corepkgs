@@ -34,11 +34,8 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   nativeBuildInputs = [
-    makeWrapper
-  ];
-
-  buildInputs = [
     compatibleErlang
+    makeWrapper
   ];
 
   env = {
@@ -52,9 +49,6 @@ stdenv.mkDerivation (finalAttrs: {
   preBuild = ''
     patchShebangs lib/elixir/scripts/generate_app.escript || true
   '';
-
-  # Disable parallel builds to avoid issues
-  enableParallelBuilding = false;
 
   # copy stdlib source files for LSP access
   postInstall = ''

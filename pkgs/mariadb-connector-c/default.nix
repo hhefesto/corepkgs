@@ -59,8 +59,6 @@ stdenv.mkDerivation (finalAttrs: {
       --replace-fail 'libmariadb SHARED' 'libmariadb STATIC'
   '';
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     cmake
     cmake.configurePhaseHook

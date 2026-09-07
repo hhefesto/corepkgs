@@ -102,8 +102,6 @@ stdenv.mkDerivation rec {
     "fonts"
   ];
 
-  enableParallelBuilding = true;
-
   depsBuildBuild = [
     buildPackages.stdenv.cc
   ];

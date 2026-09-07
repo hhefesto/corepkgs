@@ -23,8 +23,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-upChhVST27M5h2KKCcb5bN5MZrgIxgDthrwHH96ZNwc=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     autoreconfHook
     font-util

@@ -49,7 +49,6 @@ stdenv.mkDerivation rec {
   ]
   ++ lib.optional withDevdoc "devdoc";
 
-  strictDeps = true;
   nativeBuildInputs = [
     autoconf
     automake

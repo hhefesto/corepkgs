@@ -27,8 +27,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-qOlvaD6s7ogGxMuf6lKgoE60JVcvrM04rl4OxlSKP04=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     meson
     meson.configurePhaseHook

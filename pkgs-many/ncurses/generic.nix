@@ -14,14 +14,11 @@
   enableStatic ? stdenv.hostPlatform.isStatic,
   withCxx ? !stdenv.hostPlatform.useAndroidPrebuilt,
   mouseSupport ? false,
-  gpm,
+  gpm ? null,
   withTermlib ? false,
   unicodeSupport ? true,
   testers,
   binlore,
-
-  # for passthru.tests
-  gdb,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -136,8 +133,6 @@ stdenv.mkDerivation (finalAttrs: {
   # Only the C compiler, and explicitly not C++ compiler needs this flag on solaris:
   CFLAGS = lib.optionalString stdenv.hostPlatform.isSunOS "-D_XOPEN_SOURCE_EXTENDED";
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     updateAutotoolsGnuConfigScriptsHook
     pkg-config
@@ -166,8 +161,6 @@ stdenv.mkDerivation (finalAttrs: {
         configure
     CFLAGS=-D_XOPEN_SOURCE_EXTENDED
   '';
-
-  enableParallelBuilding = true;
 
   doCheck = false;
 
@@ -300,7 +293,6 @@ stdenv.mkDerivation (finalAttrs: {
     tests = {
       pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
       pkg-config-install = testers.pkg-config.testInstall finalAttrs.finalPackage { };
-      inherit gdb;
     };
   };
 })

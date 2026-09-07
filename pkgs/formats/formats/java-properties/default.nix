@@ -112,8 +112,6 @@ in
                 libiconvReal
               ];
 
-              __structuredAttrs = true;
-
               jqCode =
                 let
                   main = ''

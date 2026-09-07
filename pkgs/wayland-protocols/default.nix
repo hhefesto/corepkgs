@@ -52,7 +52,6 @@ stdenv.mkDerivation (finalAttrs: {
     wayland
   ];
   checkInputs = [ wayland ];
-  strictDeps = true;
 
   mesonFlags = [ "-Dtests=${lib.boolToString finalAttrs.finalPackage.doCheck}" ];
 

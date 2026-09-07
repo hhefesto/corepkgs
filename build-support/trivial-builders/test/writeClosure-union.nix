@@ -7,7 +7,6 @@
 }:
 runCommandLocal "test-trivial-builders-writeClosure-union"
   {
-    __structuredAttrs = true;
     closures = lib.mapAttrs (n: v: writeClosure [ v ]) samples;
     collectiveClosure = writeClosure (lib.attrValues samples);
     inherit samples;

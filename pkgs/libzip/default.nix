@@ -47,8 +47,6 @@ stdenv.mkDerivation (finalAttrs: {
     "-DENABLE_WINDOWS_CRYPTO=OFF"
   ];
 
-  enableParallelBuilding = true;
-
   passthru.tests = {
     pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
   };

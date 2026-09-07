@@ -84,7 +84,6 @@ stdenv.mkDerivation rec {
     sed -i "s/@GNULIB_CLOSE@/1/" */*/unistd.in.h
   '';
 
-  strictDeps = true;
   nativeBuildInputs = [
     updateAutotoolsGnuConfigScriptsHook
   ];
@@ -111,7 +110,6 @@ stdenv.mkDerivation rec {
     am_cv_func_iconv_works = "yes";
   };
 
-  enableParallelBuilding = true;
   enableParallelChecking = false; # fails sometimes
 
   passthru.tests = {

@@ -17,8 +17,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-BUJtAKB2tz04LhkCsDWBjgTTymU4U3Zcdm+RDYawfxQ=";
   };
 
-  strictDeps = true;
-  enableParallelBuilding = true;
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   nativeBuildInputs = [ autoreconfHook ];
 

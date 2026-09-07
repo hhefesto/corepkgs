@@ -18,7 +18,6 @@
   docbook5,
   libxslt,
   libxml2,
-  w3m-batch,
   findXMLCatalogs,
   docbook-xsl-ns,
   nix-update-script,
@@ -42,8 +41,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   };
 
-  __structuredAttrs = true;
-
   # patching unix_chkpwd is required as the nix store entry does not have the necessary bits
   postPatch = ''
     substituteInPlace modules/module-meson.build \
@@ -58,8 +55,6 @@ stdenv.mkDerivation (finalAttrs: {
     # "modules"
   ];
 
-  strictDeps = true;
-
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   nativeBuildInputs = [
     flex
@@ -71,7 +66,6 @@ stdenv.mkDerivation (finalAttrs: {
 
     libxslt
     libxml2
-    w3m-batch
     findXMLCatalogs
     docbook-xsl-ns
     docbook5
@@ -88,8 +82,6 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optionals withLogind [
     systemdLibs
   ];
-
-  enableParallelBuilding = true;
 
   mesonAutoFeatures = "auto";
   mesonFlags = [

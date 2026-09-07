@@ -28,8 +28,6 @@ stdenv.mkDerivation rec {
     "-DUSE_CVC4=OFF"
   ];
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Compiler for Ethereum smart contract language Solidity";
     homepage = "https://github.com/ethereum/solidity";

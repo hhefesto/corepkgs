@@ -38,8 +38,6 @@ stdenv.mkDerivation (finalAttrs: {
     userspace-rcu
   ];
 
-  enableParallelBuilding = true;
-
   # XFS uses a custom build system
   preConfigure = ''
     patchShebangs ./install-sh
