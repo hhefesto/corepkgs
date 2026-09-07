@@ -150,8 +150,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   env.NIX_LDFLAGS = toString [ "-lpthread" ];
 
-  enableParallelBuilding = true;
-
   postInstall = ''moveToOutput bin "$bin" '';
 
   meta = {

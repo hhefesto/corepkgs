@@ -122,7 +122,6 @@ stdenv.mkDerivation {
     "man"
   ];
 
-  strictDeps = true;
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   nativeBuildInputs = [
     bison
@@ -244,8 +243,6 @@ stdenv.mkDerivation {
   # INFO: Otherwise it fails with:
   # `./sanity.sh: line 36: $out/bin/size: not found`
   doInstallCheck = (buildPlatform == hostPlatform) && (hostPlatform == targetPlatform);
-
-  enableParallelBuilding = true;
 
   passthru = {
     inherit targetPrefix;

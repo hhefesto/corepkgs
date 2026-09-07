@@ -126,8 +126,6 @@ stdenv.mkDerivation rec {
   ]
   ++ lib.optional (lib.meta.availableOn stdenv.hostPlatform elfutils) elfutils;
 
-  enableParallelBuilding = true;
-
   meta = {
     homepage = "https://www.rpm.org/";
     license = with lib.licenses; [

@@ -277,8 +277,6 @@ stdenv.mkDerivation (finalAttrs: {
     "MANSUFFIX=ssl"
   ];
 
-  enableParallelBuilding = true;
-
   preCheck = ''
     patchShebangs util
   '';

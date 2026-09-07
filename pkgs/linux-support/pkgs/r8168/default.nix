@@ -45,8 +45,6 @@ stdenv.mkDerivation rec {
     makeFlagsArray+=("EXTRA_CFLAGS=-DCONFIG_R8168_NAPI -DCONFIG_R8168_VLAN -DCONFIG_ASPM -DENABLE_S5WOL -DENABLE_EEE")
   '';
 
-  enableParallelBuilding = true;
-
   installPhase = ''
     mkdir -p ${modDestDir}
     find . -name '*.ko' -exec cp --parents '{}' ${modDestDir} \;

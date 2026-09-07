@@ -34,8 +34,6 @@ stdenv.mkDerivation {
     mkdir -p "$out/lib/modules/${kernel.modDirVersion}/kernel/net/wireless/"
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Realtek rtl8821cu driver";
     homepage = "https://github.com/morrownr/8821cu-20210916";

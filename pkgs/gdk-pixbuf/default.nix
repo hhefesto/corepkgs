@@ -52,7 +52,6 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   # gdk-pixbuf-thumbnailer is not wrapped therefore strictDeps will work
-  strictDeps = true;
 
   depsBuildBuild = [
     pkg-config

@@ -121,7 +121,6 @@ stdenv.mkDerivation {
     sed -i 's,/usr/share/nvidia/,${nvidia_x11.bin}/share/nvidia/,g' src/gtk+-2.x/ctkappprofile.c
   '';
 
-  enableParallelBuilding = true;
   makeFlags = [ "NV_USE_BUNDLED_LIBJANSSON=0" ];
 
   preBuild = ''

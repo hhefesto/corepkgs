@@ -74,8 +74,6 @@ stdenv.mkDerivation rec {
   ++ lib.optional (!withDebugSymbols) "--disable-debug"
   ++ lib.optional withXtables "--with-xtables";
 
-  enableParallelBuilding = true;
-
   passthru.updateScript = gitUpdater {
     url = "https://git.netfilter.org/nftables";
     rev-prefix = "v";

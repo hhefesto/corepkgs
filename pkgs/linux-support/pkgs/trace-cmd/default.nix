@@ -58,7 +58,6 @@ stdenv.mkDerivation rec {
 
   dontConfigure = true;
 
-  enableParallelBuilding = true;
   makeFlags = [
     # The following values appear in the generated .pc file
     "prefix=${placeholder "lib"}"

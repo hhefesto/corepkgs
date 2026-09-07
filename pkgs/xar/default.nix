@@ -63,8 +63,6 @@ stdenv.mkDerivation (finalAttrs: {
     "dev"
   ];
 
-  strictDeps = true;
-
   nativeBuildInputs = [ autoreconfHook ];
 
   env.NIX_CFLAGS_COMPILE = toString (
@@ -133,7 +131,6 @@ stdenv.mkDerivation (finalAttrs: {
           runCommand "xar-tests-integration-test"
             {
               src = patchedSource;
-              strictDeps = true;
               pythonExecutable = pythonForTests.executable;
               nativeBuildInputs = [
                 finalAttrs.finalPackage
@@ -150,7 +147,6 @@ stdenv.mkDerivation (finalAttrs: {
           runCommandCC "xar-tests-smoke-test"
             {
               src = patchedSource;
-              strictDeps = true;
               nativeBuildInputs = [ finalAttrs.finalPackage ];
               buildInputs = [
                 finalAttrs.finalPackage

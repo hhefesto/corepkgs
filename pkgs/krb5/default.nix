@@ -35,8 +35,6 @@ stdenv.mkDerivation rec {
   pname = "krb5";
   version = "1.22.1";
 
-  __structuredAttrs = true;
-
   src = fetchurl {
     url = "https://kerberos.org/dist/krb5/${lib.versions.majorMinor version}/krb5-${version}.tar.gz";
     hash = "sha256-GogyuMrZI+u/E5T2fi789B46SfRgKFpm41reyPoAU68=";
@@ -89,8 +87,6 @@ stdenv.mkDerivation rec {
     "ac_cv_func_regcomp=yes"
     "ac_cv_printf_positional=yes"
   ];
-
-  strictDeps = true;
 
   nativeBuildInputs = [
     byacc
@@ -160,7 +156,6 @@ stdenv.mkDerivation rec {
     }
   '';
 
-  enableParallelBuilding = true;
   doCheck = false; # fails with "No suitable file for testing purposes"
 
   outputChecks.lib.disallowedRequisites = [

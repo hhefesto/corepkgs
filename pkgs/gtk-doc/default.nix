@@ -39,8 +39,6 @@ python3.pkgs.buildPythonApplication rec {
       --replace "pkg-config" "$PKG_CONFIG"
   '';
 
-  strictDeps = true;
-
   depsBuildBuild = [
     python3
     pkg-config

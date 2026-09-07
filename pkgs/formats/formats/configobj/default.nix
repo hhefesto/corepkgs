@@ -22,8 +22,6 @@ in
             ];
 
             inherit value;
-            __structuredAttrs = true;
-            strictDeps = true;
           }
           ''
             python3 ${./generate.py} > "$out"

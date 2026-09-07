@@ -817,8 +817,6 @@ stdenv.mkDerivation (
       in
       "remove-references-to ${lib.concatStringsSep " " (map (o: "-t ${o}") toStrip)} config.h";
 
-    strictDeps = true;
-
     nativeBuildInputs = [
       removeReferencesTo
       addDriverRunpath
@@ -1033,8 +1031,6 @@ stdenv.mkDerivation (
           lib.makeLibraryPath [ vulkan-loader ]
         }
       '';
-
-    enableParallelBuilding = true;
 
     passthru = mkVariantPassthru variantArgs // {
       tests.pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;

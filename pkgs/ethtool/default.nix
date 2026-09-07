@@ -23,8 +23,6 @@ stdenv.mkDerivation (finalAttrs: {
     libmnl
   ];
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Utility for controlling network drivers and hardware";
     homepage = "https://www.kernel.org/pub/software/network/ethtool/";

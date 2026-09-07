@@ -33,8 +33,6 @@ stdenv.mkDerivation rec {
     "dev"
   ];
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     meson
     meson.configurePhaseHook

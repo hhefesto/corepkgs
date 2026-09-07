@@ -143,8 +143,6 @@ stdenv.mkDerivation rec {
       "--with-zlib=link"
     ];
 
-  enableParallelBuilding = true;
-
   hardeningDisable = [ "trivialautovarinit" ];
 
   buildInputs = [

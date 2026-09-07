@@ -146,9 +146,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       '';
     };
 
-  strictDeps = true;
-  __structuredAttrs = true;
-
   dontBuild = true;
   dontConfigure = true;
 

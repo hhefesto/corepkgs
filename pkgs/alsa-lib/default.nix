@@ -25,8 +25,6 @@ stdenv.mkDerivation (finalAttrs: {
     ./alsa-plugin-conf-multilib.patch
   ];
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     ln -s ${alsa-ucm-conf}/share/alsa/{ucm,ucm2} $out/share/alsa
     ln -s ${alsa-topology-conf}/share/alsa/topology $out/share/alsa

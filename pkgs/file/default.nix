@@ -46,9 +46,6 @@ stdenv.mkDerivation (finalAttrs: {
     ./32-bit-time_t.patch
   ];
 
-  strictDeps = true;
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [
     updateAutotoolsGnuConfigScriptsHook
   ]

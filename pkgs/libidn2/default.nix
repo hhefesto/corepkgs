@@ -26,7 +26,6 @@ stdenv.mkDerivation rec {
     hash = "sha256-9VeRG/YXFiHh9y/zX1sYJbs1tS7UUyXc3ukx5dPAeHo=";
   };
 
-  strictDeps = true;
   outputs = [
     "bin"
     "dev"
@@ -34,8 +33,6 @@ stdenv.mkDerivation rec {
     "info"
     "devdoc"
   ];
-
-  enableParallelBuilding = true;
 
   # The above patch causes the documentation to be regenerated, so the
   # documentation tools are required.

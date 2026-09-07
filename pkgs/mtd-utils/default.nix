@@ -42,8 +42,6 @@ stdenv.mkDerivation rec {
       --replace-fail "/bin/mount" "${util-linux}/bin/mount"
   '';
 
-  enableParallelBuilding = true;
-
   configureFlags = [
     (lib.enableFeature doCheck "unit-tests")
     (lib.enableFeature doCheck "tests")

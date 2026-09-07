@@ -37,8 +37,6 @@ stdenv.mkDerivation (finalAttrs: {
   ];
   separateDebugInfo = stdenv.hostPlatform.isLinux && stdenv.hostPlatform.libc != "musl";
 
-  __structuredAttrs = true;
-
   nativeBuildInputs = [
     autoreconfHook
   ];
@@ -92,8 +90,6 @@ stdenv.mkDerivation (finalAttrs: {
       (stdenv.hostPlatform.isDarwin && stdenv.hostPlatform.isx86_64)
       || (stdenv.hostPlatform.isLinux && stdenv.hostPlatform.isAarch64)
     );
-
-  enableParallelBuilding = true;
 
   passthru.tests = nix.variants;
 

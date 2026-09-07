@@ -169,7 +169,6 @@ lib.fix (self: {
         package = toJSON packageJSON';
         packageLock = toJSON packageLock';
 
-        __structuredAttrs = true;
       }
       ''
         mkdir $out
@@ -225,7 +224,6 @@ lib.fix (self: {
         ''
         + (derivationArgs.postPatch or "");
 
-        __structuredAttrs = true;
       }
     );
 

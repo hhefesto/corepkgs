@@ -123,7 +123,6 @@ lib.warnIf (withDocs != null)
       "bash_cv_dev_fd=absent"
     ];
 
-    strictDeps = true;
     # Note: Bison is needed because the patches above modify parse.y.
     depsBuildBuild = [ buildPackages.stdenv.cc ];
     nativeBuildInputs = [
@@ -133,8 +132,6 @@ lib.warnIf (withDocs != null)
     ++ lib.optionals stdenv.hostPlatform.isDarwin [ stdenv.cc.bintools ];
 
     buildInputs = lib.optionals interactive [ readline ];
-
-    enableParallelBuilding = true;
 
     makeFlags = lib.optionals stdenv.hostPlatform.isCygwin [
       "LOCAL_LDFLAGS=-Wl,--export-all,--out-implib,libbash.dll.a"

@@ -202,8 +202,6 @@ stdenv.mkDerivation (finalAttrs: {
     sed -i 's|bin/cmake|${buildPackages.cmake.minimal}/bin/cmake|g' Makefile
   '';
 
-  enableParallelBuilding = true;
-
   doCheck = false; # fails
 
   passthru = mkVariantPassthru variantArgs // {

@@ -28,8 +28,6 @@ stdenv.mkDerivation {
       --replace-fail '/lib/modules/$(shell uname -r)/build' ${kernel.dev}/lib/modules/${kernel.modDirVersion}/build
   '';
 
-  enableParallelBuilding = true;
-
   installPhase = ''
     runHook preInstall
 

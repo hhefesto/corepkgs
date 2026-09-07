@@ -168,8 +168,6 @@ stdenv.mkDerivation (finalAttrs: {
     moveToOutput lib/libprunetrie.a "$dev"
   '';
 
-  __structuredAttrs = true;
-
   meta = {
     description = "Classic linker for Darwin";
     homepage = "https://opensource.apple.com/releases/";

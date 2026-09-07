@@ -51,7 +51,6 @@ stdenv.mkDerivation (finalAttrs: {
       --replace 'ARFLAGS="-o"' 'ARFLAGS="-r"'
   '';
 
-  strictDeps = true;
   outputs = [
     "out"
     "dev"
@@ -132,8 +131,6 @@ stdenv.mkDerivation (finalAttrs: {
     "INCLUDE_PATH=$(dev)/include"
     "LIBRARY_PATH=$(out)/lib"
   ];
-
-  enableParallelBuilding = true;
 
   makeFlags = [
     "PREFIX=${stdenv.cc.targetPrefix}"

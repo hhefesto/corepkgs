@@ -53,8 +53,6 @@ stdenv.mkDerivation (finalAttrs: {
     expat
   ];
 
-  strictDeps = true;
-
   patches = [
     ./apr-1.patch
 
@@ -109,7 +107,6 @@ stdenv.mkDerivation (finalAttrs: {
     done
   '';
 
-  enableParallelBuilding = true;
   # Missing install dependencies:
   # libtool:   error: error: relink 'libsvn_ra_serf-1.la' with the above command before installing it
   # make: *** [build-outputs.mk:1316: install-serf-lib] Error 1

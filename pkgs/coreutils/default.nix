@@ -212,8 +212,6 @@ stdenv.mkDerivation rec {
   # Prevents attempts of running 'help2man' on cross-built binaries.
   PERL = if isCross then "missing" else null;
 
-  enableParallelBuilding = true;
-
   NIX_LDFLAGS = optionalString selinuxSupport "-lsepol";
   FORCE_UNSAFE_CONFIGURE = optionalString stdenv.hostPlatform.isSunOS "1";
   env.NIX_CFLAGS_COMPILE = toString (

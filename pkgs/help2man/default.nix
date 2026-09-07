@@ -21,10 +21,6 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-TX5P3vLspq/geiaCFRzqeHgeCk6PliIULZ9wwIOi/U8=";
   };
 
-  strictDeps = true;
-
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [
     gettext
     perlPackages.perl

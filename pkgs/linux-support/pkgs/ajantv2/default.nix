@@ -25,8 +25,6 @@ stdenv.mkDerivation {
     chmod -R +w ../../
   '';
 
-  enableParallelBuilding = true;
-
   buildFlags = [
     "KDIR=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   ];

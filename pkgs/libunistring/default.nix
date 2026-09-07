@@ -37,7 +37,6 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
   propagatedBuildInputs = lib.optional (!stdenv.hostPlatform.isLinux) libiconv;
   nativeBuildInputs = [ updateAutotoolsGnuConfigScriptsHook ];
 
@@ -59,7 +58,6 @@ stdenv.mkDerivation (finalAttrs: {
       FAIL unistdio/test-u16-vasnprintf3.sh (exit status: 1)
   */
   enableParallelChecking = false;
-  enableParallelBuilding = true;
 
   passthru.tests = {
     inherit libidn2;

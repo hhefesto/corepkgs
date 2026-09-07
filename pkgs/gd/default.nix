@@ -72,8 +72,6 @@ stdenv.mkDerivation rec {
     "out"
   ];
 
-  enableParallelBuilding = true;
-
   doCheck = false; # fails 2 tests
 
   meta = {

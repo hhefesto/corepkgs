@@ -45,8 +45,6 @@ stdenv.mkDerivation rec {
 
   __darwinAllowLocalNetworking = true;
 
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [
     groff
   ];

@@ -33,7 +33,6 @@ stdenv.mkDerivation rec {
   ++ lib.optionals (withPayload != null) [ "FW_PAYLOAD_PATH=${withPayload}" ]
   ++ lib.optionals (withFDT != null) [ "FW_FDT_PATH=${withFDT}" ];
 
-  enableParallelBuilding = true;
   dontStrip = true;
   dontPatchELF = true;
 

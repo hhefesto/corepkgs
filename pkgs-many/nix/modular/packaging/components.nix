@@ -184,7 +184,6 @@ let
 
   nixDefaultsLayer = finalAttrs: prevAttrs: {
     strictDeps = prevAttrs.strictDeps or true;
-    enableParallelBuilding = true;
     pos = builtins.unsafeGetAttrPos "pname" prevAttrs;
     meta = prevAttrs.meta or { } // {
       homepage = prevAttrs.meta.homepage or "https://nixos.org/nix";

@@ -47,8 +47,6 @@ stdenv.mkDerivation (finalAttrs: {
     "man"
   ];
 
-  enableParallelBuilding = true;
-
   passthru.tests = {
     version = testers.testVersion {
       package = finalAttrs.finalPackage;

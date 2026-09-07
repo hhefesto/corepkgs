@@ -437,8 +437,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   configurePlatforms = [ ];
 
-  enableParallelBuilding = true;
-
   setupHooks = ./setup-hook.sh;
 
   requiredSystemFeatures = [ "big-parallel" ];
@@ -454,8 +452,6 @@ stdenv.mkDerivation (finalAttrs: {
     inherit llvmPackages;
     inherit (rustc) targetPlatforms targetPlatformsWithHostTools badTargetPlatforms;
   };
-
-  __structuredAttrs = true;
 
   meta = {
     homepage = "https://www.rust-lang.org/";

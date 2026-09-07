@@ -103,8 +103,6 @@ stdenv.mkDerivation (
       rm -rf $out/docs
     '';
 
-    enableParallelBuilding = true;
-
     checkPhase = ''
       make examples_c examples_cxx
     '';

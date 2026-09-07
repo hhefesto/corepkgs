@@ -64,8 +64,6 @@ stdenv.mkDerivation (finalAttrs: {
       --replace-fail '/bin/sh' '${lib.getExe' bash "sh"}'
   '';
 
-  strictDeps = true;
-
   depsBuildBuild = [ pkg-config ];
 
   nativeBuildInputs = [

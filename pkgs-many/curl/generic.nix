@@ -144,10 +144,6 @@ stdenv.mkDerivation (finalAttrs: {
   ];
   separateDebugInfo = isLinux;
 
-  enableParallelBuilding = true;
-
-  strictDeps = true;
-
   env = lib.optionalAttrs (isDarwin && isStatic) {
     # Not having this causes curl's `configure` script to fail with static builds on Darwin because
     # some of curl's propagated inputs need libiconv.

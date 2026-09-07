@@ -21,8 +21,6 @@ stdenv.mkDerivation {
   makeFlags = [ "INSTALL_MOD_PATH=$(out)" ];
   installTargets = [ "install" ];
 
-  enableParallelBuilding = true;
-
   meta = virtualbox.meta // {
     description = virtualbox.meta.description + " (kernel modules)";
   };

@@ -712,8 +712,6 @@ in
       pango
     ];
 
-    strictDeps = true;
-
     # The ruby build script takes care of this
     dontUseCmakeConfigure = true;
 

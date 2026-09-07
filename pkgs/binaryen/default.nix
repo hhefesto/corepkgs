@@ -23,8 +23,6 @@ stdenv.mkDerivation rec {
     python3
   ];
 
-  strictDeps = true;
-
   cmakeFlags = [ "-DBUILD_TESTS=0" ];
 
   meta = {

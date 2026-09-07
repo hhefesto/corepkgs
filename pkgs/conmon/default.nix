@@ -55,9 +55,6 @@ stdenv.mkDerivation (finalAttrs: {
     runHook postInstall
   '';
 
-  enableParallelBuilding = true;
-  strictDeps = true;
-
   passthru.tests = {
     version = testers.testVersion {
       package = finalAttrs.finalPackage;

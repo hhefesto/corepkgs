@@ -35,9 +35,6 @@ stdenv.mkDerivation (finalAttrs: {
     libslirp
   ];
 
-  enableParallelBuilding = true;
-  strictDeps = true;
-
   outputs = [
     "out"
     "man"

@@ -25,8 +25,6 @@ stdenv.mkDerivation {
     "KSRC=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
   ];
 
-  enableParallelBuilding = true;
-
   installPhase = ''
     runHook preInstall
 

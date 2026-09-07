@@ -22,11 +22,8 @@ stdenv.mkDerivation (finalAttrs: {
     "man"
     "doc"
   ];
-  strictDeps = true;
 
   nativeBuildInputs = [ removeReferencesTo ];
-
-  enableParallelBuilding = true;
 
   # pkgconf ships its own pkg-config compatibility, install it
   postInstall = ''

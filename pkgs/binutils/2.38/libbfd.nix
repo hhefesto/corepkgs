@@ -41,7 +41,6 @@ stdenv.mkDerivation {
   # We update these ourselves
   dontUpdateAutotoolsGnuConfigScripts = true;
 
-  strictDeps = true;
   nativeBuildInputs = [
     autoreconfHook
     bison
@@ -63,8 +62,6 @@ stdenv.mkDerivation {
     "--with-system-zlib"
   ]
   ++ lib.optional (!stdenv.hostPlatform.isStatic) "--enable-shared";
-
-  enableParallelBuilding = true;
 
   meta = {
     description = "Library for manipulating containers of machine code";

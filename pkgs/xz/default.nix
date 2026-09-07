@@ -30,7 +30,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-//H/zysNqE0wihTeUToaoj1OmqNGTRfmS5cUv90Lv7Y=";
   };
 
-  strictDeps = true;
   outputs = [
     "bin"
     "dev"
@@ -40,8 +39,6 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   configureFlags = lib.optional enableStatic "--disable-shared";
-
-  enableParallelBuilding = true;
 
   nativeBuildInputs = lib.optionals stdenv.hostPlatform.isOpenBSD [
     autoreconfHook

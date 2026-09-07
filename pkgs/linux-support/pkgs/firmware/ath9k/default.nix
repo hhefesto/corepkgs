@@ -58,7 +58,6 @@ stdenv.mkDerivation (finalAttrs: {
     + lib.optionalString (!enableUnstable) " -fpermissive";
 
   dontUseCmakeConfigure = true;
-  enableParallelBuilding = true;
 
   # The firmware repository builds its own toolchain, with patches
   # applied to the xtensa support in both gcc and binutils.

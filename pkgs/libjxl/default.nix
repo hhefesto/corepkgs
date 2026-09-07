@@ -45,8 +45,6 @@ stdenv.mkDerivation rec {
     fetchSubmodules = true;
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     cmake
     cmake.configurePhaseHook

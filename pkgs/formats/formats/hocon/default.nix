@@ -148,7 +148,6 @@ in
 
               json = builtins.toJSON value;
 
-              strictDeps = true;
               nativeBuildInputs = [ hocon-generator ];
               buildPhase = ''
                 runHook preBuild

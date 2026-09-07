@@ -22,7 +22,6 @@ stdenv.mkDerivation rec {
     hash = "sha256-71ACHzzk258U4q2L7GJ59mrMZG99M7nQkcH4gHafGP0=";
   };
 
-  strictDeps = true;
   nativeBuildInputs = [
     makeWrapper
     perl

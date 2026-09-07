@@ -39,8 +39,6 @@ stdenv.mkDerivation (finalAttrs: {
     "dev"
   ];
 
-  enableParallelBuilding = true;
-
   sourceRoot = "${finalAttrs.src.name}/libbacktrace";
 
   preConfigure = ''

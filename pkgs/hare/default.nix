@@ -73,9 +73,6 @@ stdenv.mkDerivation (finalAttrs: {
     "HAREPATH=$(SRCDIR)/hare/stdlib"
   ];
 
-  enableParallelBuilding = true;
-  strictDeps = true;
-
   postConfigure = ''
     ln -s configs/${platform}.mk config.mk
   '';

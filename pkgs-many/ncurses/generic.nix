@@ -133,8 +133,6 @@ stdenv.mkDerivation (finalAttrs: {
   # Only the C compiler, and explicitly not C++ compiler needs this flag on solaris:
   CFLAGS = lib.optionalString stdenv.hostPlatform.isSunOS "-D_XOPEN_SOURCE_EXTENDED";
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     updateAutotoolsGnuConfigScriptsHook
     pkg-config
@@ -163,8 +161,6 @@ stdenv.mkDerivation (finalAttrs: {
         configure
     CFLAGS=-D_XOPEN_SOURCE_EXTENDED
   '';
-
-  enableParallelBuilding = true;
 
   doCheck = false;
 

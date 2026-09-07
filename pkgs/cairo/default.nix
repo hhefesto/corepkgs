@@ -120,8 +120,6 @@ stdenv.mkDerivation (
       patchShebangs version.py
     '';
 
-    enableParallelBuilding = true;
-
     doCheck = false; # fails
 
     postInstall = ''

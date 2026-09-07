@@ -31,8 +31,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-uwi03NEdDweYDmHijGRc3ARiyvB6X2cypHKGBiKA1sY=";
   };
 
-  strictDeps = true;
-
   depsBuildBuild = [ buildPackages.stdenv.cc ];
 
   nativeBuildInputs = [

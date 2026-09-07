@@ -37,8 +37,6 @@ in
 stdenv.mkDerivation (finalAttrs: {
   inherit pname version;
 
-  __structuredAttrs = true;
-
   src = fetchurl {
     url = "https://www.netfilter.org/projects/${pname}/files/${pname}-${version}.tar.xz";
     sha256 = "2HMD1V74ySvK1N0/l4sm0nIBNkKwKUJXdfW60QCf57I=";
@@ -50,8 +48,6 @@ stdenv.mkDerivation (finalAttrs: {
     "dev"
     "man"
   ];
-
-  strictDeps = true;
 
   nativeBuildInputs = [
     autoreconfHook
@@ -78,8 +74,6 @@ stdenv.mkDerivation (finalAttrs: {
     "--enable-shared"
   ]
   ++ lib.optional (!nftablesCompat) "--disable-nftables";
-
-  enableParallelBuilding = true;
 
   postInstall = lib.optionalString nftablesCompat ''
     rm $out/sbin/{iptables,iptables-restore,iptables-save,ip6tables,ip6tables-restore,ip6tables-save}

@@ -177,7 +177,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   dontUseCmakeConfigure = true;
 
-  enableParallelBuilding = true;
   enableParallelInstalling = false;
 
   meta = {

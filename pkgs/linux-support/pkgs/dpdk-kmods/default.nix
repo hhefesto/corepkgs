@@ -30,8 +30,6 @@ stdenv.mkDerivation rec {
     make -C ${KSRC} M=$(pwd) modules_install "''${makeFlags[@]}"
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Kernel modules for DPDK";
     homepage = "https://git.dpdk.org/dpdk-kmods/";

@@ -7,7 +7,6 @@ let
 in
 runCommand "python-setup-hook.sh"
   {
-    strictDeps = true;
     env = {
       inherit sitePackages;
     };

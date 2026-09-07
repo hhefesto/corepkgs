@@ -70,8 +70,6 @@ stdenv.mkDerivation rec {
     sed "/^libdir=/s|$out|$openssl|" -i "$openssl"/lib/libevent_openssl.la
   '';
 
-  enableParallelBuilding = true;
-
   passthru.tests = {
     inherit unbound;
   };

@@ -105,8 +105,6 @@ stdenv.mkDerivation rec {
     mv "$lib"/lib/security "$pam/lib"
   '';
 
-  strictDeps = true;
-
   disallowedReferences = lib.optionals withGo [
     pkgsBuildHost.go
   ];

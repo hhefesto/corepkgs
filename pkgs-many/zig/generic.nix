@@ -53,8 +53,6 @@ stdenv.mkDerivation (finalAttrs: {
   configurePhase = "cmakeConfigurePhase";
   buildPhase = "ninjaBuildPhase";
 
-  enableParallelBuilding = true;
-
   doCheck = false;
 
   # Zig inspects /usr/bin/env as an ELF binary to detect the host dynamic

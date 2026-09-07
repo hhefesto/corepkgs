@@ -143,7 +143,6 @@ stdenv.mkDerivation (finalAttrs: {
   # cross-binutils.
   ++ lib.optionals (targetPlatform == hostPlatform) [ "lib" ];
 
-  strictDeps = true;
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   # texinfo was removed here in https://github.com/NixOS/nixpkgs/pull/210132
   # to reduce rebuilds during stdenv bootstrap.  Please don't add it back without
@@ -317,8 +316,6 @@ stdenv.mkDerivation (finalAttrs: {
   # INFO: Otherwise it fails with:
   # `./sanity.sh: line 36: $out/bin/size: not found`
   doInstallCheck = (buildPlatform == hostPlatform) && (hostPlatform == targetPlatform);
-
-  enableParallelBuilding = true;
 
   # For the same reason we don't split "lib" output we undo the $target/
   # prefix for installed headers and libraries we link:

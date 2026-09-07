@@ -102,8 +102,6 @@ let
 
         hardeningDisable = [ "all" ];
 
-        enableParallelBuilding = true;
-
         makeFlags = [
           "DTC=${lib.getExe buildPackages.dtc}"
           "CROSS_COMPILE=${stdenv.cc.targetPrefix}"

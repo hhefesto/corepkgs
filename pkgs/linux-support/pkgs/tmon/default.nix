@@ -25,8 +25,6 @@ stdenv.mkDerivation {
   ];
   NIX_CFLAGS_LINK = "-lgcc_s";
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Monitoring and Testing Tool for Linux kernel thermal subsystem";
     mainProgram = "tmon";

@@ -19,9 +19,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-P3LaDMMNPyEnA8nO1Bm7H0mW/hVBr0cFdg+p2JmWcGI=";
   };
 
-  strictDeps = true;
-  enableParallelBuilding = true;
-
   outputs = [
     "out"
     "dev"

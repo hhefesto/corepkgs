@@ -13,8 +13,6 @@
   src,
 }:
 stdenvNoCC.mkDerivation {
-  __structuredAttrs = true;
-  strictDeps = true;
   name =
     if name == null then
       lib.warn "testers.shellcheck: name will be required in a future release, defaulting to run-shellcheck" "run-shellcheck"

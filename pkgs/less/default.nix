@@ -31,8 +31,6 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.withFeatureAs true "regex" "pcre2")
   ];
 
-  strictDeps = true;
-
   nativeInstallCheckInputs = [
     versionCheckHook
   ];

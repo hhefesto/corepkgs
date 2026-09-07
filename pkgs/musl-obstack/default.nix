@@ -26,8 +26,6 @@ stdenv.mkDerivation rec {
     pkg-config
   ];
 
-  enableParallelBuilding = true;
-
   meta = {
     homepage = "https://github.com/void-linux/musl-obstack";
     description = "Extraction of the obstack functions and macros from GNU libiberty for use with musl-libc";

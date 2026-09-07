@@ -155,8 +155,6 @@ stdenv.mkDerivation (finalAttrs: {
       ./gdb_script.patch
     ];
 
-  strictDeps = true;
-
   buildInputs = [
     finalAttrs.setupHook
   ]

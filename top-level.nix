@@ -734,6 +734,7 @@ with final;
     makeSetupHook
       {
         name = "generate-ld-cache-hook";
+        # TODO: Remove once makeSetupHook defaults __structuredAttrs to true.
         __structuredAttrs = true;
       }
       (
@@ -1286,7 +1287,6 @@ with final;
     in
     runCommand "${pname}-iconv-${version}"
       {
-        strictDeps = true;
         passthru = {
           inherit (prev.libiconv) variants;
         };

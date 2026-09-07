@@ -426,7 +426,7 @@ let
       enableParallelBuilding ? true,
       enableParallelChecking ? true,
       enableParallelInstalling ? true,
-      
+
       separateDebugInfo ? false,
       outputs ? [ "out" ],
       __darwinAllowLocalNetworking ? false,
@@ -442,8 +442,7 @@ let
 
       patches ? [ ],
 
-      __contentAddressed ? contentAddressedByDefault
-      && (!attrs ? outputHash), # Fixed-output drvs can't be content addressed too
+      __contentAddressed ? contentAddressedByDefault && (!attrs ? outputHash), # Fixed-output drvs can't be content addressed too
       ...
     }@attrs:
     assert
@@ -730,7 +729,13 @@ let
 
           inherit patches;
 
-          inherit doCheck doInstallCheck enableParallelBuilding enableParallelChecking enableParallelInstalling;
+          inherit
+            doCheck
+            doInstallCheck
+            enableParallelBuilding
+            enableParallelChecking
+            enableParallelInstalling
+            ;
 
           inherit outputs;
 

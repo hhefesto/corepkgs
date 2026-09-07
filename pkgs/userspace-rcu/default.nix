@@ -29,8 +29,6 @@ stdenv.mkDerivation (finalAttrs: {
     "--disable-static"
   ];
 
-  enableParallelBuilding = true;
-
   doCheck = false; # Skip tests for faster builds
 
   passthru.tests = {

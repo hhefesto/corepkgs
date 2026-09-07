@@ -39,8 +39,6 @@ stdenv.mkDerivation {
     mkdir -p "$out/lib/modules/${kernel.modDirVersion}/kernel/net/wireless/"
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Linux driver for RTL8723DS";
     homepage = "https://github.com/lwfinger/rtl8723ds";

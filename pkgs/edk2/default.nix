@@ -84,7 +84,6 @@ stdenv.mkDerivation (finalAttrs: {
     buildPackages.bash
   ];
   depsHostHost = [ libuuid ];
-  strictDeps = true;
 
   makeFlags = [ "--directory=BaseTools" ];
 
@@ -118,8 +117,6 @@ stdenv.mkDerivation (finalAttrs: {
 
     runHook postInstall
   '';
-
-  enableParallelBuilding = true;
 
   meta = {
     description = "Intel EFI development kit";
@@ -162,7 +159,6 @@ stdenv.mkDerivation (finalAttrs: {
             pythonEnv
           ]
           ++ attrs.nativeBuildInputs or [ ];
-          strictDeps = true;
 
           env.${"GCC5_${targetArch}_PREFIX"} = stdenv.cc.targetPrefix;
 

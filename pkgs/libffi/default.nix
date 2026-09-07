@@ -29,15 +29,12 @@ stdenv.mkDerivation (finalAttrs: {
   # cgit) that are needed here should be included directly in Nixpkgs as
   # files.
 
-  strictDeps = true;
   outputs = [
     "out"
     "dev"
     "man"
     "info"
   ];
-
-  enableParallelBuilding = true;
 
   configurePlatforms = [
     "build"

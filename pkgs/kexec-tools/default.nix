@@ -51,8 +51,6 @@ stdenv.mkDerivation rec {
     zstd
   ];
 
-  enableParallelBuilding = true;
-
   passthru = {
     updateScript = gitUpdater {
       url = "https://git.kernel.org/pub/scm/utils/kernel/kexec/kexec-tools.git";

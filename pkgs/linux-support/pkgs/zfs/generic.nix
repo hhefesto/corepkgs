@@ -232,8 +232,6 @@ let
         ++ map (f: "KERNEL_${f}") kernelModuleMakeFlags
       );
 
-      enableParallelBuilding = true;
-
       doInstallCheck = true;
 
       installFlags = [

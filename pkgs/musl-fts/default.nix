@@ -22,8 +22,6 @@ stdenv.mkDerivation rec {
     pkg-config
   ];
 
-  enableParallelBuilding = true;
-
   meta = {
     homepage = "https://github.com/void-linux/musl-fts";
     description = "Implementation of fts(3) for musl-libc";

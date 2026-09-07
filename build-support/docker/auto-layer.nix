@@ -16,7 +16,6 @@
 
 runCommand "layers.json"
   {
-    __structuredAttrs = true;
     exportReferencesGraph.graph = closureRoots;
     inherit fromImage maxLayers;
     nativeBuildInputs = [

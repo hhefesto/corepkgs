@@ -21,9 +21,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [ zig ];
 
-  strictDeps = true;
-  __structuredAttrs = true;
-
   dontConfigure = true;
 
   zigBuildFlags = [

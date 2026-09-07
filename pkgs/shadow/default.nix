@@ -110,8 +110,6 @@ stdenv.mkDerivation rec {
     mv $out/bin/su $su/bin
   '';
 
-  enableParallelBuilding = true;
-
   disallowedReferences = lib.optional (
     stdenv.buildPlatform != stdenv.hostPlatform
   ) stdenv.shellPackage;

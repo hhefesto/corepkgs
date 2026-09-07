@@ -82,8 +82,6 @@ stdenv.mkDerivation (finalAttrs: {
     libqrtr-glib
   ];
 
-  strictDeps = true;
-
   mesonFlags = [
     "-Dudevdir=${placeholder "out"}/lib/udev"
     (lib.mesonBool "gtk_doc" withIntrospection)

@@ -316,7 +316,6 @@ stdenv.mkDerivation (finalAttrs: {
   ]
   ++ (lib.optional (!buildLibsOnly) "man");
   separateDebugInfo = true;
-  __structuredAttrs = true;
 
   hardeningDisable = lib.optionals withLibBPF [
     # breaks clang -target bpf; should be fixed to not use

@@ -59,8 +59,6 @@ stdenv.mkDerivation (finalAttrs: {
     perlPackages.perl
   ];
 
-  strictDeps = true;
-
   configureFlags = [
     (lib.withFeatureAs withOpenssl "ssl" "openssl")
   ]
@@ -80,8 +78,6 @@ stdenv.mkDerivation (finalAttrs: {
     make -C src version.c
     nuke-refs src/version.c
   '';
-
-  enableParallelBuilding = true;
 
   __darwinAllowLocalNetworking = true;
   doCheck = true;

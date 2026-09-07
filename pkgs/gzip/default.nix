@@ -30,8 +30,6 @@ stdenv.mkDerivation rec {
     "info"
   ];
 
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [
     updateAutotoolsGnuConfigScriptsHook
     makeShellWrapper

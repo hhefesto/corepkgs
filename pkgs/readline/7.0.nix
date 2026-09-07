@@ -22,7 +22,6 @@ stdenv.mkDerivation rec {
     "info"
   ];
 
-  strictDeps = true;
   propagatedBuildInputs = [ ncurses ];
 
   patchFlags = [ "-p0" ];

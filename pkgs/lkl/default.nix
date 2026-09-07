@@ -102,8 +102,6 @@ stdenv.mkDerivation {
     "CROSS_COMPILE=${stdenv.cc.targetPrefix}"
   ];
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Linux kernel as a library";
     longDescription = ''

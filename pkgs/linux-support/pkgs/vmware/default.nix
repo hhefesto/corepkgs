@@ -22,8 +22,6 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
 
-  enableParallelBuilding = true;
-
   postPatch = ''
     substituteInPlace Makefile \
       --replace '/lib/modules/$(VM_UNAME)/misc' "$out/lib/modules/${kernel.modDirVersion}/misc" \

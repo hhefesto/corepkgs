@@ -78,8 +78,6 @@ stdenv.mkDerivation rec {
     ]
     ++ lib.optionals enablePython [ python3 ];
 
-  enableParallelBuilding = true;
-
   configureFlags = [
     "--disable-examples"
     (lib.enableFeature enableApp "app")

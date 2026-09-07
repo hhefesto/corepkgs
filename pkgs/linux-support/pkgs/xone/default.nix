@@ -29,7 +29,6 @@ stdenv.mkDerivation (finalAttrs: {
     "VERSION=${finalAttrs.version}"
   ];
 
-  enableParallelBuilding = true;
   buildFlags = [ "modules" ];
   installFlags = [ "INSTALL_MOD_PATH=${placeholder "out"}" ];
   installTargets = [ "modules_install" ];

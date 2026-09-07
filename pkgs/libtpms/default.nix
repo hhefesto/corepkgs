@@ -34,8 +34,6 @@ stdenv.mkDerivation rec {
     "dev"
   ];
 
-  enableParallelBuilding = true;
-
   configureFlags = [
     "--with-openssl"
     "--with-tpm2"

@@ -27,8 +27,6 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "kbd" + lib.optionalString withVlock "-vlock";
   version = "2.9.0";
 
-  __structuredAttrs = true;
-
   src = fetchgit {
     url = "https://git.kernel.org/pub/scm/linux/kernel/git/legion/kbd.git";
     tag = "v${finalAttrs.version}";
@@ -75,9 +73,6 @@ stdenv.mkDerivation (finalAttrs: {
     "ac_cv_func_malloc_0_nonnull=yes"
     "ac_cv_func_realloc_0_nonnull=yes"
   ];
-
-  strictDeps = true;
-  enableParallelBuilding = true;
 
   nativeBuildInputs = [
     autoreconfHook

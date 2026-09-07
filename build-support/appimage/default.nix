@@ -45,7 +45,6 @@ rec {
     runCommand "${pname}-${version}-extracted"
       {
         nativeBuildInputs = [ appimage-exec ];
-        strictDeps = true;
       }
       ''
         appimage-exec.sh -x $out ${src}

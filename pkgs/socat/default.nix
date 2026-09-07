@@ -38,8 +38,6 @@ stdenv.mkDerivation rec {
     readline
   ];
 
-  enableParallelBuilding = true;
-
   nativeCheckInputs = [
     which
     net-tools

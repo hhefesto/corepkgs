@@ -53,8 +53,6 @@ stdenv.mkDerivation {
     java
     glibcLocales
   ];
-  __structuredAttrs = true;
-  strictDeps = true;
   # technically should go through the type.merge first, but that's tested
   # in tests/formats.nix.
   properties = javaProperties.generate "example.properties" input;

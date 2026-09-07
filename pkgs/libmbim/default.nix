@@ -42,8 +42,6 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.mesonBool "man" withDocs)
   ];
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     meson
     meson.configurePhaseHook

@@ -21,8 +21,6 @@ stdenv.mkDerivation (finalAttrs: {
     sha256 = "sha256-3bqLU9/lhMMlN2YDAhioiCVIilGn3u8EHQlucVr2S90=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     installShellFiles
     (lib.getBin libdatrie)

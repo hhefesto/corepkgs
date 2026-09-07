@@ -52,8 +52,6 @@ stdenv.mkDerivation {
     install -D -m 644 dot11ah/dot11ah.ko "$out/lib/modules/${kernel.modDirVersion}/kernel/net/wireless/dot11ah.ko"
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Morse Micro Wi-Fi driver";
     homepage = "https://github.com/MorseMicro/morse_driver";

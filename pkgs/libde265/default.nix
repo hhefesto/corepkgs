@@ -36,8 +36,6 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
   ];
 
-  enableParallelBuilding = true;
-
   passthru.tests = {
     inherit imagemagick libheif;
     inherit (gst_all_1) gst-plugins-bad;

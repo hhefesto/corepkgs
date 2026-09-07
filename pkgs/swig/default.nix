@@ -21,7 +21,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-wEqbKDgXVU8kQxdh7uC+EZ0u5leeoYh2d/61qB4guOg=";
   };
 
-  strictDeps = true;
   nativeBuildInputs = [
     autoconf
     automake
@@ -41,8 +40,6 @@ stdenv.mkDerivation (finalAttrs: {
   preConfigure = ''
     ./autogen.sh
   '';
-
-  enableParallelBuilding = true;
 
   passthru.tests = {
     version = testers.testVersion {

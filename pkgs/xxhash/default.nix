@@ -8,8 +8,6 @@
 stdenv.mkDerivation (finalAttrs: {
   pname = "xxhash";
   version = "0.8.3";
-  __structuredAttrs = true;
-  strictDeps = true;
 
   outputs = [
     "out"

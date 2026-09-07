@@ -31,8 +31,6 @@ stdenv.mkDerivation (finalAttrs: {
     "dev"
   ];
 
-  strictDeps = true;
-
   mesonFlags = [
     (lib.mesonBool "demo" false)
   ];

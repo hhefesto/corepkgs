@@ -36,8 +36,6 @@ stdenv.mkDerivation {
 
   installTargets = [ "modules_install" ];
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Kernel modules for MSI Embedded controller";
     homepage = "https://github.com/BeardOverflow/msi-ec";

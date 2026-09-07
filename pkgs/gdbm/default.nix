@@ -30,8 +30,6 @@ stdenv.mkDerivation (finalAttrs: {
     "man"
   ];
 
-  enableParallelBuilding = true;
-
   # 1. Linking static stubs on cygwin requires correct ordering. Consider
   #    upstreaming this.
   #

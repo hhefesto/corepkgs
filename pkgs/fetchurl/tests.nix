@@ -16,12 +16,12 @@ let
   # accepting it as a callPackage argument. Recover that curl from a fetcher
   # derivation so the upstream flag tests can replace it without changing the
   # production interface.
-  defaultCurl = lib.head (
-    fetchurl {
-      url = "https://www.example.com/source";
-      hash = lib.fakeHash;
-    }
-  ).nativeBuildInputs;
+  defaultCurl =
+    lib.head
+      (fetchurl {
+        url = "https://www.example.com/source";
+        hash = lib.fakeHash;
+      }).nativeBuildInputs;
 
   testFlagAppending =
     args:
@@ -59,17 +59,17 @@ let
           exit 1
         fi
       '';
-      fetchurlWithMock = fetchArgs: (fetchurl fetchArgs).overrideAttrs { nativeBuildInputs = [ curlMock ]; };
+      fetchurlWithMock =
+        fetchArgs: (fetchurl fetchArgs).overrideAttrs { nativeBuildInputs = [ curlMock ]; };
     in
-    testers.invalidateFetcherByDrvHash fetchurlWithMock
-      (
-        {
-          url = "https://www.example.com/source";
-          hash = emptyFile.outputHash;
-          recursiveHash = true; # aligned with emptyFile
-        }
-        // args
-      );
+    testers.invalidateFetcherByDrvHash fetchurlWithMock (
+      {
+        url = "https://www.example.com/source";
+        hash = emptyFile.outputHash;
+        recursiveHash = true; # aligned with emptyFile
+      }
+      // args
+    );
 in
 {
   flag-appending-curlOpts = testFlagAppending {
@@ -166,18 +166,18 @@ in
       # requested name so invalidateFetcherByDrvHash can salt the test.
       (args: (fetchurl args).overrideAttrs { name = args.name; })
       {
-      inherit urls;
-      name = "test-fetchurl-showURLs-urls-mirrors";
-      showURLs = true;
-      hash =
-        let
-          hashAlgo = lib.head (lib.splitString "-" lib.fakeHash);
-        in
-        hashAlgo
-        + ":"
-        + builtins.hashString hashAlgo (
-          lib.concatStringsSep " " (lib.concatMap fetchurl.resolveUrl urls) + "\n"
-        );
+        inherit urls;
+        name = "test-fetchurl-showURLs-urls-mirrors";
+        showURLs = true;
+        hash =
+          let
+            hashAlgo = lib.head (lib.splitString "-" lib.fakeHash);
+          in
+          hashAlgo
+          + ":"
+          + builtins.hashString hashAlgo (
+            lib.concatStringsSep " " (lib.concatMap fetchurl.resolveUrl urls) + "\n"
+          );
       };
 
   urls-simple = testers.invalidateFetcherByDrvHash fetchurl {

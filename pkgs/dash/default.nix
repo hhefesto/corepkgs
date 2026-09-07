@@ -22,8 +22,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-2ScbzgnBJ9mGbiXAEVgt3HWrmIlYoEvE2FU6O48w43A=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = lib.optionals stdenv.hostPlatform.isStatic [ pkg-config ];
 
   depsBuildBuild = [ buildPackages.stdenv.cc ];
@@ -35,8 +33,6 @@ stdenv.mkDerivation (finalAttrs: {
   preConfigure = lib.optional stdenv.hostPlatform.isStatic ''
     export LIBS="$(''${PKG_CONFIG:-pkg-config} --libs --static libedit)"
   '';
-
-  enableParallelBuilding = true;
 
   passthru = {
     shellPath = "/bin/dash";

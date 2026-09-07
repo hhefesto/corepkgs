@@ -42,7 +42,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = src-hash;
   };
 
-  strictDeps = true;
   buildInputs =
     [ ]
     ++ lib.optionals stdenv.hostPlatform.isLinux [ stdenv.cc.libc.out ]

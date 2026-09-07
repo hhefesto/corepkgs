@@ -350,8 +350,6 @@ stdenv.mkDerivation {
     })
   ];
 
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [
     which
     boost-build

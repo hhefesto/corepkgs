@@ -42,8 +42,6 @@ stdenv.mkDerivation (finalAttrs: {
     ./meson-add-installed-tests-prefix-option.patch
   ];
 
-  strictDeps = true;
-
   depsBuildBuild = [
     pkg-config
   ];

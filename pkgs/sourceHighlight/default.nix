@@ -56,7 +56,6 @@ stdenv.mkDerivation (finalAttrs: {
     substituteInPlace Makefile.in --replace "src doc tests" "src tests"
   '';
 
-  strictDeps = true;
   # necessary to build on FreeBSD native pending inclusion of
   # https://git.savannah.gnu.org/cgit/config.git/commit/?id=e4786449e1c26716e3f9ea182caf472e4dbc96e0
   nativeBuildInputs = [ updateAutotoolsGnuConfigScriptsHook ];
@@ -74,7 +73,6 @@ stdenv.mkDerivation (finalAttrs: {
     "--with-bash-completion=${placeholder "out"}/share/bash-completion/completions"
   ];
 
-  enableParallelBuilding = true;
   # Upstream uses the same intermediate files in multiple tests, running
   # them in parallel by make will eventually break one or more tests.
   enableParallelChecking = false;

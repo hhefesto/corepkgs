@@ -26,8 +26,6 @@ stdenv.mkDerivation rec {
     })
   ];
 
-  strictDeps = true;
-
   postPatch = ''
     # Do not let autoconf find Python, but set it directly. This fixes cross-compilation.
     substituteInPlace configure.ac \

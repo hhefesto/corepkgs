@@ -23,8 +23,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   env.PREFIX = placeholder "out";
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Shared code used by several utilities written by Jody Bruchon";
     homepage = "https://codeberg.org/jbruchon/libjodycode";

@@ -172,7 +172,6 @@ in
             ++ previousPythonAttrs.disabledTests or [ ];
           });
           disabledTests-expression = objprint.overridePythonAttrs (previousPythonAttrs: {
-            __structuredAttrs = true;
             pname = "test-pytestCheckHook-disabledTests-expression-${previousPythonAttrs.pname}";
             disabledTests = [
               "TestBasic and test_print"
@@ -227,7 +226,6 @@ in
             ++ previousPythonAttrs.disabledTests or [ ];
           });
           enabledTests-expression = objprint.overridePythonAttrs (previousPythonAttrs: {
-            __structuredAttrs = true;
             pname = "test-pytestCheckHook-enabledTests-expression-${previousPythonAttrs.pname}";
             enabledTests = [
               "TestBasic and test_print"

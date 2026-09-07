@@ -18,8 +18,6 @@ stdenv.mkDerivation (
       gettext
     ];
 
-    enableParallelBuilding = true;
-
     configurePhase = ''
       runHook preConfigure
       export MAKEFLAGS+="''${enableParallelBuilding:+-j$NIX_BUILD_CORES}"

@@ -57,7 +57,7 @@
   fakeroot ? null,
   fakechroot ? null,
   jshon ? null,
-  moreutils ? null,
+  moreutils,
   pigz ? null,
   proot ? null,
   skopeo ? null,
@@ -749,9 +749,9 @@ rec {
           {
             nativeBuildInputs = [
               jq
+              moreutils
             ]
             ++ optionals (jshon != null) [ jshon ]
-            ++ optionals (moreutils != null) [ moreutils ]
             ++ compress.nativeInputs;
             # Image name must be lowercase
             imageName = lib.toLower name;

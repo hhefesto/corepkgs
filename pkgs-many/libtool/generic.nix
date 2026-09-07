@@ -54,8 +54,6 @@ stdenv.mkDerivation (finalAttrs: {
       touch doc/libtoolize.1
     '');
 
-  strictDeps = true;
-
   # As libtool is an early bootstrap dependency try hard not to
   # add autoconf and automake or help2man dependencies here. That way we can
   # avoid pulling in perl and get away with just an `m4` depend.
@@ -78,8 +76,6 @@ stdenv.mkDerivation (finalAttrs: {
   # "fixed" path in generated files!
   dontPatchShebangs = true;
   dontFixLibtool = true;
-
-  enableParallelBuilding = true;
 
   # XXX: The GNU ld wrapper does all sorts of nasty things wrt. RPATH, which
   # leads to the failure of a number of tests.

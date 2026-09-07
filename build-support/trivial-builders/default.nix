@@ -76,7 +76,6 @@ rec {
     buildCommand:
     stdenv.mkDerivation (
       {
-        enableParallelBuilding = true;
         inherit buildCommand name;
       }
       // lib.optionalAttrs (!derivationArgs ? meta) {
@@ -752,7 +751,6 @@ rec {
           inherit depsTargetTargetPropagated;
           inherit propagatedBuildInputs;
           inherit propagatedNativeBuildInputs;
-          strictDeps = true;
           # TODO 2023-01, no backport: simplify to inherit passthru;
           passthru =
             passthru
@@ -779,7 +777,6 @@ rec {
     runCommand "runtime-deps"
       {
         # Get the cleaner exportReferencesGraph interface
-        __structuredAttrs = true;
         exportReferencesGraph.graph = paths;
         nativeBuildInputs = [ jq ];
       }

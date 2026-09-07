@@ -53,8 +53,6 @@ stdenv.mkDerivation (finalAttrs: {
     libdir = "${placeholder "lib"}/lib";
   };
 
-  enableParallelBuilding = true;
-
   postPatch = ''
     substituteInPlace makefile.in --replace-fail "ar rc" '$(AR) rc'
   '';

@@ -93,10 +93,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   outputs = [ "out" ] ++ lib.optional withManual "doc";
   separateDebugInfo = true;
-  __structuredAttrs = true;
-
-  enableParallelBuilding = true;
-  enableParallelInstalling = true;
 
   patches = [
     # This patch does two things: (1) use the right name for `docbook2texi',

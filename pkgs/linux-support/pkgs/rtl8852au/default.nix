@@ -63,8 +63,6 @@ stdenv.mkDerivation (finalAttrs: {
   # GCC 14 makes this an error by default
   env.NIX_CFLAGS_COMPILE = "-Wno-designated-init";
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Driver for Realtek 802.11ac, rtl8852au, provides the 8852au mod";
     homepage = "https://github.com/lwfinger/rtl8852au";

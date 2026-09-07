@@ -16,7 +16,6 @@ stdenv.mkDerivation rec {
   };
 
   separateDebugInfo = true;
-  enableParallelBuilding = true;
   # Upstream's configure script is not autoconf generated, but a hand written one.
   setOutputFlags = false;
   dontDisableStatic = true;

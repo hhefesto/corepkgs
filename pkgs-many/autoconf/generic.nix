@@ -75,8 +75,6 @@ stdenv.mkDerivation (finalAttrs: {
   # "fixed" path in generated files!
   dontPatchShebangs = true;
 
-  enableParallelBuilding = true;
-
   # Make the Autotest test suite run in parallel.
   preCheck = ''
     export TESTSUITEFLAGS="-j$NIX_BUILD_CORES"

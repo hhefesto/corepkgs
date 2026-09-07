@@ -108,8 +108,6 @@ stdenv.mkDerivation (finalAttrs: {
     # as an unrecognized option.
   ];
 
-  enableParallelBuilding = true;
-
   passthru = mkVariantPassthru variantArgs // {
     tests = {
       unittests = runUnitTests finalAttrs.finalPackage;

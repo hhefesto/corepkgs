@@ -116,8 +116,6 @@ buildPythonPackage rec {
     ln -s ${cfg} site.cfg
   '';
 
-  enableParallelBuilding = true;
-
   # Avoid circular dependencies
   doCheck = false;
   nativeCheckInputs = [

@@ -37,8 +37,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   setupHook = ./lzip-setup-hook.sh;
 
-  enableParallelBuilding = true;
-
   passthru.tests.unittests = runUnitTests finalAttrs.finalPackage;
 
   meta = {

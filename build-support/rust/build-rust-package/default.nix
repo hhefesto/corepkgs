@@ -173,8 +173,6 @@ lib.extendMkDerivation {
 
       doCheck = args.doCheck or true;
 
-      strictDeps = true;
-
       meta = meta // {
         badPlatforms = meta.badPlatforms or [ ] ++ rustc.badTargetPlatforms;
         # default to Rust's platforms

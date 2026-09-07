@@ -24,8 +24,6 @@ stdenv.mkDerivation (finalAttrs: {
     "dev"
   ];
 
-  strictDeps = true;
-
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   nativeBuildInputs = [
     autoconf.v2_69.autoreconfHook
@@ -47,8 +45,6 @@ stdenv.mkDerivation (finalAttrs: {
   postPatch = ''
     sourceRoot=$(readlink -e "./libgfortran")
   '';
-
-  enableParallelBuilding = true;
 
   preConfigure = ''
     cd "$buildRoot"

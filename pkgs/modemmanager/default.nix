@@ -45,8 +45,6 @@ stdenv.mkDerivation rec {
     ./no-dummy-dirs-in-sysconfdir.patch
   ];
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     meson
     meson.configurePhaseHook

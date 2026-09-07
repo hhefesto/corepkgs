@@ -42,8 +42,6 @@ stdenv.mkDerivation rec {
   ]
   ++ lib.optional (!interactive) "man";
 
-  strictDeps = true;
-
   # no-pma fix
   nativeBuildInputs = [
     autoreconfHook

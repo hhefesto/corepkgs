@@ -133,7 +133,6 @@ edk2.mkDerivation projectDscPath (finalAttrs: {
     dosfstools
     mtools
   ];
-  strictDeps = true;
 
   hardeningDisable = [
     "format"

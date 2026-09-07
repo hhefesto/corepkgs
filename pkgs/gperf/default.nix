@@ -13,8 +13,6 @@ stdenv.mkDerivation rec {
     hash = "sha256-/Yfgq6fkOuBUg3r9bNTbA6PyaT3rNhkIXm7Z2NlgStg=";
   };
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Perfect hash function generator";
     longDescription = ''

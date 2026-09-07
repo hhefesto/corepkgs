@@ -166,8 +166,6 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optionals ncursesSupport [ ncurses ]
   ++ lib.optionals systemdSupport [ systemdLibs ];
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     moveToOutput sbin/nologin "$login"
     moveToOutput sbin/sulogin "$login"

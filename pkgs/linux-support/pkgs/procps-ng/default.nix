@@ -39,8 +39,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   makeFlags = [ "usrbin_execdir=$(out)/bin" ] ++ lib.optionals watchOnly [ "src/watch" ];
 
-  enableParallelBuilding = true;
-
   # Too red; 8bit support for fixing https://github.com/NixOS/nixpkgs/issues/275220
   configureFlags = [
     "--disable-modern-top"

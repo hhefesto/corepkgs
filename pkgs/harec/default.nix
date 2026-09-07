@@ -40,9 +40,6 @@ stdenv.mkDerivation (finalAttrs: {
     "LD=${stdenv.cc.targetPrefix}ld"
   ];
 
-  strictDeps = true;
-  enableParallelBuilding = true;
-
   postConfigure = ''
     ln -s configs/${platform}.mk config.mk
   '';

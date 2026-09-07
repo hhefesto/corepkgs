@@ -19,7 +19,6 @@ if closureRoots == [ ] then
 else
   runCommand "docker-layers"
     {
-      __structuredAttrs = true;
       # graph, exclude_paths and pipeline are expected by the
       # flatten_references_graph executable.
       exportReferencesGraph.graph = closureRoots;

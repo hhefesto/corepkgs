@@ -68,7 +68,6 @@
           ++ (if !(stdenv.buildPlatform.canExecute stdenv.hostPlatform) then [ perl.mini ] else [ perl ]);
 
         # enabling or disabling does nothing for perl packages
-        enableParallelBuilding = true;
 
         inherit
           outputs

@@ -41,7 +41,6 @@ stdenv.mkDerivation (
       ];
 
     installTargets = [ "modules_install" ];
-    enableParallelBuilding = true;
 
     meta = {
       description = "NVIDIA Linux Open GPU Kernel Module";

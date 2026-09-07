@@ -33,8 +33,6 @@ stdenv.mkDerivation rec {
     sed -i gnu/fpending.h -e 's,include <stdio_ext.h>,,'
   '';
 
-  enableParallelBuilding = true;
-
   passthru.tests = {
     inherit libguestfs rpm;
     git = git.tests.withInstallCheck;

@@ -46,8 +46,6 @@ stdenv.mkDerivation (finalAttrs: {
       --replace-fail install_vendor install_site
   '';
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     autoconf-archive
     autoreconfHook

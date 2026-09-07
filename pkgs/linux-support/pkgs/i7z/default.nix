@@ -37,8 +37,6 @@ stdenv.mkDerivation rec {
     ./qt5.patch
   ];
 
-  enableParallelBuilding = true;
-
   postBuild = lib.optionalString withGui ''
     cd GUI
     qmake

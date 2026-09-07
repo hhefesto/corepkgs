@@ -30,7 +30,6 @@ stdenv.mkDerivation {
 
   inherit patches;
 
-  strictDeps = true;
   depsBuildBuild = lib.optionals (packageAtLeast "0.23") [ buildPackages.stdenv.cc ];
   nativeBuildInputs =
     lib.optionals (stdenv.hostPlatform.isRiscV && packageOlder "0.23") [
@@ -43,8 +42,6 @@ stdenv.mkDerivation {
   buildInputs = [ gmp ];
 
   inherit configureFlags;
-
-  enableParallelBuilding = true;
 
   meta = {
     homepage = "https://libisl.sourceforge.io/";

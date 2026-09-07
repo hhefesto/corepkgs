@@ -34,8 +34,6 @@ stdenv.mkDerivation {
     mkdir -p "$out/lib/modules/${kernel.modDirVersion}/kernel/net/wireless/"
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Realtek rtl88x2bu driver";
     homepage = "https://github.com/RinCat/RTL88x2BU-Linux-Driver";

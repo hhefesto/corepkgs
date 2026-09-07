@@ -48,8 +48,6 @@ stdenv.mkDerivation rec {
     "python3_sitelib=${python3.sitePackages}"
   ];
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     installShellCompletion --bash $out/usr/share/bash-completion/completions/*
     rm -rv $out/usr

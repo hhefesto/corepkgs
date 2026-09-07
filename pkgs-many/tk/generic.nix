@@ -119,8 +119,6 @@ matchedTcl.mkTclDerivation {
     libxft
   ];
 
-  enableParallelBuilding = true;
-
   doCheck = false;
 
   tcl = matchedTcl;

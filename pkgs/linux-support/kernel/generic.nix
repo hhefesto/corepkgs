@@ -253,8 +253,6 @@ let
 
         installPhase = "mv $buildRoot/.config $out";
 
-        enableParallelBuilding = true;
-
         passthru = rec {
           module = import ./kernel-config.nix;
 

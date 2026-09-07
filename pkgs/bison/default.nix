@@ -48,7 +48,6 @@ stdenv.mkDerivation rec {
   ++ lib.optional stdenv.hostPlatform.isSunOS help2man;
   propagatedBuildInputs = [ m4 ];
 
-  enableParallelBuilding = true;
   # tests are flaky / timing sensitive on FreeBSD
   enableParallelChecking = !stdenv.hostPlatform.isFreeBSD;
 

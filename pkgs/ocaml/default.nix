@@ -18,7 +18,6 @@ stdenv.mkDerivation (finalAttrs: {
     rm testsuite/tests/basic/trigraph.ml
   '';
 
-  strictDeps = true;
   prefixKey = "-prefix ";
   configurePlatforms =
     lib.optionals (!(stdenv.hostPlatform.isDarwin && stdenv.hostPlatform.isAarch64))
@@ -29,7 +28,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   hardeningDisable = lib.optional stdenv.cc.isClang "strictoverflow";
 
-  enableParallelBuilding = true;
   enableParallelInstalling = false;
 
   makefile = ./Makefile.nixpkgs;

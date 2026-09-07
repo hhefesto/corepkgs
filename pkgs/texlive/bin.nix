@@ -243,8 +243,6 @@ rec {
     pname = "texlive-bin";
     inherit version;
 
-    __structuredAttrs = true;
-
     inherit (common) binToOutput src prePatch;
 
     outputs = [
@@ -323,8 +321,6 @@ rec {
         "upmendex" # ICU isn't small
       ];
 
-    enableParallelBuilding = true;
-
     doCheck = false; # triptest fails, likely due to missing TEXMF tree
     preCheck = "patchShebangs ../texk/web2c";
 
@@ -373,8 +369,6 @@ rec {
   core-big = stdenv.mkDerivation {
     pname = "texlive-bin-big";
     inherit version;
-
-    __structuredAttrs = true;
 
     inherit (common) binToOutput src prePatch;
 
@@ -488,8 +482,6 @@ rec {
 
     configureScript = "../configure";
 
-    enableParallelBuilding = true;
-
     doCheck = false; # fails
 
     outputs = [
@@ -533,7 +525,6 @@ rec {
 
     configureFlags = common.configureFlags ++ [ "--with-system-kpathsea" ];
 
-    enableParallelBuilding = true;
   };
 
   # The LuaMetaTeX engine (distributed since TeX Live 2023) must be built separately.
@@ -556,7 +547,6 @@ rec {
         stripRoot = false;
       };
 
-      enableParallelBuilding = true;
       nativeBuildInputs = [
         cmake
         cmake.configurePhaseHook
@@ -608,7 +598,6 @@ rec {
     ]
     ++ lib.optional (ttfautohint != null) ttfautohint;
 
-    enableParallelBuilding = true;
   };
 
   dvipng = stdenv.mkDerivation {
@@ -644,7 +633,6 @@ rec {
 
     GS = "${ghostscript}/bin/gs";
 
-    enableParallelBuilding = true;
   };
 
   pygmentex = python3Packages.buildPythonApplication rec {
@@ -731,7 +719,6 @@ rec {
       "--with-system-icu"
     ];
 
-    enableParallelBuilding = true;
   };
 
   xdvi = stdenv.mkDerivation {
@@ -764,8 +751,6 @@ rec {
       "--with-system-libgs"
     ];
 
-    enableParallelBuilding = true;
-
     postInstall = ''
       substituteInPlace "$out/bin/xdvi" \
         --replace-fail "exec xdvi-xaw" "exec '$out/bin/xdvi-xaw'"
@@ -783,7 +768,6 @@ rec {
 
     preConfigure = "cd utils/xpdfopen";
 
-    enableParallelBuilding = true;
   };
 
 } # un-indented

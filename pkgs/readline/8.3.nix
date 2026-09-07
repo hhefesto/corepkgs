@@ -29,7 +29,6 @@ stdenv.mkDerivation (finalAttrs: {
     "info"
   ];
 
-  strictDeps = true;
   propagatedBuildInputs = [ curses-library ];
   nativeBuildInputs = [ updateAutotoolsGnuConfigScriptsHook ];
 

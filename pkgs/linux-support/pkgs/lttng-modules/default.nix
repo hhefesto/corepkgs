@@ -30,8 +30,6 @@ stdenv.mkDerivation rec {
 
   installTargets = [ "modules_install" ];
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Linux kernel modules for LTTng tracing";
     homepage = "https://lttng.org/";

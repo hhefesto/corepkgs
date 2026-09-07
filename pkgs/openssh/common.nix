@@ -79,7 +79,6 @@ stdenv.mkDerivation (finalAttrs: {
       substituteInPlace Makefile.in --replace-fail '$(INSTALL) -m 4711' '$(INSTALL) -m 0711'
     '';
 
-  strictDeps = true;
   nativeBuildInputs = [
     autoreconfHook
     pkg-config
@@ -144,8 +143,6 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optional withLdns "-lcrypto";
 
   buildFlags = [ "SSH_KEYSIGN=ssh-keysign" ];
-
-  enableParallelBuilding = true;
 
   doCheck = false;
   enableParallelChecking = false;

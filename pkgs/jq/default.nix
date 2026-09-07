@@ -60,9 +60,6 @@ stdenv.mkDerivation (finalAttrs: {
     rm -r ./vendor/oniguruma
   '';
 
-  strictDeps = true;
-  enableParallelBuilding = true;
-
   buildInputs = lib.optionals onigurumaSupport [ oniguruma ];
   nativeBuildInputs = [
     removeReferencesTo

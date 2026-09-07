@@ -18,8 +18,6 @@ stdenv.mkDerivation (finalAttrs: {
     sha256 = "sha256-G9aqQidTE68xQcfPLluWTosf1IgCXK8vlx9DsAd2szI=";
   };
 
-  enableParallelBuilding = true;
-
   nativeBuildInputs = [ autoreconfHook ];
 
   passthru.tests.unittests = runUnitTests finalAttrs.finalPackage;

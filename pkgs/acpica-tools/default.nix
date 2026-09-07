@@ -48,8 +48,6 @@ stdenv.mkDerivation (finalAttrs: {
     INSTALLFLAGS = lib.optionals (!stdenv.hostPlatform.isDarwin) "-m 555";
   };
 
-  enableParallelBuilding = true;
-
   installFlags = [ "PREFIX=${placeholder "out"}" ];
 
   meta = {

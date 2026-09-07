@@ -38,7 +38,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-SfpJskXX7r3jbAwgZl2qpa7j1M4i8/sV6rlAWiUEoQs=";
   };
 
-  enableParallelBuilding = true;
   depsBuildBuild = [
     protobufc
     buildPackages.stdenv.cc

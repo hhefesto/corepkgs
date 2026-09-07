@@ -127,8 +127,6 @@ stdenv.mkDerivation rec {
   ]
   ++ lib.optional (stdenv.targetPlatform.useLLVM or false) "--disable-demangler";
 
-  enableParallelBuilding = true;
-
   doCheck =
     # Backtrace unwinding tests rely on glibc-internal symbol names.
     # Musl provides slightly different forms and fails.

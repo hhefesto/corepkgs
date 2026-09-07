@@ -94,8 +94,6 @@ stdenv.mkDerivation rec {
     libbpf
   ];
 
-  enableParallelBuilding = true;
-
   passthru.updateScript = gitUpdater {
     # No nicer place to find latest release.
     url = "https://git.kernel.org/pub/scm/network/iproute2/iproute2.git";

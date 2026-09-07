@@ -41,8 +41,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   };
 
-  __structuredAttrs = true;
-
   # patching unix_chkpwd is required as the nix store entry does not have the necessary bits
   postPatch = ''
     substituteInPlace modules/module-meson.build \
@@ -56,8 +54,6 @@ stdenv.mkDerivation (finalAttrs: {
     "scripts"
     # "modules"
   ];
-
-  strictDeps = true;
 
   depsBuildBuild = [ buildPackages.stdenv.cc ];
   nativeBuildInputs = [
@@ -86,8 +82,6 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optionals withLogind [
     systemdLibs
   ];
-
-  enableParallelBuilding = true;
 
   mesonAutoFeatures = "auto";
   mesonFlags = [

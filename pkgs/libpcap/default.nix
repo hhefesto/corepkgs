@@ -28,8 +28,6 @@ stdenv.mkDerivation rec {
   pname = "libpcap";
   version = "1.10.5";
 
-  __structuredAttrs = true;
-
   src = fetchurl {
     url = "https://www.tcpdump.org/release/${pname}-${version}.tar.gz";
     hash = "sha256-N87ZChmjAqfzLkWCJKAMNlwReQXCzTWsVEtogKgUiPA=";
@@ -39,8 +37,6 @@ stdenv.mkDerivation rec {
     "out"
     "lib"
   ];
-
-  strictDeps = true;
 
   buildInputs = [
     bash
@@ -73,8 +69,6 @@ stdenv.mkDerivation rec {
       rm -f $out/lib/libpcap.a
     fi
   '';
-
-  enableParallelBuilding = true;
 
   outputChecks.lib.disallowedRequisites = [
     bash

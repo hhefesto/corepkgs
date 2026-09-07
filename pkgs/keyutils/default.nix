@@ -51,8 +51,6 @@ stdenv.mkDerivation rec {
         'VCPPFLAGS	:= -DPKGBUILD="\"$(date -ud "@$SOURCE_DATE_EPOCH" +%F)\""'
   '';
 
-  enableParallelBuilding = true;
-
   env = lib.optionalAttrs (stdenv.hostPlatform.useLLVM) {
     NIX_LDFLAGS = "--undefined-version";
   };

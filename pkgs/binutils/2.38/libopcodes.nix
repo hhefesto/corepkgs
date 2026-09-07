@@ -48,8 +48,6 @@ stdenv.mkDerivation {
     "--enable-shared"
   ];
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "Library from binutils for manipulating machine code";
     homepage = "https://www.gnu.org/software/binutils/";

@@ -16,9 +16,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-osVYIm/E2eTOMxvS/Tw/F/lVEV0sAORHYYpO+ZeKKnM=";
   };
 
-  strictDeps = true;
-  enableParallelBuilding = true;
-
   passthru = {
     tests = {
       version = testers.testVersion {

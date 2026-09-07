@@ -50,8 +50,6 @@ stdenv.mkDerivation (
       runHook postInstall
     '';
 
-    enableParallelBuilding = true;
-
     meta = common.meta // {
       description = "Entirely open source Linux driver that allows you to manage your Razer peripherals on GNU/Linux";
       mainProgram = "razer_mount";

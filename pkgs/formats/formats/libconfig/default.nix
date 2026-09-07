@@ -94,7 +94,6 @@ in
 
               json = builtins.toJSON value;
 
-              strictDeps = true;
               nativeBuildInputs = [ libconfig-generator ];
               buildPhase = ''
                 runHook preBuild
@@ -115,8 +114,6 @@ in
                 mv output.cfg $out
                 runHook postInstall
               '';
-
-              __structuredAttrs = true;
 
               passthru.json = writeText "${finalAttrs.name}.json" finalAttrs.json;
             })

@@ -110,8 +110,6 @@ stdenv.mkDerivation (finalAttrs: {
     )
   );
 
-  strictDeps = true;
-
   patches = [
     ./no-usr-local-search-paths.patch
   ];
@@ -167,8 +165,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   doCheck = true;
   preCheck = "export HOME=$TMPDIR; export TZ=CET; bin/Rscript -e 'sessionInfo()'";
-
-  enableParallelBuilding = true;
 
   setupHook = ./setup-hook.sh;
 

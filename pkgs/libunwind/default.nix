@@ -49,8 +49,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   propagatedBuildInputs = [ xz ];
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     find $out -name \*.la | while read file; do
       sed -i 's,-llzma,${xz.out}/lib/liblzma.la,' $file

@@ -57,8 +57,6 @@ stdenv.mkDerivation (finalAttrs: {
       --replace-fail "dtc -I" "${dtc}/bin/dtc -I"
   '';
 
-  enableParallelBuilding = true;
-
   meta = {
     homepage = "https://wiki.ubuntu.com/FirmwareTestSuite";
     description = "Firmware Test Suite";

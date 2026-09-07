@@ -30,10 +30,6 @@ stdenv.mkDerivation (finalAttrs: {
     find . -name Makefile.in -exec touch {} + || die
   '';
 
-  strictDeps = true;
-
-  enableParallelBuilding = true;
-
   # Issue exists whenever NLS is disabled, and there's an upstream fix
   # for GCC, but there's no good way to check whether NLS or GCC is in
   # use.  (Checking stdenv.cc.isGNU causes infinite recursion.)

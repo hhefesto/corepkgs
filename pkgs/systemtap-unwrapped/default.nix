@@ -39,7 +39,6 @@ stdenv.mkDerivation (finalAttrs: {
     gettext
     python3
   ];
-  enableParallelBuilding = true;
 
   meta = {
     homepage = "https://sourceware.org/systemtap/";

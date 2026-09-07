@@ -16,8 +16,6 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "squashfs-tools";
   version = "4.7.5";
 
-  __structuredAttrs = true;
-
   src = fetchFromGitHub {
     owner = "plougher";
     repo = "squashfs-tools";
@@ -32,8 +30,6 @@ stdenv.mkDerivation (finalAttrs: {
       hash = "sha256-XRDV6qtd5jVwt2jbIlLDYKiI1tbVcuij5/vaPj9SN5w=";
     })
   ];
-
-  strictDeps = true;
 
   nativeBuildInputs = [
     which

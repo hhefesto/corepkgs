@@ -44,8 +44,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-pkVBg4Rxku3rEnNhPvVoAoab55vqrDqZfW1z+umealE=";
   };
 
-  __structuredAttrs = true;
-
   outputs = [
     "out"
     "dev"
@@ -71,8 +69,6 @@ stdenv.mkDerivation (finalAttrs: {
       ];
     };
   };
-
-  strictDeps = true;
 
   buildInputs = [
     zlib
@@ -100,8 +96,6 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     removeReferencesTo
   ];
-
-  enableParallelBuilding = true;
 
   separateDebugInfo = true;
 

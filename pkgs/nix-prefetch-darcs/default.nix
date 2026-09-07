@@ -14,7 +14,6 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "nix-prefetch-darcs";
   version = "1.0.0";
 
-  strictDeps = true;
   nativeBuildInputs = [ makeWrapper ];
   buildInputs = [ bash ];
 

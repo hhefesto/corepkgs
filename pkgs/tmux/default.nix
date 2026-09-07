@@ -23,8 +23,6 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "tmux";
   version = "3.7c";
 
-  strictDeps = true;
-
   outputs = [
     "out"
     "man"
@@ -59,8 +57,6 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optionals withSixel [ "--enable-sixel" ]
   ++ lib.optionals (withUtempter && libutempter != null) [ "--enable-utempter" ]
   ++ lib.optionals withUtf8proc [ "--enable-utf8proc" ];
-
-  enableParallelBuilding = true;
 
   passthru.terminfo = runCommand "tmux-terminfo" { nativeBuildInputs = [ ncurses ]; } ''
     mkdir -p $out/share/terminfo/t

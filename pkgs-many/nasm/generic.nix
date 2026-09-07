@@ -23,8 +23,6 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [ perl ];
 
-  enableParallelBuilding = true;
-
   meta = {
     homepage = "https://www.nasm.us/";
     description = "80x86 and x86-64 assembler designed for portability and modularity";

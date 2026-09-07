@@ -16,8 +16,6 @@ lib.makeOverridable (
     expectedArray != null || expectedMap != null
   ) "testEqualArrayOrMap: at least one of 'expectedArray' or 'expectedMap' must be provided";
   stdenvNoCC.mkDerivation {
-    __structuredAttrs = true;
-    strictDeps = true;
 
     inherit name;
 

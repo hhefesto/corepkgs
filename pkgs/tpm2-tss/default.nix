@@ -78,10 +78,7 @@ stdenv.mkDerivation (finalAttrs: {
     swtpm
   ];
 
-  strictDeps = true;
   preAutoreconf = "./bootstrap";
-
-  enableParallelBuilding = true;
 
   patches = [
     # Do not rely on dynamic loader path

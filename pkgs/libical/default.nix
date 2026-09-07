@@ -38,8 +38,6 @@ stdenv.mkDerivation (finalAttrs: {
     sha256 = "sha256-KIMqZ6QAh+fTcKEYrcLlxgip91CLAwL9rwjUdKzBsQk=";
   };
 
-  strictDeps = true;
-
   depsBuildBuild = lib.optionals (stdenv.hostPlatform != stdenv.buildPlatform) [
     # provides ical-glib-src-generator that runs during build
     libical

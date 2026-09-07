@@ -272,6 +272,7 @@ NOISE_BINDINGS = (
     "__structuredAttrs",
     "doCheck",
     "enableParallelBuilding",
+    "enableParallelChecking",
     "enableParallelInstalling",
     "identifiers.cpeParts",
     "passthru.tests",

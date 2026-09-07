@@ -51,8 +51,6 @@ stdenv.mkDerivation (finalAttrs: {
   # Since `libpci' appears in `hwloc.pc', it must be propagated.
   propagatedBuildInputs = lib.optional stdenv.hostPlatform.isLinux pciutils;
 
-  enableParallelBuilding = true;
-
   postInstall = lib.optionalString stdenv.hostPlatform.isLinux ''
     if [ -d "${numactl}/lib64" ]; then
       numalibdir="${numactl}/lib64"

@@ -51,8 +51,6 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optional stdenv.hostPlatform.isDarwin gettext
   ++ lib.optional enableCapabilities libcap;
 
-  strictDeps = true;
-
   configureFlags = [
     "--with-libgpg-error-prefix=${libgpg-error.dev}"
   ]
@@ -87,8 +85,6 @@ stdenv.mkDerivation (finalAttrs: {
     } cipher/simd-common-riscv.h
   '';
 
-  enableParallelBuilding = true;
-
   # Make sure libraries are correct for .pc and .la files
   # Also make sure includes are fixed for callers who don't use libgpgcrypt-config
   postFixup = ''
@@ -111,8 +107,6 @@ stdenv.mkDerivation (finalAttrs: {
     mkdir -p $lib/lib
     cp src/.libs/libgcrypt.20.dylib $lib/lib
   '';
-
-  enableParallelChecking = true;
 
   passthru.tests = {
     inherit gnupg libotr;

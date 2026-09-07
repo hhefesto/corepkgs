@@ -392,8 +392,6 @@ lib.extendMkDerivation {
           runHook postInstall
         '';
 
-      strictDeps = true;
-
       inherit allowGoReference;
       disallowedReferences = lib.optional (!finalAttrs.allowGoReference) go;
 

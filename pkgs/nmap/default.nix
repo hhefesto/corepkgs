@@ -43,8 +43,6 @@ stdenv.mkDerivation (finalAttrs: {
     # TODO(corepkgs): Port liblinear for machine learning OS detection
   ];
 
-  enableParallelBuilding = true;
-
   nativeInstallCheckInputs = [
     versionCheckHook
   ];

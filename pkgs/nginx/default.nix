@@ -127,8 +127,6 @@ stdenv.mkDerivation (finalAttrs: {
     setOutputFlags=
   '';
 
-  enableParallelBuilding = true;
-
   preInstall = ''
     if [[ -e man/nginx.8 ]]; then
       installManPage man/nginx.8

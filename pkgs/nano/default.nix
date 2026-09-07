@@ -36,8 +36,6 @@ stdenv.mkDerivation (finalAttrs: {
     "info"
   ];
 
-  enableParallelBuilding = true;
-
   meta = {
     homepage = "https://www.nano-editor.org/";
     description = "Small, user-friendly console text editor";

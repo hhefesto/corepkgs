@@ -393,7 +393,6 @@ stdenv.mkDerivation rec {
     '';
 
   inherit passthru;
-  enableParallelBuilding = true; # almost no parallelization without STM
 
   meta = {
     homepage = "https://www.pypy.org/";

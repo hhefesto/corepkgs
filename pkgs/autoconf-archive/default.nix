@@ -23,9 +23,6 @@ stdenv.mkDerivation rec {
     ./0003-ax_switch_flags.m4-properly-quote-m4_fatal.patch
   ];
 
-  strictDeps = true;
-  enableParallelBuilding = true;
-
   buildInputs = [ xz ];
 
   meta = {

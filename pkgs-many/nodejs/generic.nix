@@ -63,8 +63,6 @@ stdenv.mkDerivation (finalAttrs: {
     "--with-intl=system-icu"
   ];
 
-  enableParallelBuilding = true;
-
   # Node.js build can be memory intensive
   env.NIX_CFLAGS_COMPILE = lib.optionalString stdenv.cc.isClang "-Wno-error=unused-command-line-argument";
 

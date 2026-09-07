@@ -86,8 +86,6 @@ stdenv.mkDerivation (finalAttrs: {
   ]; # bin/ isn't really big
   outputMan = "out"; # it's tiny
 
-  enableParallelBuilding = true;
-
   configureFlags = [
     "--with-frozenpaths"
     (lib.withFeatureAs (arch != null) "gcc-arch" arch)

@@ -99,8 +99,6 @@ stdenv.mkDerivation (finalAttrs: {
     "-DCMAKE_FIND_PACKAGE_PREFER_CONFIG=ON"
   ];
 
-  enableParallelBuilding = true;
-
   # Avoid flakiness like https://gitlab.com/libtiff/libtiff/-/commit/94f6f7315b1
   enableParallelChecking = false;
 

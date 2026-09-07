@@ -80,8 +80,6 @@ stdenv.mkDerivation (finalAttrs: {
     ./darwin/stub.patch
   ];
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     meson
     meson.configurePhaseHook

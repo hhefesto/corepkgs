@@ -30,8 +30,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-7MCExKNeBWKKJwpWut+gUKj/Y1UnEE5ZWpefkYYkfv4=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     autoreconfHook
     pkg-config

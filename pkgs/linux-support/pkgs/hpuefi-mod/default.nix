@@ -16,7 +16,6 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   nativeBuildInputs = kernel.moduleBuildDependencies;
-  strictDeps = true;
 
   makeFlags = kernelModuleMakeFlags ++ [
     "KVERS=${kernel.modDirVersion}"

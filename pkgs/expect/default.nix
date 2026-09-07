@@ -49,8 +49,6 @@ tcl.mkTclDerivation rec {
     makeWrapper
   ];
 
-  strictDeps = true;
-
   env = lib.optionalAttrs stdenv.cc.isGNU {
     NIX_CFLAGS_COMPILE = "-Wno-error=incompatible-pointer-types -std=gnu17";
   };

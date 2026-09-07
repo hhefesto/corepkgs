@@ -88,14 +88,9 @@ stdenv.mkDerivation (finalAttrs: {
     substituteInPlace configure --replace-fail "-mtune=native" "-mtune=generic"
   '';
 
-  strictDeps = true;
-  enableParallelBuilding = true;
-
   nativeCheckInputs = [ perl ];
 
   passthru.tests.pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
-
-  __structuredAttrs = true;
 
   meta = {
     changelog = "https://github.com/FFTW/fftw3/blob/fftw-${finalAttrs.version}/NEWS";

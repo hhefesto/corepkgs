@@ -27,8 +27,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   configureFlags = lib.optional stdenv.hostPlatform.isx86 "--enable-fat=yes";
 
-  enableParallelBuilding = true;
-
   meta = {
     description = "BLAKE2 family of cryptographic hash functions";
     homepage = "https://blake2.net/";

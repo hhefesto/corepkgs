@@ -97,8 +97,6 @@ stdenv.mkDerivation rec {
   ++ lib.optional (!withDebugSymbols) "--disable-debug"
   ++ lib.optional withXtables "--with-xtables";
 
-  enableParallelBuilding = true;
-
   doCheck = false;
 
   passthru.tests = {

@@ -14,8 +14,6 @@ lib.makeOverridable (
     script ? "",
   }:
   stdenvNoCC.mkDerivation (finalAttrs: {
-    __structuredAttrs = true;
-    strictDeps = true;
 
     inherit name;
 

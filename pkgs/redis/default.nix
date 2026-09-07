@@ -63,8 +63,6 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optionals withSystemd [ "USE_SYSTEMD=yes" ]
   ++ lib.optionals tlsSupport [ "BUILD_TLS=yes" ];
 
-  enableParallelBuilding = true;
-
   env.NIX_LDFLAGS = lib.optionalString stdenv.hostPlatform.isFreeBSD "-lexecinfo";
 
   # darwin currently lacks a pure `pgrep` which is extensively used here

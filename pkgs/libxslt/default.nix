@@ -41,8 +41,6 @@ stdenv.mkDerivation (finalAttrs: {
     ./77-Use-a-dedicated-node-type-to-maintain-the-list-of-cached-rv-ts.patch
   ];
 
-  strictDeps = true;
-
   nativeBuildInputs = [
     pkg-config
     autoreconfHook
@@ -72,8 +70,6 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.optionalString pythonSupport "PYTHON=${python3.pythonOnBuildForHost.interpreter}")
     (lib.withFeature cryptoSupport "crypto")
   ];
-
-  enableParallelBuilding = true;
 
   postFixup = ''
     moveToOutput bin/xslt-config "$dev"

@@ -42,8 +42,6 @@ stdenv.mkDerivation rec {
 
   env.NIX_CFLAGS_COMPILE = "-Wno-error";
 
-  enableParallelBuilding = true;
-
   passthru = {
     inherit se_url;
     tests = {

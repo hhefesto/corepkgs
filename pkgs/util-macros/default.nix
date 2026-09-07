@@ -18,8 +18,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     hash = "sha256-COIWe7GMfbk76/QUIRsN5yvjd6MEarI0j0M+Xa0WoKQ=";
   };
 
-  strictDeps = true;
-
   nativeBuildInputs = [ autoreconfHook ];
 
   passthru.tests.pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;

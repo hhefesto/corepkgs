@@ -67,8 +67,6 @@ let
     src = src';
     sourceRoot = "${finalAttrs.src.name}/llvm";
 
-    __structuredAttrs = true;
-
     postPatch = ''
       (
         cd ../clang

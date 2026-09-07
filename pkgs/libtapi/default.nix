@@ -102,8 +102,6 @@ stdenv.mkDerivation (finalAttrs: {
     mv tapi-src source/tapi
   '';
 
-  strictDeps = true;
-
   buildInputs = [ zlib ]; # Upstream links against zlib in their distribution.
 
   nativeBuildInputs = [

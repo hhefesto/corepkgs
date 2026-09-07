@@ -35,8 +35,6 @@ stdenv.mkDerivation rec {
     substituteInPlace Makefile --replace 'CC=$(CROSS_COMPILE)gcc' ""
   '';
 
-  enableParallelBuilding = true;
-
   makeFlags = [
     "SHARED=${lib.boolToYesNo (!static)}"
     "PREFIX=\${out}"

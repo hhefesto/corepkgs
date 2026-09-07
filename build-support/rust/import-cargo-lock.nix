@@ -291,7 +291,6 @@ let
     runCommand "cargo-vendor-dir"
       (
         {
-          __structuredAttrs = true;
         }
         // (
           if lockFile == null then

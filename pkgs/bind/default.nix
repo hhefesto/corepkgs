@@ -55,8 +55,6 @@ stdenv.mkDerivation (finalAttrs: {
     "--disable-linux-caps"
   ];
 
-  enableParallelBuilding = true;
-
   postInstall = ''
     # Move utilities to separate output
     mkdir -p $utils/bin
