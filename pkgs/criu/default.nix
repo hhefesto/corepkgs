@@ -45,6 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
   nativeBuildInputs = [
     pkg-config
+    protobuf
     asciidoc
     xmlto
     libpaper
@@ -57,7 +58,6 @@ stdenv.mkDerivation (finalAttrs: {
     perl
   ];
   buildInputs = [
-    protobuf
     libnl
     libcap
     libnet
