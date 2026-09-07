@@ -25,8 +25,8 @@ assert stdenv.targetPlatform == stdenv.hostPlatform;
 let
   downloadsUrl = "https://downloads.haskell.org/ghc";
 
-  # Copy sha256 from https://downloads.haskell.org/~ghc/9.8.4/SHA256SUMS
-  version = "9.8.4";
+  # Copy sha256 from https://downloads.haskell.org/~ghc/9.10.3/SHA256SUMS
+  version = "9.10.3";
 
   # Information about available bindists that we use in the build.
   #
@@ -52,7 +52,7 @@ let
         variantSuffix = "";
         src = {
           url = "${downloadsUrl}/${version}/ghc-${version}-i386-deb10-linux.tar.xz";
-          sha256 = "e5efce16c654d5e702986258a87dd9531e1722b8051823c8ce1150ce3c5899ae";
+          sha256 = "dc4d941d2240b5a3cd0d2de7b91b2184f60afb27ab8c4a66a9fce82f8cae4c89";
         };
         exePathForLibraryCheck = "bin/ghc";
         archSpecificLibraries = [
@@ -70,7 +70,7 @@ let
         variantSuffix = "";
         src = {
           url = "${downloadsUrl}/${version}/ghc-${version}-x86_64-deb11-linux.tar.xz";
-          sha256 = "af151db8682b8c763f5a44f960f65453d794c95b60f151abc82dbdefcbe6f8ad";
+          sha256 = "b6bbd3514e0cdb9db350812a003bb7c670c58d99779086fbe41092b019548924";
         };
         exePathForLibraryCheck = "bin/ghc";
         archSpecificLibraries = [
@@ -88,7 +88,7 @@ let
         variantSuffix = "";
         src = {
           url = "${downloadsUrl}/${version}/ghc-${version}-aarch64-deb11-linux.tar.xz";
-          sha256 = "310204daf2df6ad16087be94b3498ca414a0953b29e94e8ec8eb4a5c9bf603d3";
+          sha256 = "052789dfe7f6fba6dc3822de0da272e8a5bd358c37adae17d8e82cff39bc1008";
         };
         exePathForLibraryCheck = "bin/ghc";
         archSpecificLibraries = [
@@ -106,7 +106,7 @@ let
         variantSuffix = "";
         src = {
           url = "${downloadsUrl}/${version}/ghc-${version}-x86_64-apple-darwin.tar.xz";
-          sha256 = "de7baacfb1513ab0e4ccf8911045cceee84bc8a4e39b89bd975ed3135e5f7d96";
+          sha256 = "01e4ff9530c124408db0b0f9ec7e4be35b300a6aee939c5758d1acf22d51693f";
         };
         exePathForLibraryCheck = null; # we don't have a library check for darwin yet
         archSpecificLibraries = [
@@ -128,7 +128,7 @@ let
         variantSuffix = "";
         src = {
           url = "${downloadsUrl}/${version}/ghc-${version}-aarch64-apple-darwin.tar.xz";
-          sha256 = "e2f12a922754fd28511512875bf6d9eb3e0cce7fc963a7266f6e1661aeabd7ed";
+          sha256 = "9f50ddd87be5cb994c719402778d6c7fdd341934fd4fbc0fcc3ecb40d49f860c";
         };
         exePathForLibraryCheck = null; # we don't have a library check for darwin yet
         archSpecificLibraries = [
@@ -153,7 +153,7 @@ let
         variantSuffix = "-musl";
         src = {
           url = "${downloadsUrl}/${version}/ghc-${version}-aarch64-alpine3_18-linux.tar.xz";
-          sha256 = "b5c86a0cda0bd62d5eeeb52b1937c3bd00c70cd67dd74226ce787d5c429a4e62";
+          sha256 = "4866d3b241c59860f2f6eaa2a5e96632113e57100b911ff8aa936665cc0045fe";
         };
         exePathForLibraryCheck = "bin/ghc";
         archSpecificLibraries = [
@@ -171,7 +171,7 @@ let
         variantSuffix = "-musl";
         src = {
           url = "${downloadsUrl}/${version}/ghc-${version}-x86_64-alpine3_12-linux.tar.xz";
-          sha256 = "e34bb16e8387509adc96a3d98b4a444bab425d12864c38a3629f2860b4bec2e7";
+          sha256 = "c8863098401febaab6892536b363deda109a75fea437abb992d58103d402ed89";
         };
         exePathForLibraryCheck = "bin/ghc";
         archSpecificLibraries = [
@@ -359,7 +359,7 @@ stdenv.mkDerivation (finalAttrs: {
     done
   ''
   # Use ld.gold instead of ld.bfd to avoid relocation errors with binutils >= 2.44.
-  # GHC 9.8.x produces object files with relocations that confuse ld.bfd.
+  # GHC 9.8.x and 9.10.x produce object files with relocations that confuse ld.bfd.
   + lib.optionalString stdenv.hostPlatform.isLinux ''
     settings="$out/lib/ghc-${version}/lib/settings"
     sed -i \
