@@ -829,9 +829,8 @@ in
       }
     );
 
-  openssl = attrs: {
-    # https://github.com/ruby/openssl/issues/369
-    buildInputs = [ (if (lib.versionAtLeast attrs.version "3.0.0") then openssl else openssl.v1_1) ];
+  openssl = _: {
+    buildInputs = [ openssl ];
   };
 
   opus-ruby = attrs: {

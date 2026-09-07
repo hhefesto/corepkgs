@@ -171,6 +171,7 @@ mapAliases {
   nodejs_23 = nodejs.v23;
   openjdk = java;
   openjdk11 = java.v11;
+  openssl_1_1 = openssl.v1_1;
   openssl_oqs = openssl.oqs;
   patchelfUnstable = throw "patchelfUnstable was removed because it was older than patchelf and unneeded, use patchelf instead";
   perl538 = perl.v5_38;
