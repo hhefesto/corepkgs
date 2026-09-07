@@ -13,7 +13,7 @@
     version = "1.4.2";
     hashes = {
       "aarch64-darwin" = "sha256-2Jc86DX6eGflzHmv7m/G8a4BF6pL1fwlRv0AxRL3E4Y=";
-      "aarch64-linux" = "sha256-WAzndTMQjcaxC+wXITl+T1qkTpCXJtokUdSD38XlgdY=";
+      "aarch64-linux" = "sha256-VDKLvC2cjgyfiSxUTWbFeoO4QTnjSQnl7oF1jxrI/ac=";
       "x86_64-darwin" = "sha256-SY521hu+h9Iwb2X+1groa2sMjuLacJ+DICgI2xoJ5Ac=";
       "x86_64-linux" = "sha256-NjaPrvdSeHXV/6UuU81IAhdB8qg+tiCKjdZAaNQiqRM=";
     };
