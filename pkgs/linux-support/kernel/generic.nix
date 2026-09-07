@@ -160,7 +160,6 @@ let
 
       configfile = stdenv.mkDerivation {
         inherit
-          ignoreConfigErrors
           autoModules
           preferBuiltin
           kernelArch
@@ -189,7 +188,10 @@ let
           rustc-unwrapped
         ];
 
-        RUST_LIB_SRC = lib.optionalString withRust rustPlatform.rustLibSrc;
+        env = {
+          inherit ignoreConfigErrors;
+          RUST_LIB_SRC = lib.optionalString withRust rustPlatform.rustLibSrc;
+        };
 
         # e.g. "defconfig"
         kernelBaseConfig = defconfig;
