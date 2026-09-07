@@ -50,7 +50,11 @@ stdenv.mkDerivation {
     inherit hash;
   };
 
-  patches = optional crossBuildTools ./cross-tools-flags.patch;
+  patches =
+    optional (
+      isInteractive && lib.versionAtLeast version "7.2" && versionOlder version "7.3"
+    ) ./fix-test-suite-failures-with-perl-5.42.patch
+    ++ optional crossBuildTools ./cross-tools-flags.patch;
 
   postPatch = ''
     patchShebangs tp/maintain/regenerate_commands_perl_info.pl
