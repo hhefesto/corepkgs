@@ -1,6 +1,6 @@
 # Minimal stdenv
 
-This repo is meant to encapsulate all the logic around stdenv, spliced packages,
+This folder is meant to encapsulate all the logic around stdenv, spliced packages,
 and construction of a package set given additional overlays.
 
 The desire is for this to be the base on which larger nix package sets build upon.
@@ -8,6 +8,7 @@ The desire is for this to be the base on which larger nix package sets build upo
 ## Changes from upstream Nixpkgs
 
 - `stdenv.isCross` is now defined
+- `strictDeps`, `__structuredAttrs`, `enableParallelBuilding`, `enableParallelInstalling` and `enableParallelChecking` enabled by default
 
 ## Status
 

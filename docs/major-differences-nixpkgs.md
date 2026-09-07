@@ -4,9 +4,13 @@ Although there is desire to keep as aligned with Nixpkgs as possible, Ekapkgs
 isn't obligated to retain poor UX paradigms either. In that vein, the following
 changes differ significantly from whath one would expct with Nixpkgs.
 
+## Stdenv
+
+- See [stdenv/README.md](../stdenv/README.md)
+
 ## Evaluation behavior
 
-- `~/.config/nix` is no longer respected for `config` or `overlays`
+- Impure locations like `~/.config/nix` is no longer respected for `config` or `overlays`
 - `config.gitConfig` and `config.gitConfigFile` were removed
   - Globally altering git behavior should be done at the machine level
 
@@ -17,19 +21,8 @@ changes differ significantly from whath one would expct with Nixpkgs.
 ## Package paradigms
 
 - setupHooks for build managers are now explicit and opt-in.
-  - E.g. `meson.configurePhaseHook` now needs to be specified.
+  - `meson.configurePhaseHook` and `cmake.configurePhaseHook` now needs to be specified.
 - `mesonBuildType` defaults to `release` instead of Nixpkgs' `plain`.
-  - Meson's `plain` emits no `-O` flag at all; packages only ended up optimized
-    because the `fortify` hardening flag injects `-O2`. Any package disabling
-    that flag was silently built unoptimized.
-  - `release` means `-O3`. It does not imply `-DNDEBUG`: Meson's `b_ndebug`
-    defaults to `false`, so assertions are still compiled in unless a package
-    opts in with `-Db_ndebug=if-release`.
-  - This also matches the CMake hook, which already defaults
-    `CMAKE_BUILD_TYPE` to `Release`.
-  - The hook defines `mesonBuildType` before `preConfigure`, so setup hooks and
-    package phases can branch on it, and overriding it in the environment (or as
-    a derivation attribute) still wins.
 - `doCheck` now defaults to `false` across the package set.
   - Test suites are not executed as part of the main build by default.
   - This keeps the critical build path lean and avoids rebuilding the world
