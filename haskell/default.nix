@@ -78,15 +78,23 @@ in
   compiler = {
     ghc902Binary = pkgs.ghc.v9_0_2_binary;
     ghc984Binary = pkgs.ghc.v9_8_4_binary;
+    ghc9103Binary = pkgs.ghc.v9_10_3_binary;
   };
 
   # Per-compiler package sets
   packages =
     let
       ghc98Config = import ./configuration-ghc-9.8.x.nix { inherit pkgs haskellLib; };
+      ghc910Config = import ./configuration-ghc-9.10.x.nix { inherit pkgs haskellLib; };
       ghc90Config = import ./configuration-ghc-9.0.x.nix { };
     in
     {
+      ghc9103Binary = mkPackageSet {
+        ghc = pkgs.ghc.v9_10_3_binary;
+        ghcAttr = "ghc9103Binary";
+        compilerConfig = ghc910Config;
+      };
+
       ghc984Binary = mkPackageSet {
         ghc = pkgs.ghc.v9_8_4_binary;
         ghcAttr = "ghc984Binary";

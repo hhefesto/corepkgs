@@ -9,4 +9,8 @@
     version = "9.8.4-binary";
     isBinary = true;
   };
+  v9_10_3_binary = {
+    version = "9.10.3-binary";
+    isBinary = true;
+  };
 }
