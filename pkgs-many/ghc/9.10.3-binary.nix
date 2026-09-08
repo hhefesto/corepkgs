@@ -437,7 +437,7 @@ stdenv.mkDerivation (finalAttrs: {
         # shell wrapper scripts that GHC uses for its bin/ commands.
         # The interpreter was already set in postUnpack.
         ''
-          ghcLibDir="$out/lib/ghc-${version}/lib/x86_64-linux-ghc-${version}"
+          ghcLibDir=$(echo "$out"/lib/ghc-${version}/lib/*-ghc-${version})
           for i in "$out/bin/"*; do
             test ! -h "$i" || continue
             isScript "$i" || continue
@@ -461,7 +461,7 @@ stdenv.mkDerivation (finalAttrs: {
     # where we modify the package db before installing.
     # Use LD_LIBRARY_PATH since we don't patchelf RPATHs.
     + ''
-      ghcLibDir="$out/lib/ghc-${version}/lib/x86_64-linux-ghc-${version}"
+      ghcLibDir=$(echo "$out"/lib/ghc-${version}/lib/*-ghc-${version})
       package_db=("$out"/lib/ghc-*/lib/package.conf.d)
       LD_LIBRARY_PATH="${libPath}:$ghcLibDir''${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" \
         "$out/bin/ghc-pkg" --package-db="$package_db" recache
