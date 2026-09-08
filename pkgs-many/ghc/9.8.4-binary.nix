@@ -201,6 +201,13 @@ let
       ) binDistUsed.archSpecificLibraries
     )).nixPackage;
 
+  ncursesUsed =
+    (builtins.head (
+      builtins.filter (
+        drv: lib.hasPrefix "ncurses" (drv.nixPackage.name or "")
+      ) binDistUsed.archSpecificLibraries
+    )).nixPackage;
+
   libPath = lib.makeLibraryPath (
     # Add arch-specific libraries.
     map ({ nixPackage, ... }: nixPackage) binDistUsed.archSpecificLibraries
@@ -293,7 +300,7 @@ stdenv.mkDerivation (finalAttrs: {
     # nothing that uses haskeline links.
     + ''
       find . -name 'terminfo*.conf' \
-          -exec sed -e '/^[a-z-]*library-dirs/a \    ${lib.getLib ncurses.v6}/lib' -i {} \;
+          -exec sed -e '/^[a-z-]*library-dirs/a \    ${lib.getLib ncursesUsed}/lib' -i {} \;
     ''
     # Similar for iconv and libffi on darwin
     + lib.optionalString stdenv.hostPlatform.isDarwin ''
