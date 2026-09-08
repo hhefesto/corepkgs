@@ -171,7 +171,7 @@ let
         variantSuffix = "-musl";
         src = {
           url = "${downloadsUrl}/${version}/ghc-${version}-x86_64-alpine3_12-linux.tar.xz";
-          sha256 = "c8863098401febaab6892536b363deda109a75fea437abb992d58103d402ed89";
+          sha256 = "0ad0335849dd69672fd8ac1c168237aa5a88e8890b25fe703942957961816067";
         };
         exePathForLibraryCheck = "bin/ghc";
         archSpecificLibraries = [
